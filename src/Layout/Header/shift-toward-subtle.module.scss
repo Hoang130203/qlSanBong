@@ -1,0 +1,15 @@
+@keyframes shift-toward-subtle {
+  from {
+    transform: translateY(60px); /* Bắt đầu từ vị trí dưới */
+    opacity: 0; /* Bắt đầu ẩn */
+  }
+  to {
+    transform: translateY(0); /* Di chuyển lên trên */
+    opacity: 1; /* Hiển thị */
+  }
+}
+
+/* Áp dụng hiệu ứng cho phần tử */
+.tippy-box[data-animation="shift-toward-subtle"] {
+  animation: shift-toward-subtle 0.3s ease; /* Thời gian và kiểu chuyển động */
+}

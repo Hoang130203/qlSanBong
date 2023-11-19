@@ -1,11 +1,27 @@
-import DefauLayout from './Layout/DefauLayout';
-import Header from './Layout/Header/Header';
-import logo from './logo.svg';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import DefaultLayout from './Layout/DefaultLayout';
+import { publicRoutes } from './routes';
 function App() {
+
   return (
-    <div>
-      <DefauLayout ><div></div></DefauLayout>
-    </div>
+    <Router>
+      <Routes>
+        {publicRoutes.map((route, index) => {
+          const Page = route.component
+          return (
+            <Route key={index} path={route.path} element={
+              <DefaultLayout>
+                <Page></Page>
+              </DefaultLayout>
+            }>
+
+            </Route>
+          )
+        })}
+      </Routes>
+    </Router>
+
+
   );
 }
 
