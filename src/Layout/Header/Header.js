@@ -77,7 +77,7 @@ function Header() {
                         <NavLink to='/'>
                             <CustomizedButton style={{ '&.hover': { color: '#333' } }}>Trang chủ</CustomizedButton>
                         </NavLink>
-                        <NavLink to='/gioi-thieu'>
+                        <NavLink to='/dat-san'>
                             <CustomizedButton style={{ paddingRight: '5px' }}>Đặt sân<SportsSoccerIcon style={{ paddingLeft: '5px' }} /></CustomizedButton>
                         </NavLink>
                         <Tippy interactive

@@ -8,9 +8,9 @@ function DangNhap() {
     return (
         <Grid container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', top: '20px', position: 'relative' }}>
             <Grid container item xs={9} height='610px' display='flex' flexDirection='row' justifyContent='space-around'>
-                <Grid item xs={5} md={6} display='flex' flexDirection='row' borderRadius='10px' sx={{ borderTopRightRadius: '0', borderBottomRightRadius: '0', background: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
+                <Grid item md={5} sm={0.00001} display='flex' flexDirection='row' borderRadius='10px' sx={{ borderTopRightRadius: '0', borderBottomRightRadius: '0', background: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
                 </Grid>
-                <Grid item container xs={7} md={6} padding="40px 100px" display='block'>
+                <Grid item container md={7} sm={11.9} padding="40px 100px" display='block'>
                     <Grid item xs={12}><Typography variant="h4">Login</Typography></Grid>
                     <Grid item xs={12}><Typography variant="h7">New user?</Typography>
                         <NavLink to='/account/dang-ky' style={{ textDecoration: 'none', color: "#1D9BF0" }}><Typography variant="h7">Create an account</Typography></NavLink>
@@ -34,13 +34,13 @@ function DangNhap() {
                         <Typography padding='0px 5px' variant="h8">Or</Typography>
                         <div style={{ height: '1px', width: '110px', maxWidth: '35%', backgroundColor: '#ccc' }}></div>
                     </Grid>
-                    <Grid item container xs={12} >
-                        <Grid item xs={6} lg={2.2}>
+                    <Grid item container md={10} sm={7} xs={12} wrap="nowrap">
+                        <Grid item md={2.2} xs={3}>
                             <NavLink to='/account/dang-ky'><GoogleIcon /></NavLink>
                         </Grid>
-                        <Grid item xs={6} lg={2.2}><FacebookIcon /></Grid>
-                        <Grid item xs={6} lg={2.2}><TwitterIcon /></Grid>
-                        <Grid item xs={6} lg={2.2}><AppleIcon /></Grid>
+                        <Grid item md={2.2} xs={3}><FacebookIcon /></Grid>
+                        <Grid item md={2.2} xs={3}><TwitterIcon /></Grid>
+                        <Grid item md={2.2} xs={3}><AppleIcon /></Grid>
                     </Grid>
                 </Grid>
             </Grid>

@@ -4,10 +4,10 @@ function GioHang() {
     return (
         <Grid container justifyContent='center'>
             <Grid container item xs={9.5} paddingTop='25px' display='flex' flexDirection='column'>
-                <Grid item  >
+                <Grid item display='flex' flexDirection='row'>
                     <a href="/" style={{ textDecoration: 'none', color: '#333' }}>
-                        <Typography variant="h7">Trang chủ    /&nbsp;</Typography></a>
-                    <Typography variant="h7" color='#35c0c5'>Giỏ hàng</Typography>
+                        <Typography >Trang chủ    /&nbsp;</Typography></a>
+                    <Typography color='#35c0c5'>Giỏ hàng</Typography>
 
                 </Grid>
 

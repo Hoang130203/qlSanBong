@@ -48,13 +48,13 @@ function SanPham() {
         <Grid container justifyContent='center' alignContent='flex-start'>
             <Grid container item xs={9.5} paddingTop='25px' display='flex' flexDirection='row' height='30px' marginBottom='30px'>
                 <a href="/" style={{ textDecoration: 'none', color: '#333' }}>
-                    <Typography variant="h7">Trang chủ    /&nbsp;</Typography>
+                    <Typography >Trang chủ    /&nbsp;</Typography>
                 </a>
-                <Typography variant="h7" color='#35c0c5'>Sản phẩm</Typography>
+                <Typography color='#35c0c5'>Sản phẩm</Typography>
             </Grid>
-            <Grid container item xs={11.5} display='flex' flexDirection='row' >
+            <Grid container item xs={11.5} display='flex' flexDirection='row' justifyContent='flex-end'>
 
-                <Grid item container lg={3} md={4} sm={0.001} xs={0.001} overflow='hidden' display='flex' flexDirection='column' justifyContent='flex-start'>
+                <Grid item container lg={2.5} md={4} sm={0.001} xs={0.001} overflow='hidden' display='flex' flexDirection='column' justifyContent='flex-start'>
 
                     <Grid container item height='200px' display='flex' flexDirection='column' padding='0px 10px' justifyContent='center' rowSpacing={1} border='1px solid #ccc'>
                         <MenuSp />
@@ -116,7 +116,7 @@ function SanPham() {
                         </Grid>
                         <Grid item container justifyContent='space-evenly' xs={12} style={{ minHeight: '400px', marginTop: '10px' }}>
                             {allsp.map((item, index) => (
-                                <Grid key={index} container item xs={12} sm={5} lg={3.5} sx={{ padding: '20px 0px' }} justifyContent='center'>
+                                <Grid key={index} container item lg={3.5} md={7} sm={6} sx={{ padding: '20px 0px' }} justifyContent='center'>
                                     <Grid item justifyContent='center'>
                                         <ItemSp img={item.img} title={item.title} cost={item.cost} />
                                     </Grid>
