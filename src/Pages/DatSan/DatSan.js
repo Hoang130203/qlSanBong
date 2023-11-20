@@ -8,8 +8,8 @@ let fields = [
 ]
 function DatSan() {
     return (
-        <Grid container justifyContent='center'>
-            <Grid container item xs={9.5} paddingTop='25px' display='flex' flexDirection='row' height='30px' marginBottom='30px'>
+        <Grid container justifyContent='center' alignContent='flex-start'>
+            <Grid container item xs={12} sm={9.5} paddingTop='25px' display='flex' flexDirection='row' marginBottom='30px'>
                 <Grid item xs={12} flexDirection='row' display='flex'>
                     <a href="/" style={{ textDecoration: 'none', color: '#333' }}>
                         <Typography>Trang chủ &gt; </Typography>
@@ -18,7 +18,7 @@ function DatSan() {
                 </Grid>
 
                 <Grid item container display='flex' paddingTop='25px' flexDirection='row' >
-                    <Grid item container xs={3} display='flex' flexDirection='column' style={{ minHeight: '500px' }}>
+                    <Grid item container xs={12} md={3} display='flex' flexDirection='colume' alignContent='flex-start'>
                         <ButtonMenu title='Đánh giá' iconRight=''>
                             <Grid container item fontSize='22px' display='flex' rowSpacing={1} flexDirection='column' padding='10px 0px 0px 30px'>
                                 <Grid item ><input type="checkbox" value='5 sao' id="5s" style={{ width: '30px' }} /><label htmlFor="5s">5 sao</label></Grid>
@@ -44,15 +44,14 @@ function DatSan() {
 
 
                     </Grid>
-                    <Grid item container xs={9} display='flex' flexDirection='column' >
+                    <Grid item container xs={12} md={9} display='flex' flexDirection='row' >
                         <Grid item>
                             <Typography variant="h6" fontWeight={500}>SÂN BÓNG ĐÁ</Typography>
                         </Grid>
-                        <Grid item container>
+                        <Grid item container >
                             {fields.map((item, index) => (
                                 <SanBong key={index} image={item.image} title={item.title} rate={item.rate} address={item.address} special={item.special} cost={item.cost} />
                             ))}
-
                         </Grid>
                     </Grid>
 

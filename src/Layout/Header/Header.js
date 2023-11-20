@@ -12,6 +12,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import { Fragment, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 import MenuSp from './MenuSp';
 
 const cx = classNames.bind(styles)
@@ -21,9 +22,14 @@ const listHeader = [{ xs: 2, icon: <PhoneIcon sx={{ fill: '#35c0c5;' }} />, chil
         "& fieldset": { border: 'none' },
     }} placeholder='Tìm kiếm...' />
 },
-{ xs: 2.2, to: '/account/dang-nhap', icon: <PersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
-{ xs: 2.2, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+{ xs: 2.5, to: '/account/dang-nhap', icon: <PersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+{ xs: 2.0, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
 { xs: 2.4, to: '/cart', icon: <ShoppingCartIcon />, children: <Typography variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
+]
+const listHeader2 = [
+    { xs: 4, to: '/account/dang-nhap', icon: <PersonIcon fontSize='small' />, cursor: 'pointer', children: <Typography variant='h9' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+    { xs: 3, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='small' />, cursor: 'pointer', children: <Typography variant='h9' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+    { xs: 3.5, to: '/cart', icon: <ShoppingCartIcon fontSize='small' />, children: <Typography variant='h9' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
 ]
 function Header() {
     const navigate = useNavigate()
@@ -43,8 +49,8 @@ function Header() {
                     <img src='https://divuitravel.com/wp-content/uploads/2023/05/chon-loc-25-logo-bong-da-an-tuong-va-dep-mat_28.jpg' className={cx('logo')} />
                 </Grid>
                 <Grid item container xs={9.5} md={9} justifyContent="center" display="flex" >
-                    <Grid item container xs={9}>
-                        <Divider orientation='vertical' />
+                    <Grid item container xs={0.000001} overflow='hidden' md={9} sm={12}>
+                        <Divider orientation='vertical' style={{ height: '70px' }} />
                         {listHeader.map((item, index) => {
                             const Component = item.component || Fragment;
                             return (
@@ -61,7 +67,31 @@ function Header() {
                                             <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
 
                                         </Grid>
-                                        <Divider orientation='vertical' />
+                                        <Divider orientation='vertical' style={{ height: '70px' }} />
+                                    </Component>
+                                </Fragment>
+                            )
+
+                        })}
+                    </Grid>
+                    <Grid item container xs={12} overflow='hidden' sm={0.000001} justifyContent='flex-end'>
+                        <Divider orientation='vertical' style={{ height: '70px' }} />
+                        {listHeader2.map((item, index) => {
+                            const Component = item.component || Fragment;
+                            return (
+                                <Fragment key={index} >
+                                    <Component>
+                                        <Grid onClick={() => { if (item.to) { navigate(item.to) } }} item container wrap='nowrap' maxHeight="70px" xs={item.xs} display="flex" flexDirection="row" justifyContent="center" alignItems="center"
+                                            sx={{
+                                                cursor: item.cursor, background: item.background, '&:hover': {
+                                                    background: item.hoverBackground,
+                                                    color: item.hovercolor ? '#35c0c5' : "white !important"
+                                                },
+                                            }} >
+                                            <Grid item display="flex" justifyItems="flex-end">{item.icon}</Grid>
+                                            <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
+                                        </Grid>
+                                        <Divider orientation='vertical' style={{ height: '70px' }} />
                                     </Component>
                                 </Fragment>
                             )
@@ -72,8 +102,10 @@ function Header() {
             </Grid>
             <div className={cx('menu')}>
                 <Grid container height='40px'>
-
-                    <Grid item container xs={10} md={8} lg={7} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} overflow='hidden' >
+                    <Grid item xs={3} sm={0.00001} overflow='hidden'>
+                        <Button style={{ height: '40px' }}><MenuIcon style={{ color: 'white' }} /></Button>
+                    </Grid>
+                    <Grid item container xs={0.0001} sm={10} md={8} lg={7} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} overflow='hidden' >
                         <NavLink to='/'>
                             <CustomizedButton style={{ '&.hover': { color: '#333' } }}>Trang chủ</CustomizedButton>
                         </NavLink>
