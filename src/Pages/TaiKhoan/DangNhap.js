@@ -7,7 +7,7 @@ import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from "../../Icons/Ic
 function DangNhap() {
     return (
         <Grid container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', top: '20px', position: 'relative' }}>
-            <Grid container item xs={9} height='610px' display='flex' flexDirection='row' justifyContent='space-around'>
+            <Grid container item xs={12} sm={9} height='610px' display='flex' flexDirection='row' justifyContent='space-around'>
                 <Grid item md={5} sm={0.00001} display='flex' flexDirection='row' borderRadius='10px' sx={{ borderTopRightRadius: '0', borderBottomRightRadius: '0', background: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
                 </Grid>
                 <Grid item container md={7} sm={11.9} padding="40px 100px" display='block'>

@@ -49,7 +49,7 @@ function Header() {
                     <img src='https://divuitravel.com/wp-content/uploads/2023/05/chon-loc-25-logo-bong-da-an-tuong-va-dep-mat_28.jpg' className={cx('logo')} />
                 </Grid>
                 <Grid item container xs={9.5} md={9} justifyContent="center" display="flex" >
-                    <Grid item container xs={0.000001} overflow='hidden' md={9} sm={12}>
+                    <Grid item container sm={12} md={10} sx={{ display: { xs: 'none', sm: 'flex' } }}>
                         <Divider orientation='vertical' style={{ height: '70px' }} />
                         {listHeader.map((item, index) => {
                             const Component = item.component || Fragment;
@@ -74,7 +74,7 @@ function Header() {
 
                         })}
                     </Grid>
-                    <Grid item container xs={12} overflow='hidden' sm={0.000001} justifyContent='flex-end'>
+                    <Grid item container xs={12} overflow='hidden' sx={{ display: { sm: 'none' } }} justifyContent='flex-end'>
                         <Divider orientation='vertical' style={{ height: '70px' }} />
                         {listHeader2.map((item, index) => {
                             const Component = item.component || Fragment;
@@ -105,7 +105,7 @@ function Header() {
                     <Grid item xs={3} sm={0.00001} overflow='hidden'>
                         <Button style={{ height: '40px' }}><MenuIcon style={{ color: 'white' }} /></Button>
                     </Grid>
-                    <Grid item container xs={0.0001} sm={10} md={8} lg={7} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} overflow='hidden' >
+                    <Grid item container xs={0.0001} sm={10} md={8} lg={7} sx={{ display: { xs: 'none', sm: 'flex' }, flexDirection: 'row', justifyContent: 'center' }} overflow='hidden' >
                         <NavLink to='/'>
                             <CustomizedButton style={{ '&.hover': { color: '#333' } }}>Trang chủ</CustomizedButton>
                         </NavLink>
