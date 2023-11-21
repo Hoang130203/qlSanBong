@@ -8,11 +8,13 @@ function App() {
       <Routes>
         {publicRoutes.map((route, index) => {
           const Page = route.component
+          let layout = route.layout
+          const Layout = layout ? layout : DefaultLayout
           return (
             <Route key={index} path={route.path} element={
-              <DefaultLayout>
+              <Layout>
                 <Page></Page>
-              </DefaultLayout>
+              </Layout>
             }>
 
             </Route>

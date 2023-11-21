@@ -1,0 +1,98 @@
+.wrapper {
+  //width min-height background-color
+  width: 235px;
+  min-height: 800px;
+
+  flex: 0;
+  margin-left: 0px;
+  display: flex;
+
+  background-color: #fff;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background: #fff;
+}
+::-webkit-scrollbar-thumb {
+  background: #dadcdd;
+}
+.wrapperparent {
+  padding-top: 19px;
+  margin-top: 1px;
+  height: 100vh;
+  position: fixed;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #fff;
+}
+div a {
+  margin-left: 0px;
+  color: red;
+  padding-left: 0px;
+  height: 48px;
+}
+.item {
+  font-size: 17.5px;
+  margin-top: 2px;
+}
+.menu {
+  padding-bottom: 9px;
+}
+.hr {
+  height: 0.5px;
+  width: 210px;
+  background-color: rgba(241, 241, 242, 1);
+  margin-left: 15px;
+}
+.title {
+  padding: 0 8px;
+  margin-bottom: 8px;
+  font-family: "IBM Plex Sans", TikTokFont, Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: rgba(80, 82, 90, 1);
+}
+.follow {
+  margin: 15px 10px;
+  min-height: 300px;
+  display: block;
+}
+.more {
+  background-color: transparent;
+  padding: 0px 8px;
+  margin-top: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fe2c55;
+  font-size: 14px;
+  font-family: inherit;
+}
+.menu-btn {
+  background-color: transparent;
+  display: block;
+  left: 0;
+}
+
+/*.image {
+    max-width: 220px;
+    height: auto;
+}
+.btn {
+    width: 100px;
+    height: auto;
+    border: #333 solid 1px;
+    font-size: 15px;
+    cursor: pointer;
+    &:hover {
+        background: #666;
+        color: white;
+    }
+
+    margin-left: 20px;
+}
+*/

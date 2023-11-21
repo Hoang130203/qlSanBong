@@ -1,0 +1,43 @@
+.menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+  padding: 10px 16px;
+  padding-right: 0px;
+  line-height: 1.8rem;
+  font-weight: 700;
+  color: #161823;
+  font-size: 18px;
+  font-family: "IBM Plex Sans", TikTokFont, Arial, Tahoma, PingFangSC,
+    sans-serif;
+  &.separate {
+    border-top: 1px solid rgba(22, 24, 35, 0.12);
+  }
+  &.active {
+    color: #1976d2;
+    background-color: rgba(117, 132, 213, 0.197);
+    .icon {
+      display: none;
+    }
+
+    .active-icon {
+      display: flex;
+    }
+  }
+  &:hover {
+    background-color: rgba(117, 132, 213, 0.197);
+  }
+}
+.title {
+  margin-left: 10px;
+}
+
+.icon,
+.active-icon {
+  display: flex;
+}
+
+.active-icon {
+  display: none;
+}

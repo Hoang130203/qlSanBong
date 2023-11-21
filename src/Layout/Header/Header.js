@@ -113,8 +113,7 @@ function Header() {
                             <CustomizedButton style={{ paddingRight: '5px' }}>Đặt sân<SportsSoccerIcon style={{ paddingLeft: '5px' }} /></CustomizedButton>
                         </NavLink>
                         <Tippy interactive
-
-                            offset={[0, 0]}
+                            offset={[0, -9]}
                             maxWidth="100vw" render={(attrs) => (
                                 <div style={{ width: '100vw', backgroundColor: '#000000CC', height: '236px', }}  {...attrs}>
                                     <MenuSp />
