@@ -9,7 +9,7 @@ function SidebarLayout({ children }) {
 
         <Grid container className={cx('wrapper')}>
             <Grid item container className={cx('container')} >
-                <Grid item xs={12} md={3} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                <Grid item xs={12} sx={{ display: { xs: 'none', sm: 'block' } }}>
                     <Sidebar className={cx('sidebar')} />
                 </Grid>
                 <Grid item>
