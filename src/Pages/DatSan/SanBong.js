@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Button, Card, CardContent, CardMedia, Grid, Rating, Typography } from "@mui/material";
 import React from 'react';
+import { NavLink } from "react-router-dom";
 
 
 
@@ -58,12 +59,16 @@ function SanBong({ address, cost, special, image, title, rate }) {
                         </Typography>
                     </div>
                     <div className={classes.buttons}>
-                        <Button variant="contained" color="primary" sx={{ marginRight: '10px' }}>
-                            Xem chi tiết
-                        </Button>
-                        <Button variant="contained" color="secondary">
-                            Đặt sân
-                        </Button>
+                        <a href='/dat-san/chi-tiet-san'>
+                            <Button variant="contained" color="primary" sx={{ marginRight: '10px' }}>
+                                Xem chi tiết
+                            </Button>
+                        </a>
+                        <NavLink to='/dat-san/dat-san'>
+                            <Button variant="contained" color="secondary">
+                                Đặt sân
+                            </Button>
+                        </NavLink>
                     </div>
                 </CardContent>
             </Card>

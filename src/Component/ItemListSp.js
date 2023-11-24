@@ -1,4 +1,5 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 function ItemListSp({ maxWidth, widthMedia, title, cost, img, heightt, paddingtop }) {
     return (
@@ -20,10 +21,11 @@ function ItemListSp({ maxWidth, widthMedia, title, cost, img, heightt, paddingto
                 </CardContent>
 
                 <CardActions style={{ paddingTop: '0px' }}>
-                    <Button size="small" color="primary" >
-                        Xem
-                    </Button>
-
+                    <NavLink to='/san-pham/chitietsanpham'>
+                        <Button size="small" color="primary" >
+                            Xem
+                        </Button>
+                    </NavLink>
                 </CardActions>
 
             </Box>

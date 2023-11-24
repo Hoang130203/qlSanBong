@@ -1,5 +1,6 @@
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Fab, Typography } from "@mui/material";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { NavLink } from "react-router-dom";
 function ItemSp({ img, title, cost }) {
     return (
         <Card sx={{ maxWidth: '100%', width: '280px' }}>
@@ -25,7 +26,9 @@ function ItemSp({ img, title, cost }) {
                 <Button size="small" color="primary">
                     Thêm vào giỏ
                 </Button>
-                <Fab size="medium" style={{ right: '-70px', bottom: '7px' }}><RemoveRedEyeIcon /></Fab>
+                <NavLink to='/san-pham/chitietsanpham'>
+                    <Fab size="medium" style={{ right: '-70px', bottom: '7px' }}><RemoveRedEyeIcon /></Fab>
+                </NavLink>
             </CardActions>
         </Card>
     );
