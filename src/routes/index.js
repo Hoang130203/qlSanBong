@@ -18,6 +18,7 @@ import ThemQuangCao from '../Pages/Admin/ThemQuangCao'
 import ChiTietSanPham from '../Pages/SanPham/ChiTietSanPham'
 import ChiTietSan from '../Pages/DatSan/ChiTietSan'
 import FormDatSan from '../Pages/DatSan/FormDatSan'
+import DatHang from '../Pages/GioHang/DatHang'
 const publicRoutes = [
     { path: '/dat-san', component: DatSan },
     { path: '/dat-san/chi-tiet-san', component: ChiTietSan },
@@ -29,6 +30,7 @@ const publicRoutes = [
     { path: '/account/dang-nhap', component: DangNhap },
     { path: '/account/dang-ky', component: DangKy },
     { path: '/cart', component: GioHang },
+    { path: '/cart/dat-hang', component: DatHang },
     { path: '/san-pham/chitietsanpham', component: ChiTietSanPham },
     { path: '/admin/thong-ke', component: ThongKe, layout: SidebarLayout },
     { path: '/admin/san-pham', component: SanPham2, layout: SidebarLayout },

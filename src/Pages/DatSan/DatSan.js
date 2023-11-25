@@ -31,9 +31,9 @@ function DatSan() {
                         </ButtonMenu>
                         <ButtonMenu title='Loại sân' iconRight=''>
                             <Grid container item fontSize='22px' display='flex' rowSpacing={1} flexDirection='column' padding='10px 0px 0px 30px'>
-                                <Grid item ><input type="checkbox" value='5 sao' id="7n" style={{ width: '30px' }} /><label htmlFor="7n">7 người</label></Grid>
-                                <Grid item ><input type="checkbox" value='4 sao' id="5n" style={{ width: '30px' }} /><label htmlFor="5n">5 người</label></Grid>
-                                <Grid item ><input type="checkbox" value='3 sao' id="fs" style={{ width: '30px' }} /><label htmlFor="fs">Sân fusal</label></Grid>
+                                <Grid item ><input type="checkbox" value='7' id="7n" style={{ width: '30px' }} /><label htmlFor="7n">7 người</label></Grid>
+                                <Grid item ><input type="checkbox" value='11' id="11n" style={{ width: '30px' }} /><label htmlFor="11n">11 người</label></Grid>
+                                <Grid item ><input type="checkbox" value='fs' id="fs" style={{ width: '30px' }} /><label htmlFor="fs">Sân fusal</label></Grid>
 
                             </Grid>
                         </ButtonMenu>

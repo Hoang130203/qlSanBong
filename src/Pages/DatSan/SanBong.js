@@ -59,11 +59,11 @@ function SanBong({ address, cost, special, image, title, rate }) {
                         </Typography>
                     </div>
                     <div className={classes.buttons}>
-                        <a href='/dat-san/chi-tiet-san'>
+                        <NavLink to='/dat-san/chi-tiet-san'>
                             <Button variant="contained" color="primary" sx={{ marginRight: '10px' }}>
                                 Xem chi tiết
                             </Button>
-                        </a>
+                        </NavLink>
                         <NavLink to='/dat-san/dat-san'>
                             <Button variant="contained" color="secondary">
                                 Đặt sân
