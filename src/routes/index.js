@@ -19,6 +19,8 @@ import ChiTietSanPham from '../Pages/SanPham/ChiTietSanPham'
 import ChiTietSan from '../Pages/DatSan/ChiTietSan'
 import FormDatSan from '../Pages/DatSan/FormDatSan'
 import DatHang from '../Pages/GioHang/DatHang'
+import ThongTin from '../Pages/TaiKhoan/ThongTin'
+import DonMua from '../Pages/TaiKhoan/DonMua'
 const publicRoutes = [
     { path: '/dat-san', component: DatSan },
     { path: '/dat-san/chi-tiet-san', component: ChiTietSan },
@@ -29,6 +31,8 @@ const publicRoutes = [
     { path: '/', component: TrangChu },
     { path: '/account/dang-nhap', component: DangNhap },
     { path: '/account/dang-ky', component: DangKy },
+    { path: 'account/thong-tin', component: ThongTin },
+    { path: 'account/don-mua', component: DonMua },
     { path: '/cart', component: GioHang },
     { path: '/cart/dat-hang', component: DatHang },
     { path: '/san-pham/chitietsanpham', component: ChiTietSanPham },

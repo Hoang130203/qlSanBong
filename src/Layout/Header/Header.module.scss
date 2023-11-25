@@ -27,3 +27,15 @@
   width: auto;
   cursor: pointer;
 }
+.iconMenu {
+  padding-left: 20px;
+}
+@media screen and (max-width: 450px) {
+  .textMenu {
+    display: none;
+  }
+  .iconMenu {
+    padding-left: 20px;
+    font-size: 25px;
+  }
+}

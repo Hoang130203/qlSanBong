@@ -14,24 +14,35 @@ import { Fragment, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuSp from './MenuSp';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const cx = classNames.bind(styles)
-const listHeader = [{ xs: 2, icon: <PhoneIcon sx={{ fill: '#35c0c5;' }} />, children: <Typography color="#333" >19006750</Typography>, component: Fragment },
-{
-    xs: 3, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;' }} />, children: <TextField sx={{
-        "& fieldset": { border: 'none' },
-    }} placeholder='Tìm kiếm...' />
-},
-{ xs: 2.5, to: '/account/dang-nhap', icon: <PersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
-{ xs: 2.0, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
-{ xs: 2.4, to: '/cart', icon: <ShoppingCartIcon />, children: <Typography variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
-]
-const listHeader2 = [
-    { xs: 4, to: '/account/dang-nhap', icon: <PersonIcon fontSize='small' />, cursor: 'pointer', children: <Typography variant='h9' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
-    { xs: 3, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='small' />, cursor: 'pointer', children: <Typography variant='h9' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
-    { xs: 3.5, to: '/cart', icon: <ShoppingCartIcon fontSize='small' />, children: <Typography variant='h9' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
-]
+
 function Header() {
+    const user = localStorage.getItem('usersb')
+    const listHeader = [{ xs: 2, icon: <PhoneIcon sx={{ fill: '#35c0c5;' }} />, children: <Typography color="#333" >19006750</Typography>, component: Fragment },
+    {
+        xs: 3, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;' }} />, children: <TextField sx={{
+            "& fieldset": { border: 'none' },
+        }} placeholder='Tìm kiếm...' />
+    },
+    { xs: 2.5, to: '/account/dang-nhap', icon: <PersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+    { xs: 2.0, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+    { xs: 2.4, to: '/cart', icon: <ShoppingCartIcon />, children: <Typography variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
+    ]
+    const listHeader2 = [
+        { xs: 4, to: '/account/dang-nhap', icon: <PersonIcon fontSize='small' />, cursor: 'pointer', children: <Typography variant='h9' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+        { xs: 3, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='small' />, cursor: 'pointer', children: <Typography variant='h9' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
+        { xs: 3.5, to: '/cart', icon: <ShoppingCartIcon fontSize='small' />, children: <Typography variant='h9' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
+    ]
+    const listHeader3 = [
+        {
+            xs: 5, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;' }} />, children: <TextField sx={{
+                "& fieldset": { border: 'none' },
+            }} placeholder='Tìm kiếm...' />
+        },
+        { xs: 3, to: '/cart', icon: <ShoppingCartIcon className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
+        { xs: 3, to: '/account/thong-tin', icon: <AccountCircleIcon fontSize='large' className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400} fontSize={18}>{user}</Typography>, hoverBackground: "url(https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/Pen0000000/php3Y3Q7b.jpeg) #35c0c5;" }
+    ]
     const navigate = useNavigate()
     const CustomizedButton = styled(Button)
         ({
@@ -48,57 +59,87 @@ function Header() {
                 <Grid item xs={2.5} md={3} justifyContent="center" display="flex" sx={{ cursor: 'pointer' }}>
                     <img src='https://divuitravel.com/wp-content/uploads/2023/05/chon-loc-25-logo-bong-da-an-tuong-va-dep-mat_28.jpg' className={cx('logo')} />
                 </Grid>
-                <Grid item container xs={9.5} md={9} justifyContent="center" display="flex" >
-                    <Grid item container sm={12} md={10} sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                        <Divider orientation='vertical' style={{ height: '70px' }} />
-                        {listHeader.map((item, index) => {
-                            const Component = item.component || Fragment;
-                            return (
-                                <Fragment key={index} >
-                                    <Component>
-                                        <Grid onClick={() => { if (item.to) { navigate(item.to) } }} item container wrap='nowrap' maxHeight="70px" xs={item.xs} display="flex" flexDirection="row" justifyContent="center" alignItems="center"
-                                            sx={{
-                                                cursor: item.cursor, background: item.background, '&:hover': {
-                                                    background: item.hoverBackground, // Change this to the desired hover color
-                                                    color: item.hovercolor ? '#35c0c5' : "white !important"
-                                                },
-                                            }} >
-                                            <Grid item display="flex" justifyItems="flex-end">{item.icon}</Grid>
-                                            <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
+                {user != null && user.length > 0 ? (
+                    <Grid item container xs={9.5} md={9} justifyContent="flex-end" display="flex" >
+                        <Grid item container xs={12} md={8} justifyContent="flex-end">
+                            {listHeader3.map((item, index) => {
+                                const Component = item.component || Fragment;
+                                return (
+                                    <Fragment key={index} >
+                                        <Component>
+                                            <Grid style={{ cursor: 'pointer' }} onClick={() => { if (item.to) { navigate(item.to) } }} item container wrap='nowrap' maxHeight="70px" xs={item.xs} display="flex" flexDirection="row" justifyContent="center" alignItems="center"
+                                                sx={{
+                                                    cursor: item.cursor, background: item.background, '&:hover': {
+                                                        background: item.hoverBackground, // Change this to the desired hover color
+                                                        color: item.hovercolor ? '#35c0c5' : "white !important"
+                                                    },
+                                                }} >
+                                                <Grid item display="flex" justifyItems="flex-end">{item.icon}</Grid>
+                                                <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
 
-                                        </Grid>
-                                        <Divider orientation='vertical' style={{ height: '70px' }} />
-                                    </Component>
-                                </Fragment>
-                            )
+                                            </Grid>
+                                            <Divider orientation='vertical' style={{ height: '70px' }} />
+                                        </Component>
+                                    </Fragment>
+                                )
 
-                        })}
+                            })}
+                        </Grid>
                     </Grid>
-                    <Grid item container xs={12} overflow='hidden' sx={{ display: { sm: 'none' } }} justifyContent='flex-end'>
-                        <Divider orientation='vertical' style={{ height: '70px' }} />
-                        {listHeader2.map((item, index) => {
-                            const Component = item.component || Fragment;
-                            return (
-                                <Fragment key={index} >
-                                    <Component>
-                                        <Grid onClick={() => { if (item.to) { navigate(item.to) } }} item container wrap='nowrap' maxHeight="70px" xs={item.xs} display="flex" flexDirection="row" justifyContent="center" alignItems="center"
-                                            sx={{
-                                                cursor: item.cursor, background: item.background, '&:hover': {
-                                                    background: item.hoverBackground,
-                                                    color: item.hovercolor ? '#35c0c5' : "white !important"
-                                                },
-                                            }} >
-                                            <Grid item display="flex" justifyItems="flex-end">{item.icon}</Grid>
-                                            <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
-                                        </Grid>
-                                        <Divider orientation='vertical' style={{ height: '70px' }} />
-                                    </Component>
-                                </Fragment>
-                            )
+                ) : (
+                    <Grid item container xs={9.5} md={9} justifyContent="center" display="flex" >
+                        <Grid item container sm={12} md={10} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                            <Divider orientation='vertical' style={{ height: '70px' }} />
+                            {listHeader.map((item, index) => {
+                                const Component = item.component || Fragment;
+                                return (
+                                    <Fragment key={index} >
+                                        <Component>
+                                            <Grid onClick={() => { if (item.to) { navigate(item.to) } }} item container wrap='nowrap' maxHeight="70px" xs={item.xs} display="flex" flexDirection="row" justifyContent="center" alignItems="center"
+                                                sx={{
+                                                    cursor: item.cursor, background: item.background, '&:hover': {
+                                                        background: item.hoverBackground, // Change this to the desired hover color
+                                                        color: item.hovercolor ? '#35c0c5' : "white !important"
+                                                    },
+                                                }} >
+                                                <Grid item display="flex" justifyItems="flex-end">{item.icon}</Grid>
+                                                <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
 
-                        })}
+                                            </Grid>
+                                            <Divider orientation='vertical' style={{ height: '70px' }} />
+                                        </Component>
+                                    </Fragment>
+                                )
+
+                            })}
+                        </Grid>
+                        <Grid item container xs={12} overflow='hidden' sx={{ display: { sm: 'none' } }} justifyContent='flex-end'>
+                            <Divider orientation='vertical' style={{ height: '70px' }} />
+                            {listHeader2.map((item, index) => {
+                                const Component = item.component || Fragment;
+                                return (
+                                    <Fragment key={index} >
+                                        <Component>
+                                            <Grid onClick={() => { if (item.to) { navigate(item.to) } }} item container wrap='nowrap' maxHeight="70px" xs={item.xs} display="flex" flexDirection="row" justifyContent="center" alignItems="center"
+                                                sx={{
+                                                    cursor: item.cursor, background: item.background, '&:hover': {
+                                                        background: item.hoverBackground,
+                                                        color: item.hovercolor ? '#35c0c5' : "white !important"
+                                                    },
+                                                }} >
+                                                <Grid item display="flex" justifyItems="flex-end">{item.icon}</Grid>
+                                                <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
+                                            </Grid>
+                                            <Divider orientation='vertical' style={{ height: '70px' }} />
+                                        </Component>
+                                    </Fragment>
+                                )
+
+                            })}
+                        </Grid>
                     </Grid>
-                </Grid>
+                )}
+
             </Grid>
             <div className={cx('menu')}>
                 <Grid container height='40px'>

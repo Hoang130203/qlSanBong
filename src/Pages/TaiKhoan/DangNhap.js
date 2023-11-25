@@ -19,6 +19,9 @@ function DangNhap() {
         if (user == 'admin' && password == "123") {
             localStorage.setItem('admin', 'admin')
             navigate('/admin/thong-ke')
+        } else if (user.length > 0 && password.length > 0) {
+            localStorage.setItem('usersb', 'user')
+            navigate('/')
         }
     }
     return (
