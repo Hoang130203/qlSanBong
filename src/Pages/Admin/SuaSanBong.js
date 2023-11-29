@@ -1,9 +1,10 @@
 import { ThemeProvider } from "@emotion/react";
 import { Button, CircularProgress, Grid, MenuItem, Select, TextField, TextareaAutosize, Typography, createTheme } from "@mui/material";
-import { useState } from "react";
-import AddIcon from '@mui/icons-material/Add';
+import { useEffect, useState } from "react";
+import UpgradeIcon from '@mui/icons-material/Upgrade';
 import ClassApi from "../../api/API";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 const theme = createTheme({
     components: {
         MuiTypography: {
@@ -31,37 +32,57 @@ const theme = createTheme({
 
     },
 });
-function ThemSanBong() {
+function SuaSanBong() {
     const [isUploading, setIsUploading] = useState(false);
+    const id = useParams().id
     const [name, setName] = useState('')
     const [cost, setCost] = useState(0)
     const [address, setAddress] = useState('')
     const [decription, setDescription] = useState('')
     const [image, setImage] = useState('')
+    const [rate, setRate] = useState()
     const [type, setType] = useState('')
-    const [demoUrl, setDemoUrl] = useState('https://thuviendohoa.vn/upload/images/items/hinh-anh-trai-bong-da-lua-png-447.webp')
+    const [demoUrl, setDemoUrl] = useState('')
+    const [isChangImg, setIsChangeImg] = useState(false)
     const onChange = (e) => {
         setType(e.target.value)
     }
-    const handleAdd = async () => {
-
+    useEffect(() => {
         try {
+            ClassApi.GetField(id).then((response) => {
+                console.log(id)
+                let data = response.data
+                setName(data.name)
+                setCost(data.price)
+                setAddress(data.address)
+                setRate(data.rate)
+                setType(data.type)
+                setDescription(data.decription)
+                setDemoUrl(data.linkimg)
 
+            })
+        } catch {
+            toast.error('error')
+        }
+
+    }, [])
+    const handleAdd = async () => {
+        try {
             setCost(parseInt(cost))
             if (name.length == 0 || address.length == 0 || type.length == 0) {
                 toast.warning('điền đủ thông tin')
                 return
             }
-            if (image != '') {
+            if (isChangImg) {
                 setIsUploading(true);
                 const sendimage = await ClassApi.PostImage(image)
-
-                await ClassApi.PostField(name, cost, address, type, decription, sendimage.data.url)
+                setDemoUrl(sendimage.data.url)
                 setIsUploading(false);
-            } else {
-                await ClassApi.PostField(name, cost, address, type, decription, 'sendimage.data.url')
             }
-            await toast.success('thêm thành công')
+
+
+            await ClassApi.PutField({ fieldid: id, price: cost, linkimg: demoUrl, address: address, rate: rate, decription: decription, type: type, name: name })
+            await toast.success('sửa thành công')
         }
         catch {
             toast.error('lỗi')
@@ -70,6 +91,8 @@ function ThemSanBong() {
     }
 
     const onChangeImg = (e) => {
+
+        setIsChangeImg(true)
         const selectedImage = e.target.files[0];
         setImage(selectedImage)
         if (selectedImage) {
@@ -88,7 +111,7 @@ function ThemSanBong() {
             <ThemeProvider theme={theme}>
                 <Grid item xs={12} padding='0px 0px 20px 0px'>
                     <Typography fontFamily='inherit' variant="h4" color='#1976d2' fontSize='35px'>
-                        Thêm sân bóng mới
+                        Sửa thông tin sân
                     </Typography>
                 </Grid>
                 <Grid item container xs={12} rowSpacing={1} >
@@ -158,7 +181,7 @@ function ThemSanBong() {
                         </Grid>
                     </Grid>
                     <Grid item xs={12} >
-                        <Button onClick={handleAdd} variant="contained" startIcon={<AddIcon />}><Typography textTransform='none'>Thêm sân bóng</Typography></Button>
+                        <Button onClick={handleAdd} variant="contained" startIcon={<UpgradeIcon />}><Typography textTransform='none'>Cập nhật</Typography></Button>
                     </Grid>
                 </Grid>
             </ThemeProvider>
@@ -166,4 +189,4 @@ function ThemSanBong() {
     );
 }
 
-export default ThemSanBong;
+export default SuaSanBong;

@@ -3,6 +3,10 @@ import { Accordion, AccordionDetails, AccordionSummary, Card, CardActionArea, Ca
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import ClassApi from '../../../api/API'
+import { useEffect, useState } from "react";
 const StyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
@@ -37,11 +41,27 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
 }));
 
 
-function ItemSanBong({ fields }) {
+function ItemSanBong({ fields, setFields }) {
+
+    const navigate = useNavigate()
+    const handleDelete = async (id) => {
+        try {
+            ClassApi.DeleteField(id).then(() => {
+                const updatedFields = fields.filter(field => field.id !== id);
+                // Cập nhật lại danh sách sản phẩm hiển thị thông qua setFields
+                setFields(updatedFields);
+                toast.info('Xóa thành công')
+            })
+
+        } catch (error) {
+            toast.error('lỗi')
+        }
+    }
+
     return (
         <Grid item container>
             {fields.map((field, index) => (
-                <Grid item xs={12} maxWidth='100%' padding='20px 0px' key={index}>
+                <Grid item xs={12} maxWidth='100%' padding='20px 0px' key={field.id}>
                     <StyledCard>
                         <StyledCardActionArea>
                             <StyledCardMedia image={field.image} />
@@ -61,10 +81,12 @@ function ItemSanBong({ fields }) {
                         <CardActions >
                             <Grid container style={{ display: 'flex', flexDirection: 'row', paddingLeft: '20px' }}>
                                 <Grid item display='flex ' flexDirection='row' alignItems="center" >
-                                    <IconButton onClick={() => { }}> <SettingsIcon /></IconButton>
+                                    <NavLink to={'/admin/sua-san-bong/' + field.id}>
+                                        <IconButton > <SettingsIcon /></IconButton>
+                                    </NavLink>
                                 </Grid>
                                 <Grid item >
-                                    <IconButton onClick={() => { }} ><DeleteIcon style={{ color: 'red' }} /></IconButton>
+                                    <IconButton onClick={() => { handleDelete(field.id) }} ><DeleteIcon style={{ color: 'red' }} /></IconButton>
                                 </Grid>
                             </Grid>
                         </CardActions>
