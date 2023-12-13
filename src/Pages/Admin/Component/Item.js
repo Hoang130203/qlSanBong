@@ -1,8 +1,12 @@
 import { styled } from "@mui/system";
-import { Accordion, AccordionDetails, AccordionSummary, Card, CardActionArea, CardActions, CardContent, CardMedia, Collapse, Divider, Grid, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Collapse, Divider, Grid, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import ClassApi from '../../../api/API'
+import { NavLink } from "react-router-dom";
 const StyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
@@ -43,16 +47,30 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
     },
 }));
 function Item({ products }) {
+    const [productes, setProductes] = useState([])
+    useEffect(() => {
+        setProductes(products)
+    }, [])
+    const handleDelete = async (index, id) => {
+        const newArray = productes.filter((_, i) => i != index)
+        await ClassApi.DeleteProdut(id).then(() => {
+            setProductes(newArray)
+            toast.info('Xóa thành công!')
+        }).catch(() =>
+            toast.error('Xóa thất bại')
+        )
+
+    }
     return (
         <Grid item container>
-            {products.map((product, index) => (
-                <Grid item xs={12} maxWidth='100%' padding='20px 0px' key={index}>
+            {productes.map((product, index) => (
+                <Grid item xs={12} maxWidth='100%' padding='20px 0px' key={product.productId}>
                     <StyledCard>
                         <StyledCardActionArea>
-                            <StyledCardMedia image={product.image} />
+                            <StyledCardMedia image={product.linkimg} />
                             <StyledCardContent>
-                                <Typography gutterBottom variant="h5" component='h2'>{product.name}</Typography>
-                                <Typography variant="h6" component='p'>{product.price}đ</Typography>
+                                <Typography gutterBottom variant="h5" component='h2'>{product.productName}</Typography>
+                                <Typography variant="h6" component='p'>{product.price.toLocaleString()}đ</Typography>
                             </StyledCardContent>
                         </StyledCardActionArea>
                         <StyledAccordion>
@@ -60,7 +78,7 @@ function Item({ products }) {
                                 <Typography>Chi tiết</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography variant="body2" component='p'>{product.decription}</Typography>
+                                <Typography variant="body2" component='p'>{product.description}</Typography>
                             </AccordionDetails>
                         </StyledAccordion>
 
@@ -71,7 +89,10 @@ function Item({ products }) {
                                     <Typography style={{ color: 'red' }} variant="h6">{product.quantity}</Typography>
                                 </Grid>
                                 <Grid item >
-                                    <IconButton onClick={() => { }} ><DeleteIcon /></IconButton>
+                                    <IconButton onClick={() => { handleDelete(index, product.productId) }} ><DeleteIcon /></IconButton>
+                                    <NavLink to={'/admin/sua-san-pham/' + product.productId}>
+                                        <Button>Sửa</Button>
+                                    </NavLink>
                                 </Grid>
                             </Grid>
                         </CardActions>

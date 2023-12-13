@@ -158,7 +158,7 @@ function ThemSanBong() {
                         </Grid>
                     </Grid>
                     <Grid item xs={12} >
-                        <Button onClick={handleAdd} variant="contained" startIcon={<AddIcon />}><Typography textTransform='none'>Thêm sân bóng</Typography></Button>
+                        <Button onClick={handleAdd} disabled={isUploading} variant="contained" startIcon={<AddIcon />}><Typography textTransform='none'>Thêm sân bóng</Typography></Button>
                     </Grid>
                 </Grid>
             </ThemeProvider>

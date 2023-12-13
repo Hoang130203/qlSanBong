@@ -2,9 +2,10 @@ import { Star } from "@mui/icons-material";
 import { Box, Button, Divider, Fab, Grid, MenuItem, Rating, Select, Tab, Tabs, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Comment from "../../Component/Comment";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import ClassApi2 from '../../api/API2'
 const listComment = [
     { name: 'Messi', avt: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgfqcIR6_q8U_vFeIxVY_Uah0hvqB6zvaC6h_jU-OMJV7PkyWrEfZ_X8kt0500NRmPk28&usqp=CAU', time: '20-11-2022', rate: 4, comment: 'Sân khá ổn.' },
     { name: 'Ronaldo', avt: 'https://nld.mediacdn.vn/291774122806476800/2022/12/9/13-ronaldo-16705925694541880121770.jpg', time: '15-11-2022', rate: 2, comment: 'Sân hơi cùi chút' },
@@ -39,7 +40,13 @@ function a11yProps(index) {
 }
 function ChiTietSan() {
     const [value, setValue] = useState(0);
-
+    const id = useParams().id
+    const [field, setField] = useState({})
+    useEffect(() => {
+        ClassApi2.GetFieldById(id).then((response) => {
+            setField(response.data)
+        })
+    }, [])
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -55,11 +62,11 @@ function ChiTietSan() {
             </Grid>
             <Grid container item xs={10} md={8} padding='25px 0px' display='flex ' justifyContent='space-between' flexDirection='row' minHeight='500px' rowSpacing={1} >
                 <Grid item xs={12} sm={10} md={6}>
-                    <img style={{ maxWidth: '100%', maxHeight: '500px' }} src="https://image.sggp.org.vn/w560/Uploaded/2023/duaeymdrei/2023_01_08/cn6-1a-svd-my-dinh-5464.jpg"></img>
+                    <img style={{ maxWidth: '100%', maxHeight: '500px' }} src={field.linkimg}></img>
                 </Grid>
                 <Grid item container xs={12} sm={10} md={5.5} alignContent='flex-start' >
                     <Grid item xs={12} >
-                        <Typography variant="h5">Sân Mỹ Đình </Typography>
+                        <Typography variant="h5">{field ? field.name : ''} </Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography><span style={{ fontWeight: '600' }}>Tình trạng: </span><span style={{ color: 'green' }}>Đang hoạt động</span></Typography>
@@ -68,10 +75,10 @@ function ChiTietSan() {
                         <Divider />
                     </Grid>
                     <Grid item xs={12}>
-                        <Rating name="read-only" value={4} readOnly />
+                        <Rating name="read-only" value={field ? field.rate : 0} readOnly />
                     </Grid>
                     <Grid item xs={12} padding='0px 0px 10px 0px'>
-                        <Typography><span style={{ fontSize: '30px', color: 'red' }}>290.000</span><span style={{ textDecoration: 'underline', top: '-5px', fontSize: '20px', position: 'relative', color: '#ccc', marginLeft: '4px' }}>đ</span></Typography>
+                        <Typography><span style={{ fontSize: '30px', color: 'red' }}>{field ? !isNaN(field.price) ? field.price.toLocaleString() : field.price : 0}</span><span style={{ textDecoration: 'underline', top: '-5px', fontSize: '20px', position: 'relative', color: '#ccc', marginLeft: '4px' }}>đ</span></Typography>
                     </Grid>
 
                     <Grid item container paddingTop='15px' alignItems='center' columnSpacing={2}>
@@ -79,7 +86,9 @@ function ChiTietSan() {
                             <Typography variant="h6">Loại sân: </Typography>
                         </Grid>
                         <Grid item >
-                            <Typography variant="h6" fontWeight={600}>11 người</Typography>
+                            <Typography variant="h6" fontWeight={600}>
+                                {field ? field.type == 1 ? '7 người' : field.type == 2 ? '11 người' : 'fusal' : ''}
+                            </Typography>
 
                         </Grid>
                     </Grid>
@@ -88,12 +97,12 @@ function ChiTietSan() {
                             <Typography variant="h6">Địa chỉ: </Typography>
                         </Grid>
                         <Grid item >
-                            <Typography color='green' variant="h7" fontWeight={500}>2QC8+57R, Đ. Lê Đức Thọ, Mỹ Đình, Từ Liêm, Hà Nội</Typography>
+                            <Typography color='green' variant="h7" fontWeight={500}>{field ? field.address : ''}</Typography>
 
                         </Grid>
                     </Grid>
                     <Grid item xs={12} padding='20px 0px'>
-                        <NavLink to='/dat-san/dat-san'>
+                        <NavLink to={'/dat-san/dat-san/' + field.fieldid}>
                             <Button color="secondary" variant="contained" ><Typography variant="h7" >Đặt sân</Typography></Button>
                         </NavLink>
                     </Grid>
@@ -108,7 +117,7 @@ function ChiTietSan() {
                 </Box>
                 <CustomTabPanel value={value} index={0} >
                     <Grid item><Typography variant="h6" color='#ccc'>Mô tả sân</Typography></Grid>
-                    <Grid item maxWidth='700px'><Typography variant="h8" >Sân vận động Quốc gia Mỹ Đình là một sân vận động đa năng ở quận Nam Từ Liêm, Hà Nội, Việt Nam. Sân có sức chứa 40.192 chỗ ngồi và là trung tâm của Khu liên hợp thể thao quốc gia Việt Nam.</Typography></Grid>
+                    <Grid item maxWidth='700px'><Typography variant="h8" >{field ? field.decription : ''}</Typography></Grid>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     {listComment.map((item, index) => {

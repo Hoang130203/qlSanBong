@@ -1,29 +1,58 @@
-import { Button, Chip, Divider, Grid, Radio, TextField, Typography } from "@mui/material";
+import { Button, Chip, Divider, Grid, InputLabel, Radio, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import ItemSpDatHang from "./ItemSpDatHang";
+import ClassApi2 from '../../api/API2'
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import AlertDialog from "../../Component/Dialog";
 
 function DatHang() {
     const [GioHangs, setGioHangs] = useState([
-        { image: 'https://bizweb.dktcdn.net/thumb/compact/100/091/133/products/4-b9fc7b6b-6819-4462-845d-98f35edfae96.jpg', name: 'Giày Converse by John Varvatos', color: 'Xanh', cost: 550000 * 3, quantity: 3 },
-        { image: 'https://product.hstatic.net/1000288768/product/chen_watermark_ttvn_dl-03_a97defaa7e894e199b1b9508eaa0d83b_master.png', name: 'Áo phông Đoàn thể thao Việt Nam 2023', color: 'Xanh đậm', cost: 250000 * 1, quantity: 1 },
+        { linkimg: 'https://bizweb.dktcdn.net/thumb/compact/100/091/133/products/4-b9fc7b6b-6819-4462-845d-98f35edfae96.jpg', productName: 'Giày Converse by John Varvatos', color: 'Xanh', price: 550000, quantity: 3 },
+        { linkimg: 'https://product.hstatic.net/1000288768/product/chen_watermark_ttvn_dl-03_a97defaa7e894e199b1b9508eaa0d83b_master.png', productName: 'Áo phông Đoàn thể thao Việt Nam 2023', color: 'Xanh đậm', price: 250000, quantity: 1 },
 
     ])
 
-    let totalPrice = 0
     let vanchuyen = 50000
-
-    for (const sanpham of GioHangs) {
-        totalPrice += sanpham.cost
-    }
-
-
-
-
-    const user = { name: 'Người đặt hàng', id: '11001' }
     const [address, setAddress] = useState()
     const [phoneNumber, setPhoneNumber] = useState()
+    const [name, setName] = useState()
+    useEffect(() => {
+        try {
+            ClassApi2.GetCart().then((response) => {
+                setGioHangs(response.data)
+            })
+
+
+        } catch (error) {
+
+        }
+
+    }, [])
+    let totalPrice = 0
+    const navigate = useNavigate()
+    let user = { id: localStorage.getItem('usersb') }
+    ClassApi2.GetInfo().then((response) => {
+        setAddress(response.data.address)
+        setPhoneNumber(response.data.phonenumber)
+        setName(response.data.name)
+    })
+    const postOrder = () => {
+        ClassApi2.PostOrder(GioHangs, vanchuyen).then((response) => {
+            toast.info(response.data.message, {
+                position: 'bottom-right'
+            })
+            if (response.data.success == true) {
+                ClassApi2.DeleteGioHang()
+            }
+        }).finally(
+            navigate('/')
+        )
+    }
+    const [show, setShow] = useState(false)
     return (
         <Grid container justifyContent='center' paddingTop='30px' alignContent='flex-start'>
+            <AlertDialog title='Bạn có chắc chắn muốn đặt hàng ?' isopen={show} setIsOpen={setShow} confirm={postOrder} />
             <Grid item xs={12} md={9.5}>
                 <Typography variant="h5" color='#2a9dcc' fontFamily='inherit'>ĐẶT HÀNG</Typography>
             </Grid>
@@ -34,18 +63,35 @@ function DatHang() {
                         <Typography variant="h6" fontWeight={500}>Thông tin nhận hàng</Typography>
                     </Grid>
                     <Grid item xs={12} padding="10px 0px">
-                        <TextField value={user.name} label="Họ tên" variant="outlined" style={{ width: '400px', maxWidth: '90%' }} />
-                    </Grid>
-                    <Grid item xs={12} padding="10px 0px">
-                        <TextField label="Địa chỉ" variant="outlined" style={{ width: '400px', maxWidth: '90%' }}
-                            value={address}
-                            onChange={(e) => { setAddress(e.target.value) }}
+                        <InputLabel htmlFor="name-textfield">Họ tên</InputLabel>
+                        <TextField value={name} id="name-textfield" variant="outlined" style={{ width: '400px', maxWidth: '90%' }}
+                            onChange={(e) => {
+                                toast.warn('hãy vào cài đặt để sửa tên', {
+                                    position: 'bottom-right'
+                                })
+                            }}
                         />
                     </Grid>
                     <Grid item xs={12} padding="10px 0px">
-                        <TextField label="Số điện thoại" variant="outlined" style={{ width: '400px', maxWidth: '90%' }}
+                        <InputLabel htmlFor="address-textfield">Địa chỉ</InputLabel>
+                        <TextField id="address-textfield" variant="outlined" style={{ width: '400px', maxWidth: '90%' }}
+                            value={address}
+                            onChange={(e) => {
+                                toast.warn('hãy vào cài đặt để sửa địa chỉ', {
+                                    position: 'bottom-right'
+                                })
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} padding="10px 0px">
+                        <InputLabel htmlFor="sdt-textfield">Số điện thoại</InputLabel>
+                        <TextField id="sdt-textfield" variant="outlined" style={{ width: '400px', maxWidth: '90%' }}
                             value={phoneNumber}
-                            onChange={(e) => { setPhoneNumber(e.target.value) }}
+                            onChange={(e) => {
+                                toast.warn('hãy vào cài đặt để sửa số điện thoại', {
+                                    position: 'bottom-right'
+                                })
+                            }}
                         />
                     </Grid>
                 </Grid>
@@ -95,21 +141,28 @@ function DatHang() {
                         <Divider />
                     </Grid>
                     <Grid item container>
-                        {GioHangs.map((sanpham, index) => (
-                            <ItemSpDatHang key={index} cost={sanpham.cost} quantity={sanpham.quantity} image={sanpham.image} name={sanpham.name} color={sanpham.color} />
-                        ))}
+                        {GioHangs.map((sanpham, index) => {
+                            let totalPricee = 0
+                            for (const sanpham of GioHangs) {
+                                totalPricee += sanpham.price * sanpham.quantity
+                            }
+                            totalPrice = totalPricee
+                            return <ItemSpDatHang key={index} cost={sanpham.price * sanpham.quantity} quantity={sanpham.quantity} image={sanpham.linkimg} name={sanpham.productName} color={sanpham.color} />
+                        })}
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography>Tạm tính: <span style={{ color: 'red' }}>{totalPrice}</span> đ</Typography>
+                        <Typography>Tạm tính: <span style={{ color: 'red' }}>{totalPrice.toLocaleString()}</span> đ</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography>Phí vận chuyển: <span style={{ color: 'blue' }}>{vanchuyen}</span> đ</Typography>
+                        <Typography>Phí vận chuyển: <span style={{ color: 'blue' }}>{vanchuyen.toLocaleString()}</span> đ</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography> Tổng tiền: <span style={{ color: 'orange' }}>{totalPrice + vanchuyen}</span> đ</Typography>
+                        <Typography> Tổng tiền: <span style={{ color: 'orange' }}>{(totalPrice + vanchuyen).toLocaleString()}</span> đ</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="contained" >Đặt hàng</Button>
+                        <Button variant="contained"
+                            onClick={() => { setShow(true) }}
+                        >Đặt hàng</Button>
                     </Grid>
                 </Grid>
 

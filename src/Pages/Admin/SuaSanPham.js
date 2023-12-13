@@ -11,11 +11,12 @@ import {
     Typography,
     createTheme,
 } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+
 import { useEffect, useState } from "react";
 import ClassApi from '../../api/API'
-
+import UpgradeIcon from '@mui/icons-material/Upgrade';
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 const API_ADDRESS = 'https://provinces.open-api.vn/';
 const theme = createTheme({
     components: {
@@ -44,7 +45,8 @@ const theme = createTheme({
 
     },
 });
-function ThemSanPham() {
+function SuaSanPham() {
+    const id = useParams().id
     const [isUploading, setIsUploading] = useState(false)
     const [type, setType] = useState('')
     const [name, setName] = useState('')
@@ -70,11 +72,29 @@ function ThemSanPham() {
             reader.readAsDataURL(selectedImage);
         }
     }
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    useEffect(() => {
+        try {
+            ClassApi.GetProduct(id).then((response) => {
+                setName(response.data.productName)
+                setCost(response.data.price)
+                setDetail(response.data.description ? response.data.description : '')
+                setQuantity(response.data.quantity)
+                setColor(response.data.color)
+                setDemoUrl(response.data.linkimg.length > 10 ? response.data.linkimg : demoUrl)
+                setType(response.data.type)
+            })
+        } catch (error) {
 
+        }
 
+    }, [])
     const handleClick = async () => {
+        setIsButtonDisabled(true);
 
-
+        setTimeout(() => {
+            setIsButtonDisabled(false);
+        }, 2000);
         try {
             if (name.length == 0 || cost.length == 0 || type.length == 0 || quantity.length == 0) {
                 toast.warning('điền đủ thông tin')
@@ -85,12 +105,13 @@ function ThemSanPham() {
                 setIsUploading(true);
                 const sendimage = await ClassApi.PostImage(image)
 
-                ClassApi.PostProduct(name, cost, parseInt(quantity), type, color, detail, sendimage.data.url);
+                ClassApi.PutProduct(id, { productid: id, quantity: parseInt(quantity), type: type, color: color, productName: name, price: cost, description: detail, linkimg: sendimage.data.url });
                 setIsUploading(false);
             } else {
-                ClassApi.PostProduct(name, cost, parseInt(quantity), type, color, detail, '');
+                ClassApi.PutProduct(id, { productid: id, quantity: parseInt(quantity), type: type, color: color, productName: name, price: cost, description: detail, linkimg: demoUrl });
+
             }
-            await toast.success('thêm thành công')
+            await toast.success('sửa thành công')
         }
         catch {
             toast.error('lỗi')
@@ -103,7 +124,7 @@ function ThemSanPham() {
             <ThemeProvider theme={theme}>
                 <Grid item xs={12}>
                     <Typography fontFamily='inherit' variant="h4" color='#1976d2' fontSize='35px'>
-                        Thêm sản phẩm mới
+                        Sửa sản phẩm
                     </Typography>
                 </Grid>
                 <Grid item container xs={12} rowSpacing={1}>
@@ -186,7 +207,7 @@ function ThemSanPham() {
                         </Grid>
                     </Grid>
                     <Grid item xs={12} >
-                        <Button variant="contained" startIcon={<AddIcon />} onClick={handleClick} disabled={isUploading}><Typography textTransform='none'>Thêm sản phẩm</Typography></Button>
+                        <Button variant="contained" startIcon={<UpgradeIcon />} onClick={handleClick} disabled={isUploading}><Typography textTransform='none'>Sửa sản phẩm</Typography></Button>
                     </Grid>
                 </Grid>
 
@@ -195,4 +216,4 @@ function ThemSanPham() {
     );
 }
 
-export default ThemSanPham;
+export default SuaSanPham;

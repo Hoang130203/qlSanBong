@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, TextField, Tooltip, Typography, styled } from '@mui/material';
+import { Avatar, Button, Divider, Grid, TextField, Tooltip, Typography, styled } from '@mui/material';
 import Tippy from '@tippyjs/react/headless';
 import styles from './Header.module.scss'
 import classNames from 'classnames/bind';
@@ -10,15 +10,22 @@ import LockPersonIcon from '@mui/icons-material/LockPerson';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuSp from './MenuSp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ClassApi2 from '../../api/API2'
 const cx = classNames.bind(styles)
 
 function Header() {
-    const user = localStorage.getItem('usersb')
+    const user = localStorage.getItem('namesb')
+    const [avt, setAvt] = useState()
+    useEffect(() => {
+        ClassApi2.GetInfo().then((response) => {
+            setAvt(response.data.avt)
+        })
+    }, [])
     const listHeader = [{ xs: 2, icon: <PhoneIcon sx={{ fill: '#35c0c5;' }} />, children: <Typography color="#333" >19006750</Typography>, component: Fragment },
     {
         xs: 3, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;' }} />, children: <TextField sx={{
@@ -41,7 +48,11 @@ function Header() {
             }} placeholder='Tìm kiếm...' />
         },
         { xs: 3, to: '/cart', icon: <ShoppingCartIcon className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
-        { xs: 3, to: '/account/thong-tin', icon: <AccountCircleIcon fontSize='large' className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400} fontSize={18}>{user}</Typography>, hoverBackground: "url(https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/Pen0000000/php3Y3Q7b.jpeg) #35c0c5;" }
+        {
+            xs: 3, to: '/account/thong-tin', icon: avt ? <Avatar sx={{ bgcolor: 'transparent' }} aria-label="recipe">
+                <img style={{ maxHeight: '42px' }} src={avt} />
+            </Avatar> : <AccountCircleIcon fontSize='large' className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400} fontSize={18}>{user}</Typography>, hoverBackground: "url(https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/Pen0000000/php3Y3Q7b.jpeg) #35c0c5;"
+        }
     ]
     const navigate = useNavigate()
     const CustomizedButton = styled(Button)
@@ -57,7 +68,9 @@ function Header() {
         <div className={cx('wrapper')}>
             <Grid container maxHeight={70} display='flex' flexDirection='row' justifyContent='space-between'>
                 <Grid item xs={2.5} md={3} justifyContent="center" display="flex" sx={{ cursor: 'pointer' }}>
-                    <img src='https://divuitravel.com/wp-content/uploads/2023/05/chon-loc-25-logo-bong-da-an-tuong-va-dep-mat_28.jpg' className={cx('logo')} />
+                    <NavLink to='/'>
+                        <img src='https://divuitravel.com/wp-content/uploads/2023/05/chon-loc-25-logo-bong-da-an-tuong-va-dep-mat_28.jpg' className={cx('logo')} />
+                    </NavLink>
                 </Grid>
                 {user != null && user.length > 0 ? (
                     <Grid item container xs={9.5} md={9} justifyContent="flex-end" display="flex" >
@@ -155,8 +168,8 @@ function Header() {
                         </NavLink>
                         <Tippy interactive
                             offset={[0, -9]}
-                            maxWidth="100vw" render={(attrs) => (
-                                <div style={{ width: '100vw', backgroundColor: '#000000CC', height: '236px', }}  {...attrs}>
+                            render={(attrs) => (
+                                <div style={{ width: '122px', backgroundColor: '#000000CC', }}  {...attrs}>
                                     <MenuSp />
                                 </div>
                             )}>

@@ -3,7 +3,8 @@ import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia,
 import ItemSp from "../../Component/ItemSp";
 import ItemListSp from "../../Component/ItemListSp";
 import MenuSp from "../../Component/MenuSp";
-
+import { useEffect, useState } from "react";
+import ClassApi2 from '../../api/API2'
 let spmoi = [
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/2-382751d6-ebd4-477c-83d5-5045a3a23999.jpg?v=1466415099313', title: 'Giày tây nâu đỏ thương hiệu Converse All Star', cost: '500.000' },
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/zal1.jpg?v=1466482812400', title: 'Giày Converse Star Collar Break', cost: '450.000' },
@@ -18,6 +19,17 @@ let spbanchay = [
 
 ]
 function TrangChu() {
+    const [spmoi, setSpMoi] = useState([])
+    const [spbanchay, setSpbanchay] = useState([])
+
+    useEffect(() => {
+        ClassApi2.GetSpMoi().then((response) => {
+            setSpMoi(response.data)
+        })
+        ClassApi2.GetTopDoanhThu().then((response) => {
+            setSpbanchay(response.data)
+        })
+    }, [])
     return (
         <Grid container width='100%' justifyContent='center' >
             <Grid item xs={12} >
@@ -35,7 +47,7 @@ function TrangChu() {
                     <Grid item container xs={12} height="80%" overflow='hidden'>
                         {spmoi.map((item, index) => (
                             <Grid key={index} item container xs={12} height='100%' md={4} display='flex' flexDirection='row' justifyContent='center' >
-                                <ItemSp title={item.title} img={item.img} cost={item.cost} />
+                                <ItemSp title={item.productname} img={item.linkimg} cost={item.price.toLocaleString()} id={item.productid} />
                             </Grid>
                         ))}
 
@@ -52,7 +64,7 @@ function TrangChu() {
                             flexDirection: 'row',
                             justifyContent: 'center'
                         }}>
-                            <ItemListSp widthMedia='151px' maxWidth='400px' cost={item.cost} title={item.title} heightt='152px' img={item.img} />
+                            <ItemListSp id={item.productid} widthMedia='151px' maxWidth='400px' cost={item.price.toLocaleString()} fontSize='20px' minWidthContent='200px' title={item.productname} heightt='152px' img={item.linkimg} />
 
                         </Grid>
                     ))}

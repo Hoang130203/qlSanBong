@@ -1,6 +1,9 @@
 import { Card, CardContent, CardMedia, Fab, Grid, Typography, createTheme } from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
+import ClassApi from '../../../api/API'
 const theme = createTheme({
     typography: {
         fontSize: 14,
@@ -13,7 +16,16 @@ const theme = createTheme({
 
     },
 });
-function QuangCaoCard({ img, title }) {
+function QuangCaoCard({ img, title, id, index, setBanner, banners }) {
+    const handleDelete = async () => {
+        const newArray = banners.filter((_, i) => i != index)
+        await ClassApi.DeleteBanner(id).then(() => {
+            setBanner(newArray)
+            toast.info('Xóa thành công!')
+        }).catch(() =>
+            toast.error('Xóa thất bại')
+        )
+    }
     return (
         <Grid item container xs={12}>
             <Card sx={theme.cardStyles} >
@@ -27,10 +39,12 @@ function QuangCaoCard({ img, title }) {
             </Card>
             <Grid item container display='flex' flexDirection='row' padding='0px 20px' columnSpacing={3}>
                 <Grid item>
-                    <Fab size="small"> <SettingsIcon /></Fab>
+                    <NavLink to={'/admin/quang-cao/sua-quang-cao/' + id}>
+                        <Fab size="small"> <SettingsIcon /></Fab>
+                    </NavLink>
                 </Grid>
                 <Grid item>
-                    <Fab size="small" style={{ color: 'red' }}> <DeleteForeverIcon /></Fab>
+                    <Fab size="small" style={{ color: 'red' }} onClick={() => handleDelete()}> <DeleteForeverIcon /></Fab>
                 </Grid>
             </Grid>
         </Grid>

@@ -4,6 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import ClassApi2 from '../../api/API2'
+import { toast } from "react-toastify";
 const tableHeadName = [
     { name: "Số thứ tự" },
     { name: "Ảnh sản phẩm" },
@@ -16,20 +18,31 @@ const tableHeadName = [
 ];
 function GioHang() {
     const [GioHangs, setGioHangs] = useState([
-        { image: 'https://bizweb.dktcdn.net/thumb/compact/100/091/133/products/4-b9fc7b6b-6819-4462-845d-98f35edfae96.jpg', name: 'Giày Converse by John Varvatos', color: 'Xanh', cost: 550000, quantity: 3 },
-        { image: 'https://product.hstatic.net/1000288768/product/chen_watermark_ttvn_dl-03_a97defaa7e894e199b1b9508eaa0d83b_master.png', name: 'Áo phông Đoàn thể thao Việt Nam 2023', color: 'Xanh đậm', cost: 250000, quantity: 1 },
+
 
     ])
+
     const solvetotalcost = () => {
         let totalPrice = 0;
 
         for (const sanpham of GioHangs) {
-            totalPrice += sanpham.cost * sanpham.quantity;
+            totalPrice += sanpham.price * sanpham.quantity;
         }
 
         return totalPrice;
     }
-    const [totalCost, setTotalCost] = useState(solvetotalcost())
+    const [totalCost, setTotalCost] = useState(1)
+    useEffect(() => {
+        try {
+            ClassApi2.GetCart().then((response) => {
+                setGioHangs(response.data)
+            }).then((response) => {
+                setTotalCost(solvetotalcost())
+            })
+        } catch (error) {
+
+        }
+    }, [totalCost])
     return (
         <Grid container justifyContent='center'>
             <Grid container item xs={9.5} paddingTop='25px' display='flex' flexDirection='column'>
@@ -65,19 +78,20 @@ function GioHang() {
                                             <TableRow key={index}>
                                                 <TableCell style={{ fontSize: "18px", textAlign: 'center', minWidth: '50px' }}>{index + 1}</TableCell>
                                                 <TableCell style={{ fontSize: "18px", maxWidth: '130px', minWidth: '120px' }}><img style={{ maxWidth: '100%' }}
-                                                    src={sanpham.image} alt=""></img>
+                                                    src={sanpham.linkimg} alt=""></img>
                                                 </TableCell>
-                                                <TableCell style={{ fontSize: "18px", textAlign: 'center', minWidth: '100px' }}>{sanpham.name}<br />{sanpham.color}</TableCell>
-                                                <TableCell style={{ fontSize: "18px" }}><span style={{ color: 'blue' }}>{sanpham.cost}</span> đ</TableCell>
+                                                <TableCell style={{ fontSize: "18px", textAlign: 'center', minWidth: '100px' }}>
+                                                    {sanpham.productName}<br /><span style={{ color: '#ccc' }}>{sanpham.color}</span>
+                                                </TableCell>
+                                                <TableCell style={{ fontSize: "18px" }}><span style={{ color: 'blue' }}>{sanpham.price.toLocaleString()}</span> đ</TableCell>
                                                 <TableCell style={{ fontSize: "18px" }}>
                                                     <div style={{ height: '30px', display: 'flex', flexDirection: 'row' }}>
                                                         <button style={{ padding: '0px' }}
                                                             onClick={() => {
                                                                 const updatedGioHangs = [...GioHangs];
                                                                 if (updatedGioHangs[index].quantity > 0) {
-
+                                                                    ClassApi2.PutToCart({ userphonenumber: localStorage.getItem('usersb'), productid: sanpham.productId, price: sanpham.price, quantity: (sanpham.quantity - 1), color: sanpham.color })
                                                                     updatedGioHangs[index].quantity = updatedGioHangs[index].quantity - 1;
-
                                                                     setGioHangs(updatedGioHangs);
                                                                     setTotalCost(solvetotalcost())
                                                                 }
@@ -88,6 +102,7 @@ function GioHang() {
                                                         <button style={{ padding: '0px' }}
                                                             onClick={() => {
                                                                 const updatedGioHangs = [...GioHangs];
+                                                                ClassApi2.PutToCart({ userphonenumber: localStorage.getItem('usersb'), productid: sanpham.productId, price: sanpham.price, quantity: (sanpham.quantity + 1), color: sanpham.color })
                                                                 updatedGioHangs[index].quantity = updatedGioHangs[index].quantity + 1;
                                                                 setGioHangs(updatedGioHangs);
                                                                 setTotalCost(solvetotalcost())
@@ -96,15 +111,24 @@ function GioHang() {
                                                         </button>
                                                     </div>
                                                 </TableCell>
-                                                <TableCell style={{ fontSize: "18px" }}><span style={{ color: 'blue' }}>{sanpham.cost * sanpham.quantity}</span> đ</TableCell>
+                                                <TableCell style={{ fontSize: "18px" }}><span style={{ color: 'blue' }}>{(sanpham.price * sanpham.quantity).toLocaleString()}</span> đ</TableCell>
                                                 <TableCell style={{ fontSize: "18px" }}>
                                                     <Fab variant='circular' size="small" style={{ color: 'red' }}
                                                         onClick={() => {
                                                             const updatedGioHangs = [...GioHangs];
-                                                            updatedGioHangs[index].quantity = 0
-                                                            updatedGioHangs.splice(index, 1);
-                                                            setGioHangs(updatedGioHangs);
-                                                            setTotalCost(solvetotalcost())
+                                                            ClassApi2.DeleteProductFromCart(sanpham.productId, sanpham.color ? sanpham.color : '.').then(() => {
+                                                                updatedGioHangs[index].quantity = 0
+                                                                updatedGioHangs.splice(index, 1);
+                                                                setGioHangs(updatedGioHangs);
+                                                                setTotalCost(solvetotalcost())
+                                                                toast.info('Đã xóa', {
+                                                                    position: 'bottom-right'
+                                                                })
+                                                            }).catch(() => {
+                                                                toast.error('lỗi', {
+                                                                    position: 'bottom-right'
+                                                                })
+                                                            })
                                                         }}
                                                     >
                                                         <DeleteOutlineIcon /></Fab>
@@ -119,7 +143,7 @@ function GioHang() {
                             <Grid item xs={12} padding='25px 0px'>
                                 <Typography style={{ fontSize: "24px", color: '#a29d9d' }}>
                                     Tổng số tiền:&nbsp;
-                                    <span style={{ color: 'red' }}>{totalCost}</span> đ
+                                    <span style={{ color: 'red' }}>{totalCost.toLocaleString()}</span> đ
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} padding='25px 0px'>

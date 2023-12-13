@@ -22,27 +22,35 @@ import DatHang from '../Pages/GioHang/DatHang'
 import ThongTin from '../Pages/TaiKhoan/ThongTin'
 import DonMua from '../Pages/TaiKhoan/DonMua'
 import SuaSanBong from '../Pages/Admin/SuaSanBong'
+import SuaSanPham from '../Pages/Admin/SuaSanPham'
+import SuaQuangCao from '../Pages/Admin/SuaQuangCao'
+import SanPhamOfType from '../Pages/SanPham/SanPhamOfType'
+import DonDatSan from '../Pages/TaiKhoan/DonDatSan'
 const publicRoutes = [
     { path: '/dat-san', component: DatSan },
-    { path: '/dat-san/chi-tiet-san', component: ChiTietSan },
-    { path: '/dat-san/dat-san', component: FormDatSan },
+    { path: '/dat-san/chi-tiet-san/:id', component: ChiTietSan },
+    { path: '/dat-san/dat-san/:id', component: FormDatSan },
     { path: '/lien-he', component: LienHe },
     { path: '/san-pham', component: SanPham },
+    { path: '/san-pham/loai-sp/:type', component: SanPhamOfType },
     { path: '/tin-tuc', component: TinTuc },
     { path: '/', component: TrangChu },
     { path: '/account/dang-nhap', component: DangNhap },
     { path: '/account/dang-ky', component: DangKy },
     { path: 'account/thong-tin', component: ThongTin },
     { path: 'account/don-mua', component: DonMua },
+    { path: 'account/don-dat-san', component: DonDatSan },
     { path: '/cart', component: GioHang },
     { path: '/cart/dat-hang', component: DatHang },
-    { path: '/san-pham/chitietsanpham', component: ChiTietSanPham },
+    { path: '/san-pham/chitietsanpham/:id', component: ChiTietSanPham },
     { path: '/admin/thong-ke', component: ThongKe, layout: SidebarLayout },
     { path: '/admin/san-pham', component: SanPham2, layout: SidebarLayout },
+    { path: '/admin/sua-san-pham/:id', component: SuaSanPham, layout: SidebarLayout },
     { path: '/admin/san-bong', component: SanBong2, layout: SidebarLayout },
     { path: '/admin/sua-san-bong/:id', component: SuaSanBong, layout: SidebarLayout },
     { path: '/admin/thong-bao', component: ThongBao, layout: SidebarLayout },
     { path: '/admin/quang-cao', component: QuangCao, layout: SidebarLayout },
+    { path: '/admin/quang-cao/sua-quang-cao/:id', component: SuaQuangCao, layout: SidebarLayout },
     { path: '/admin/san-pham/them-san-pham', component: ThemSanPham, layout: SidebarLayout },
     { path: '/admin/san-bong/them-san-bong', component: ThemSanBong, layout: SidebarLayout },
     { path: '/admin/quang-cao/them-quang-cao', component: ThemQuangCao, layout: SidebarLayout },

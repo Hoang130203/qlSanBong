@@ -7,6 +7,7 @@ import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 import { useEffect, useState } from "react";
 import ItemSp from "../../Component/ItemSp";
 import ClassApi2 from '../../api/API2'
+import { useParams } from "react-router-dom";
 /*let spmoi = [
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/2-382751d6-ebd4-477c-83d5-5045a3a23999.jpg?v=1466415099313', title: 'Giày tây nâu đỏ thương hiệu Converse All Star', cost: '500.000' },
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/zal1.jpg?v=1466482812400', title: 'Giày Converse Star Collar Break', cost: '450.000' },
@@ -33,15 +34,16 @@ const menuitems = [
     { name: 'Cũ nhất', type: 7 },
 
 ]
-function SanPham() {
+function SanPhamOfType() {
+    const type = useParams().type
     const [allsp, setAllsp] = useState([])
     const [spmoi, setSpmoi] = useState([])
     const [shape, setShape] = useState(1)
     useEffect(() => {
-        ClassApi2.GetAllSp().then((response) => {
+        ClassApi2.GetAllSpofType(type).then((response) => {
             setAllsp(response.data)
         })
-        ClassApi2.GetSpMoi().then((response) => {
+        ClassApi2.GetSpMoiofType(type).then((response) => {
             setSpmoi(response.data)
         })
     }, [])
@@ -53,31 +55,31 @@ function SanPham() {
         setCachSapXep(e.target.value)
 
         if (e.target.value == 1) {
-            ClassApi2.GetAllSp().then((response) => {
+            ClassApi2.GetAllSpofType(type).then((response) => {
                 setAllsp(response.data)
             })
         } else if (e.target.value == 3) {
-            ClassApi2.GetAllZtoA().then((response) => {
+            ClassApi2.GetAllofTypeZtoA(type).then((response) => {
                 setAllsp(response.data)
             })
         } else if (e.target.value == 2) {
-            ClassApi2.GetAllAtoZ().then((response) => {
+            ClassApi2.GetAllofTypeAtoZ(type).then((response) => {
                 setAllsp(response.data)
             })
         } else if (e.target.value == 6) {
-            ClassApi2.GetAllNewer().then((response) => {
+            ClassApi2.GetAllofTypeNewer(type).then((response) => {
                 setAllsp(response.data)
             })
         } else if (e.target.value == 7) {
-            ClassApi2.GetAllOlder().then((response) => {
+            ClassApi2.GetAllofTypeOlder(type).then((response) => {
                 setAllsp(response.data)
             })
         } else if (e.target.value == 4) {
-            ClassApi2.GetAllCostAsc().then((response) => {
+            ClassApi2.GetAllofTypeCostAsc(type).then((response) => {
                 setAllsp(response.data)
             })
         } else if (e.target.value == 5) {
-            ClassApi2.GetAllCostDesc().then((response) => {
+            ClassApi2.GetAllofTypeCostDesc(type).then((response) => {
                 setAllsp(response.data)
             })
         }
@@ -187,4 +189,4 @@ function SanPham() {
     );
 }
 
-export default SanPham;
+export default SanPhamOfType;

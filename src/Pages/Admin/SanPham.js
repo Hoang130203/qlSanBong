@@ -2,9 +2,14 @@ import { Button, Grid, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { NavLink } from "react-router-dom";
 import ItemSanPham from "./Component/ItemSanPham";
-let productPK = [
+import { useEffect, useState } from "react";
 
-    { image: 'https://contents.mediadecathlon.com/p1767620/ea8a01938401fb0440fe43f30c23a372/p1767620.jpg?f=1000x1000&format=auto', name: 'Kính bơi Xbase 100 cỡ L cho người lớn - Xanh biển', price: '125.000', decription: 'Kính bơi dành cho những người mới bắt đầu học bơi hoặc muốn tập bơi trở lại. Mẫu kính bơi phù hợp với tất cả các khuôn mặt với phần sống mũi có thể điều chỉnh được đã được cấp bằng sáng chế và điều chỉnh dây đeo đơn giản để đảm bảo độ kín nước.', quantity: '10' }
+import ClassApi from '../../api/API'
+/*let productPK = [
+
+    { image: 'https://contents.mediadecathlon.com/p1767620/ea8a01938401fb0440fe43f30c23a372/p1767620.jpg?f=1000x1000&format=auto', 
+    name: 'Kính bơi Xbase 100 cỡ L cho người lớn - Xanh biển', price: '125.000', 
+    decription: 'Kính bơi dành cho những người mới bắt đầu học bơi hoặc muốn tập bơi trở lại. Mẫu kính bơi phù hợp với tất cả các khuôn mặt với phần sống mũi có thể điều chỉnh được đã được cấp bằng sáng chế và điều chỉnh dây đeo đơn giản để đảm bảo độ kín nước.', quantity: '10' }
 ]
 let productB = [
     {
@@ -50,15 +55,46 @@ let productD = [
         name: 'Xà đơn gắn cửa đa năng tùy chỉnh độ dài (80-130m)', quantity: '30',
         decription: 'Xà đơn gắn cửa đa năng tùy chỉnh độ dài (80-130m) Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển, phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....'
     }
-]
-let types = [
-    { name: 'BÓNG', child: productB },
-    { name: 'GIÀY', child: productG },
-    { name: 'QUẦN ÁO', child: productQA },
-    { name: 'DỤNG CỤ', child: productD },
-    { name: 'PHỤ KIỆN', child: productPK },
-]
+]*/
+
 function SanPham2() {
+    const [productB, setProductB] = useState([])
+    const [productG, setProductG] = useState([])
+    const [productQA, setProductQA] = useState([])
+    const [productD, setProductD] = useState([])
+    const [productPK, setProductPK] = useState([])
+    let types = [
+        { name: 'BÓNG', child: productB },
+        { name: 'GIÀY', child: productG },
+        { name: 'QUẦN ÁO', child: productQA },
+        { name: 'DỤNG CỤ', child: productD },
+        { name: 'PHỤ KIỆN', child: productPK },
+    ]
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                ClassApi.GetByType('Bóng').then((response) => {
+                    setProductB(response.data)
+                })
+                ClassApi.GetByType('GIÀY').then((response) => {
+                    setProductG(response.data)
+                })
+                ClassApi.GetByType('QUẦN ÁO').then((response) => {
+                    setProductQA(response.data)
+                })
+                ClassApi.GetByType('DỤNG CỤ').then((response) => {
+                    setProductD(response.data)
+                })
+                ClassApi.GetByType('PHỤ KIỆN').then((response) => {
+                    setProductPK(response.data)
+                })
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        fetchData()
+    }, [])
+
     return (
         <Grid container padding='30px 30px' alignContent='flex-start' rowSpacing={4}>
             <Grid item xs={12}>

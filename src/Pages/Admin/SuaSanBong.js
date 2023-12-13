@@ -181,7 +181,7 @@ function SuaSanBong() {
                         </Grid>
                     </Grid>
                     <Grid item xs={12} >
-                        <Button onClick={handleAdd} variant="contained" startIcon={<UpgradeIcon />}><Typography textTransform='none'>Cập nhật</Typography></Button>
+                        <Button onClick={handleAdd} disabled={isUploading} variant="contained" startIcon={<UpgradeIcon />}><Typography textTransform='none'>Cập nhật</Typography></Button>
                     </Grid>
                 </Grid>
             </ThemeProvider>

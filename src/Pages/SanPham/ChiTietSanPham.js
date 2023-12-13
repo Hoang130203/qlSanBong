@@ -1,9 +1,12 @@
 import { Star } from "@mui/icons-material";
-import { Box, Button, Divider, Fab, Grid, MenuItem, Rating, Select, Tab, Tabs, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Fab, Grid, Menu, MenuItem, Rating, Select, Tab, Tabs, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Comment from "../../Component/Comment";
+import { useParams } from "react-router-dom";
+import ClassAPI2 from '../../api/API2'
+import { toast } from "react-toastify";
 const listComment = [
     { name: 'Ayaka', avt: 'https://cdn-www.bluestacks.com/bs-images/Genshin-Impact-Ayaka-crit-stat-guide-vi-1.jpeg', time: '20-11-2022', rate: 5, comment: 'Giày đẹp quá ạ!' },
     { name: 'Raiden shogun', avt: 'https://vtcpay.vn/blog/wp-content/uploads/2021/09/Raiden-Shogun.png', time: '15-11-2022', rate: 3, comment: 'Cũng thường thôi:))' },
@@ -37,13 +40,40 @@ function a11yProps(index) {
     };
 }
 function ChiTietSanPham() {
+    const id = useParams().id
     const [value, setValue] = useState(0);
+    const [colors, setColors] = useState(['xanh', 'đỏ'])
+    const [product, setProduct] = useState({
+        productname: 'Kamito QH19 Màu Xanh Cổ Vịt ',
+        linkimg: 'https://www.sport9.vn/images/thumbs/001/0019091_kamito-qh19-mau-xanh-co-vit.jpeg?preset=large&watermark=default',
+        detail: 'Sự kết hợp giữa Kamito và Quang Hải vào hồi tháng 5/2019 với siêu phẩm “QH19” đã tạo được dấu ấn lớn với người chơi bóng đá trên cả nước. Từ các sân cỏ ở thành thị cho tới vùng sâu, vùng xa, đâu đâu cũng có thể nhìn thấy QH19.',
+        rate: '1', price: 150000, color: 'Đen, trắng'
+    })
+    const [color, setColor] = useState('')
+    const [quantity, setQuantity] = useState(1)
+    const handleAdd = async () => {
+        try {
+            await ClassAPI2.PostToCart({ userphonenumber: localStorage.getItem('usersb'), productid: id, price: product.price, quantity: quantity, color: color })
+            await toast.success('đã thêm vào giỏ hàng', {
+                position: 'bottom-right'
+            })
 
+        } catch (error) {
+            toast.error('thêm thất bại', {
+                position: 'bottom-right'
+            })
+        }
+    }
+    useEffect(() => {
+        ClassAPI2.GetProductById(id).then((response) => {
+            setProduct(response.data)
+            setColors(response.data.color.split(/[,\s]+/))
+            console.log(colors)
+        })
+    }, [])
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    const [quantity, setQuantity] = useState(1)
-    const [color, setColor] = useState('')
     return (
         <Grid container justifyContent='center' alignContent='flex-start'>
             <Grid container item xs={9.5} paddingTop='25px' display='flex' flexDirection='row' height='30px' marginBottom='30px'>
@@ -53,12 +83,12 @@ function ChiTietSanPham() {
                 <Typography color='#35c0c5'>Chi tiết sản phẩm</Typography>
             </Grid>
             <Grid container item xs={10} md={8} padding='25px 0px' display='flex ' flexDirection='row' minHeight='500px' rowSpacing={1} columnSpacing={5}>
-                <Grid item xs={12} sm={10} md={4} border="1px solid #ccc">
-                    <img style={{ maxWidth: '100%', maxHeight: '500px' }} src="https://www.sport9.vn/images/thumbs/001/0019091_kamito-qh19-mau-xanh-co-vit.jpeg?preset=large&watermark=default"></img>
+                <Grid item xs={12} sm={10} md={4}>
+                    <img style={{ maxWidth: '100%', maxHeight: '500px' }} src={product.linkimg}></img>
                 </Grid>
                 <Grid item container xs={12} sm={10} md={8} alignContent='flex-start'>
                     <Grid item xs={12} >
-                        <Typography variant="h5">Kamito QH19 Màu Xanh Cổ Vịt </Typography>
+                        <Typography variant="h5">{product.productname}</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography><span style={{ fontWeight: '600' }}>Tình trạng: </span>Còn hàng</Typography>
@@ -67,10 +97,10 @@ function ChiTietSanPham() {
                         <Divider />
                     </Grid>
                     <Grid item xs={12}>
-                        <Rating name="read-only" value={4} readOnly />
+                        <Rating name="read-only" value={product.rate != null ? product.rate : 0} readOnly />
                     </Grid>
                     <Grid item xs={12} padding='0px 0px 10px 0px'>
-                        <Typography><span style={{ fontSize: '30px', color: '#6dc3d0' }}>290.000</span><span style={{ textDecoration: 'underline', top: '-5px', fontSize: '20px', position: 'relative', color: '#ccc', marginLeft: '4px' }}>đ</span></Typography>
+                        <Typography><span style={{ fontSize: '30px', color: '#6dc3d0' }}>{product.price.toLocaleString()}</span><span style={{ textDecoration: 'underline', top: '-5px', fontSize: '20px', position: 'relative', color: '#ccc', marginLeft: '4px' }}>đ</span></Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <div style={{ fontSize: '20px', padding: '5px 0px' }}>Số lượng:</div>
@@ -100,15 +130,15 @@ function ChiTietSanPham() {
                         </Grid>
                         <Grid item >
                             <Select value={color} onChange={(e) => { setColor(e.target.value) }} style={{ width: '150px', height: '45px' }}>
-                                <MenuItem value='Xanh'>Xanh</MenuItem>
-                                <MenuItem value='Đỏ'>Đỏ</MenuItem>
-                                <MenuItem value='Tím'>Tím</MenuItem>
-                                <MenuItem value='Vàng'>Vàng</MenuItem>
+                                {colors.map((item, index) => (
+                                    <MenuItem key={index} value={item}>{item}</MenuItem>
+                                ))}
+
                             </Select>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} padding='20px 0px'>
-                        <Button color="primary" variant="contained"><Typography variant="h7">Thêm vào giỏ hàng</Typography></Button>
+                        <Button onClick={handleAdd} color="primary" variant="contained"><Typography variant="h7">Thêm vào giỏ hàng</Typography></Button>
                     </Grid>
                 </Grid>
             </Grid>
@@ -121,7 +151,7 @@ function ChiTietSanPham() {
                 </Box>
                 <CustomTabPanel value={value} index={0} >
                     <Grid item><Typography variant="h6" color='#ccc'>Mô tả sản phẩm</Typography></Grid>
-                    <Grid item maxWidth='700px'><Typography variant="h8" >Sự kết hợp giữa Kamito và Quang Hải vào hồi tháng 5/2019 với siêu phẩm “QH19” đã tạo được dấu ấn lớn với người chơi bóng đá trên cả nước. Từ các sân cỏ ở thành thị cho tới vùng sâu, vùng xa, đâu đâu cũng có thể nhìn thấy QH19.</Typography></Grid>
+                    <Grid item maxWidth='700px'><Typography variant="h8" >{product.detail}</Typography></Grid>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     {listComment.map((item, index) => {

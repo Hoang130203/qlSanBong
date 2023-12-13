@@ -2,9 +2,10 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import img from '../../Icons/ImageDangNhap.png'
 
 import { NavLink, useNavigate } from "react-router-dom";
-
+import ClassApi2 from '../../api/API2'
 import { AppleIcon, FacebookIcon, GoogleIcon, TwitterIcon } from "../../Icons/IconDangNhap";
 import { useState } from "react";
+import { toast } from "react-toastify";
 function DangNhap() {
     const navigate = useNavigate()
     const [user, setUser] = useState('')
@@ -20,8 +21,24 @@ function DangNhap() {
             localStorage.setItem('admin', 'admin')
             navigate('/admin/thong-ke')
         } else if (user.length > 0 && password.length > 0) {
-            localStorage.setItem('usersb', 'user')
-            navigate('/')
+            ClassApi2.Login(user, password).then((response) => {
+                if (response.data.success == true && response.data.message == "User") {
+                    localStorage.setItem('usersb', user)
+                    localStorage.setItem('namesb', response.data.name)
+                    navigate('/')
+                    toast.info('Chào mừng bạn trở lại!', {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    })
+                } else {
+                    toast.error('Sai tài khoản hoặc mật khẩu!', {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    })
+                }
+            })
+        } else {
+            toast.warn('Vui lòng nhập đủ thông tin!', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
         }
     }
     return (
@@ -35,7 +52,7 @@ function DangNhap() {
                         <NavLink to='/account/dang-ky' style={{ textDecoration: 'none', color: "#1D9BF0" }}><Typography variant="h7">Create an account</Typography></NavLink>
                     </Grid>
                     <Grid item container padding="20px 0px" spacing={1}>
-                        <Grid item xs={12}><Typography variant="h7">Email</Typography></Grid>
+                        <Grid item xs={12}><Typography variant="h7">Phone number</Typography></Grid>
                         <Grid item xs={12}>
                             <TextField placeholder="John@example.com" sx={{ width: '250px', maxWidth: '100%' }} onChange={handleChangUser}>
                             </TextField>
@@ -44,7 +61,7 @@ function DangNhap() {
                     <Grid item container spacing={1}>
                         <Grid item xs={12}><Typography variant="h7">Password</Typography></Grid>
                         <Grid item xs={12}  >
-                            <TextField type="password" placeholder="********" sx={{ width: '250px', maxWidth: '100%' }} onChange={handleChangePassword}></TextField>
+                            <TextField onKeyDown={(event) => { if (event.key == 'Enter') { handleLogin() } }} type="password" placeholder="********" sx={{ width: '250px', maxWidth: '100%' }} onChange={handleChangePassword}></TextField>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} marginTop='30px'>

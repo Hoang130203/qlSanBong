@@ -2,11 +2,11 @@ import { Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 
 let listsp = [
-    { name: 'Bóng', child: ['Bóng đá', 'Bóng chuyền', 'Bóng rổ', 'Bóng bàn'] },
-    { name: 'Giày', child: ['Giày đá bóng', 'Giày chạy bộ', 'Giày bóng chuyền', 'Giày thời trang'] },
-    { name: 'Quần áo', child: ['Áo bóng rổ', 'Áo thể thao', 'Áo giữ nhiệt thể thao'] },
-    { name: 'Dụng cụ', child: ['Thanh lò xo', 'Kính bơi', 'Xà đơn', 'Bao cát'] },
-    { name: 'Phụ kiện', child: ['Bó gối chống chấn thương', 'Tất thể thao'] },
+    { name: 'Bóng', to: '/san-pham/loai-sp/bóng' },
+    { name: 'Giày', to: '/san-pham/loai-sp/giày' },
+    { name: 'Quần áo', to: '/san-pham/loai-sp/quần áo' },
+    { name: 'Dụng cụ', to: '/san-pham/loai-sp/dụng cụ' },
+    { name: 'Phụ kiện', to: '/san-pham/loai-sp/phụ kiện' },
 ]
 function MenuSp() {
     return (
@@ -14,7 +14,7 @@ function MenuSp() {
             <Typography variant="h6">DANH MỤC SẢN PHẨM</Typography>
             <Grid item container style={{ paddingLeft: '20px' }} display='block'>
                 {listsp.map((item, index) => (
-                    <a href="#" key={index} style={{ textDecoration: 'none', color: '#333' }}>
+                    <a href={item.to} key={index} style={{ textDecoration: 'none', color: '#333' }}>
                         <Typography>{item.name}</Typography>
                     </a>
                 ))}</Grid></Fragment>

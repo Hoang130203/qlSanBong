@@ -19,7 +19,7 @@ function ItemSpDatHang({ image, name, color, cost, quantity }) {
                 </Grid>
             </Grid>
             <Grid item xs={3} >
-                <Typography textAlign='center'>{cost} đ</Typography>
+                <Typography textAlign='center'>{cost.toLocaleString()} đ</Typography>
             </Grid>
         </Grid>
     );

@@ -30,13 +30,13 @@ const useStyles = styled((theme) => ({
         marginTop: theme.spacing(2),
     },
 }));
-function SanBong({ address, cost, special, image, title, rate }) {
+function SanBong({ address, cost, special, image, title, rate, id }) {
     const classes = useStyles();
     return (
         <Grid container item height='247px' width='95%' padding='10px' borderLeft="1px solid #ccc">
-            <Card className={classes.root} style={{ display: 'flex' }}>
+            <Card className={classes.root} style={{ display: 'flex', maxHeight: '100%' }}>
                 <CardMedia
-                    sx={{ width: '30%' }}
+                    sx={{ width: '30%', maxHeight: '100%' }}
                     component='img'
                     className={classes.media}
                     image={image}
@@ -49,9 +49,9 @@ function SanBong({ address, cost, special, image, title, rate }) {
                         </Typography>
                         <Rating value={rate} readOnly />
                         <Typography variant="body1" gutterBottom>
-                            Giá tiền: <span style={{ color: 'red' }}>{cost}đ</span> / Trận
+                            Giá tiền: <span style={{ color: 'red' }}>{cost.toLocaleString()}đ</span> / Trận
                         </Typography>
-                        <Typography variant="body1" gutterBottom>
+                        <Typography variant="body1" gutterBottom noWrap overflow='hidden'>
                             Địa chỉ: {address}
                         </Typography>
                         <Typography variant="body1" gutterBottom>
@@ -59,12 +59,12 @@ function SanBong({ address, cost, special, image, title, rate }) {
                         </Typography>
                     </div>
                     <div className={classes.buttons}>
-                        <NavLink to='/dat-san/chi-tiet-san'>
+                        <NavLink to={'/dat-san/chi-tiet-san/' + id}>
                             <Button variant="contained" color="primary" sx={{ marginRight: '10px' }}>
                                 Xem chi tiết
                             </Button>
                         </NavLink>
-                        <NavLink to='/dat-san/dat-san'>
+                        <NavLink to={'/dat-san/dat-san/' + id}>
                             <Button variant="contained" color="secondary">
                                 Đặt sân
                             </Button>
