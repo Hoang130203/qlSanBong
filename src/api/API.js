@@ -46,6 +46,17 @@ class ClassApi {
      * api admin
      */
     //
+    //Api thống kê
+    //1 tuần qua
+    GetDash1W() {
+        return axios.get(base_api + '/api/Thongkes/Doanhso1W', { headers })
+    }
+    GetDash1M() {
+        return axios.get(base_api + '/api/Thongkes/Doanhso1Month', { headers })
+    }
+    GetDash1Y(year) {
+        return axios.get(base_api + '/api/Thongkes/DoanhSo1Y?Year=' + year, { headers })
+    }
     //api sân bóng cho admin
     //Them san bong 
     PostField(name, cost, address, type, detail, img) {
@@ -130,7 +141,17 @@ class ClassApi {
     DeleteBanner(id) {
         return axios.delete(base_api + '/api/Banners/' + id, { headers })
     }
-
+    /*
+    *api don dat hang
+    */
+    //Lay don dat hang theo trang thai va thoi gian
+    GetOrderedByStatusAndTime(Status, Time) {
+        return axios.get(base_api + '/api/Donhangs?by=' + Status + '&time=' + Time, { headers })
+    }
+    //Sửa trạng thái đơn hàng
+    UpdateStatusOrder(id, status) {
+        return axios.put(base_api + '/api/Donhangs/UpdateOrder?orderid=' + id + '&status=' + status, { headers })
+    }
     /***
      * api thong bao
      */

@@ -7,12 +7,7 @@ import Comment from "../../Component/Comment";
 import { useParams } from "react-router-dom";
 import ClassAPI2 from '../../api/API2'
 import { toast } from "react-toastify";
-const listComment = [
-    { name: 'Ayaka', avt: 'https://cdn-www.bluestacks.com/bs-images/Genshin-Impact-Ayaka-crit-stat-guide-vi-1.jpeg', time: '20-11-2022', rate: 5, comment: 'Giày đẹp quá ạ!' },
-    { name: 'Raiden shogun', avt: 'https://vtcpay.vn/blog/wp-content/uploads/2021/09/Raiden-Shogun.png', time: '15-11-2022', rate: 3, comment: 'Cũng thường thôi:))' },
-    { name: 'Jingliu', avt: 'https://assetsio.reedpopcdn.com/Honkai-Star-Rail-Jingliu-Eidolons-1.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp', time: '12-11-2022', rate: 4, comment: 'Cũng ổn' },
 
-]
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -49,6 +44,26 @@ function ChiTietSanPham() {
         detail: 'Sự kết hợp giữa Kamito và Quang Hải vào hồi tháng 5/2019 với siêu phẩm “QH19” đã tạo được dấu ấn lớn với người chơi bóng đá trên cả nước. Từ các sân cỏ ở thành thị cho tới vùng sâu, vùng xa, đâu đâu cũng có thể nhìn thấy QH19.',
         rate: '1', price: 150000, color: 'Đen, trắng'
     })
+    const [listComment, setListComment] = useState([
+        {
+            "danhgia": {
+                "productid": 3,
+                "userphonenumber": "0167273189",
+                "rate": 5,
+                "comment": "",
+                "time": "2023-12-15T22:58:39.7766667"
+            },
+            "user": {
+                "phonenumber": "0167273189",
+                "name": "kamisato ayaka",
+                "birthdate": null,
+                "gender": false,
+                "address": "inazuma, teyvat",
+                "avt": "http://res.cloudinary.com/dqwouu351/image/upload/v1702478910/Home/cwetraejitlasd3x7unv.jpg"
+            }
+        },
+
+    ])
     const [color, setColor] = useState('')
     const [quantity, setQuantity] = useState(1)
     const handleAdd = async () => {
@@ -69,6 +84,11 @@ function ChiTietSanPham() {
             setProduct(response.data)
             setColors(response.data.color.split(/[,\s]+/))
             console.log(colors)
+        })
+    }, [])
+    useEffect(() => {
+        ClassAPI2.GetAllCmtOfProduct(id).then((response) => {
+            setListComment(response.data)
         })
     }, [])
     const handleChange = (event, newValue) => {
@@ -156,7 +176,7 @@ function ChiTietSanPham() {
                 <CustomTabPanel value={value} index={1}>
                     {listComment.map((item, index) => {
                         return (
-                            <Comment key={index} name={item.name} time={item.time} rate={item.rate} avt={item.avt} comment={item.comment} />
+                            <Comment key={index} name={item.user.name} time={item.danhgia.time} rate={item.danhgia.rate} avt={item.user.avt} comment={item.danhgia.comment} />
                         )
                     })}
 

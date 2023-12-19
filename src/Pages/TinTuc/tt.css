@@ -1,0 +1,17 @@
+.news-item {
+  width: 80%;
+  margin-top: 30px;
+  margin-left: 10%;
+  background-color: #f9f9f9;
+}
+.news-item img {
+  max-height: 400px;
+  width: auto;
+  max-width: 100%;
+}
+.news-details {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #d1c3c3;
+}

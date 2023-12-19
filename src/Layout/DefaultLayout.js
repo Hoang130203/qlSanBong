@@ -9,10 +9,8 @@ function DefaultLayout({ children }) {
         <div className={cx('wrapper')}>
             <div className={cx('head')}><Header />
             </div>
-
             <Grid container className={cx('children')}>{children}</Grid>
             <Footer />
-
         </div>
     );
 }

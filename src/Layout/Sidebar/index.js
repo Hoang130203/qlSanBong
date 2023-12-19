@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 
-
+import EventNoteIcon from '@mui/icons-material/EventNote';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -34,6 +34,12 @@ const SidebarMenu = [
         to: '/admin/san-bong',
     },
     {
+        icon: <EventNoteIcon />,
+        activeIcon: <EventNoteIcon color='primary' />,
+        title: 'Đơn đặt hàng',
+        to: '/admin/don-dat-hang',
+    },
+    {
         icon: <CircleNotificationsIcon />,
         activeIcon: <CircleNotificationsIcon color='primary' />,
         title: 'Thông báo',
@@ -45,6 +51,7 @@ const SidebarMenu = [
         title: 'Quảng cáo',
         to: '/admin/quang-cao',
     },
+
 ];
 
 function onClicks() { }

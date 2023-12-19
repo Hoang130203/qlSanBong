@@ -5,6 +5,10 @@ import UpgradeIcon from '@mui/icons-material/Upgrade';
 import ClassApi from "../../api/API";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { font } from '../../Service/font'
 const theme = createTheme({
     components: {
         MuiTypography: {
@@ -105,6 +109,55 @@ function SuaSanBong() {
             reader.readAsDataURL(selectedImage);
         }
     }
+    const handleExport = () => {
+        const doc = new jsPDF();
+
+        const imageUrl = demoUrl.length > 10 ? demoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoL4bX1iIJZituNk6mWAwOdD2Am1MjOdJBZQ&usqp=CAU';
+        let line = 10
+        doc.setTextColor(255, 0, 0);
+        doc.text('Thông tin sân bóng', 80, 10, 'center');
+        line += 15
+        // Tải hình ảnh từ URL
+        const img = new Image();
+        img.src = imageUrl;
+
+        // Đợi hình ảnh tải xong
+        img.onload = () => {
+            const imgWidth = 100; // Chiều rộng hình ảnh trong file PDF
+            const imgHeight = 75; // Chiều cao hình ảnh trong file PDF
+            doc.setTextColor(0, 0, 0);
+            doc.addImage(img, 'JPEG', 35, line, imgWidth, imgHeight); // Thêm hình ảnh vào file PDF
+            doc.addFileToVFS("WorkSans-normal.ttf", font);
+            doc.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
+            doc.setFont("WorkSans");
+            doc.setFontSize(15);
+            line += 82
+            doc.text('Mã sân bóng :   ' + id, 35, line);
+            line += 12
+            doc.text('Tên sân bóng :   ' + name, 35, line);
+            line += 12
+            doc.text('Giá tiền/kíp:     ' + cost.toLocaleString() + ' đ', 35, line);
+            line += 12
+            doc.text('Địa chỉ:         ' + address, 35, line)
+            line += 12
+            const typ = (type == 1 ? '7 người' : type == 2 ? '11 người' : 'fusal')
+            doc.text('Loại sân:       ' + typ, 35, line)
+            line += 12
+            doc.text('Mô tả:  ', 35, line)
+
+            const maxWidth = 100; // Chiều rộng tối đa cho mỗi dòng
+
+            let textLines = doc.splitTextToSize(decription, maxWidth); // Chia mô tả thành các dòng với độ dài tối đa
+
+            textLines.forEach((lines) => {
+                doc.text('' + lines, 70, line);
+                line += 12; // Tăng y để xuống dòng cho dòng tiếp theo
+            });
+            // Lưu file PDF
+            doc.save('thogtinsan_' + id + '.pdf');
+        };
+
+    };
     return (
         <Grid item container spacing={1} style={{ padding: " 30px 50px" }} xs={12} width='100%'>
             {isUploading && <CircularProgress style={{ position: 'fixed', right: '20px', top: '20px' }} />}
@@ -180,9 +233,11 @@ function SuaSanBong() {
                             <img style={{ maxWidth: '100%', maxHeight: '300px' }} src={demoUrl} alt="preview"></img>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} >
-                        <Button onClick={handleAdd} disabled={isUploading} variant="contained" startIcon={<UpgradeIcon />}><Typography textTransform='none'>Cập nhật</Typography></Button>
-                    </Grid>
+
+                </Grid>
+                <Grid item xs={12} >
+                    <Button onClick={handleAdd} disabled={isUploading} variant="contained" startIcon={<UpgradeIcon />} style={{ marginRight: '20px' }}><Typography textTransform='none'>Cập nhật</Typography></Button>
+                    <Button onClick={handleExport} startIcon={<ExitToAppIcon />} variant="contained"><Typography textTransform='none'>Export</Typography></Button>
                 </Grid>
             </ThemeProvider>
         </Grid>

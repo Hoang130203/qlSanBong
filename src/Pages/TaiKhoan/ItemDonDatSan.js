@@ -1,5 +1,8 @@
 import { Badge, Button, Divider, Grid, Popover, Rating, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ClassApi2 from '../../api/API2'
+import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
 function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -13,6 +16,39 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
     const [rate, setRate] = useState(0)
     const [comment, setComment] = useState('')
     const open = Boolean(anchorEl);
+    const [disabled, setDisabled] = useState(false)
+    useEffect(() => {
+        try {
+            ClassApi2.GetCommentByField_User(sanbong.fieldid, donhang.time).then((response) => {
+                if (response.data.comment) {
+                    console.log(response.data.comment)
+                    setRate(response.data.rate)
+                    setComment(response.data.comment)
+                    setDisabled(true)
+                }
+            })
+        } catch (error) {
+
+        }
+    }, [sanbong])
+    const handleSendComment = () => {
+        ClassApi2.PostFieldComment({
+            "fieldid": sanbong.fieldid,
+            "userphonenumber": localStorage.getItem('usersb'),
+            "rate": rate,
+            "comment": comment,
+            "time": donhang.time
+        }).then((response) => {
+            toast.success('Bạn đã đánh giá thành công sân bóng ' + sanbong.name, {
+                position: 'bottom-right'
+            })
+            setDisabled(true)
+        }).catch(() => {
+            toast.error('Lỗi', {
+                position: 'bottom-right'
+            })
+        })
+    }
     return (
         <Grid item container padding='10px 0px' alignContent='flex-start' rowSpacing={2} margin='15px 0px'>
             <Grid item container xs={12} justifyContent='space-between' padding='0px 10px 10px 10px' bgcolor="#ccc">
@@ -26,12 +62,16 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
             <Grid item container xs={12} alignContent='center' >
                 <Grid item container xs={2.5} alignContent='center'>
                     <Grid item >
-                        <img style={{ maxWidth: '100%', maxHeight: '80px' }} src={sanbong.linkimg} />
+                        <NavLink to={"/dat-san/chi-tiet-san/" + sanbong.fieldid} style={{ textDecoration: 'none' }}>
+                            <img style={{ maxWidth: '100%', maxHeight: '80px' }} src={sanbong.linkimg} />
+                        </NavLink>
                     </Grid>
                 </Grid>
                 <Grid item container xs={7} paddingLeft='10px'>
                     <Grid item xs={12}>
-                        <Typography fontWeight={600}>{sanbong.name}</Typography>
+                        <NavLink to={"/dat-san/chi-tiet-san/" + sanbong.fieldid} style={{ textDecoration: 'none' }}>
+                            <Typography fontWeight={600}>{sanbong.name}</Typography>
+                        </NavLink>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography>Kíp: <span style={{ color: 'blue' }}>{sanbongdh.kip}</span> Đã đặt đá ngày: <span style={{ color: 'green' }}>{sanbongdh.times.split("T")[0]}</span></Typography>
@@ -39,7 +79,7 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
                 </Grid>
                 <Grid item container xs={2.5} justifyContent='flex-end'>
                     <Grid item>
-                        <Typography textAlign='center' color='orange'>{sanbong.price.toLocaleString()} đ</Typography>
+                        <Typography textAlign='center' color='orange'>{sanbongdh.cost.toLocaleString()} đ</Typography>
                     </Grid>
 
                 </Grid>
@@ -71,16 +111,16 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
                                 <Typography>Đánh giá</Typography>
                             </Grid>
                             <Grid item xs={9}>
-                                <Rating value={rate} onChange={(e) => { setRate(parseInt(e.target.value)) }}></Rating>
+                                <Rating disabled={disabled} value={rate} onChange={(e) => { setRate(parseInt(e.target.value)) }}></Rating>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Bình luận</Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField value={comment} style={{ width: '90%' }} onChange={(e) => { setComment(e.target.value) }}></TextField>
+                                <TextField value={comment} disabled={disabled} style={{ width: '90%' }} onChange={(e) => { setComment(e.target.value) }}></TextField>
                             </Grid>
                             <Grid item xs={12} paddingTop='20px'>
-                                <Button variant="contained" color="info">Gửi đánh giá</Button>
+                                <Button onClick={handleSendComment} variant="contained" color="info" disabled={disabled}>Gửi đánh giá</Button>
                             </Grid>
                         </Grid>
                     </Popover>

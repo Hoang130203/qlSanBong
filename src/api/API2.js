@@ -19,6 +19,10 @@ class ClassApi2 {
     Resister(info) {
         return axios.post(base_api + '/api/AccountUsers/register', info, { headers })
     }
+    //api quảng cáo
+    GetAllBanner() {
+        return axios.get(base_api + '/api/Banners', { headers })
+    }
     //Lay thong tin nguoi dung
     GetInfo() {
         return axios.get(base_api + '/api/Users/' + localStorage.getItem('usersb'), { headers })
@@ -34,6 +38,25 @@ class ClassApi2 {
     //doi mat khau
     ChangePassword(password) {
         return axios.put(base_api + '/api/Accounts/' + localStorage.getItem('usersb'), { "phonenumber": localStorage.getItem('usersb'), "password": password }, { headers })
+    }
+    //api comment
+    GetCommentByProduct(productid, time) {
+        return axios.get(base_api + '/api/ProductUsers/FindComment?productid=' + productid + '&phone=' + phone + '&time=' + time, { headers })
+    }
+    PostComment(comment) {
+        return axios.post(base_api + '/api/ProductUsers', comment, { headers })
+    }
+    GetAllCmtOfProduct(productid) {
+        return axios.get(base_api + '/api/ProductUsers/GetAllCmtOfProduct?productid=' + productid, { headers })
+    }
+    PostFieldComment(comment) {
+        return axios.post(base_api + '/api/SanbongUsers', comment, { headers })
+    }
+    GetAllCmtOfField(fieldid) {
+        return axios.get(base_api + '/api/SanbongUsers/GetAllCmtOfField?fieldid=' + fieldid, { headers })
+    }
+    GetCommentByField_User(fieldid, time) {
+        return axios.get(base_api + '/api/SanbongUsers/FindComment?fieldid=' + fieldid + '&phone=' + phone + '&time=' + time)
     }
     //Hiển thị sản phẩm
     GetAllSp() {

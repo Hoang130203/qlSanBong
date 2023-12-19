@@ -17,12 +17,17 @@ function DangNhap() {
         setPassword(e.target.value)
     }
     const handleLogin = () => {
-        if (user == 'admin' && password == "123") {
-            localStorage.setItem('admin', 'admin')
-            navigate('/admin/thong-ke')
-        } else if (user.length > 0 && password.length > 0) {
+        if (user.length > 0 && password.length > 0) {
             ClassApi2.Login(user, password).then((response) => {
-                if (response.data.success == true && response.data.message == "User") {
+                if (response.data.success == true && response.data.message == "Admin") {
+                    localStorage.setItem('usersb', "0000000000")
+                    // localStorage.setItem('namesb', 'admin')
+                    navigate('/admin/thong-ke')
+                    toast.success('Chào mừng Admin tới với hệ thống quản lý !', {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    })
+
+                } else if (response.data.success == true && response.data.message == "User") {
                     localStorage.setItem('usersb', user)
                     localStorage.setItem('namesb', response.data.name)
                     navigate('/')
@@ -40,6 +45,7 @@ function DangNhap() {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
         }
+
     }
     return (
         <Grid container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', top: '20px', position: 'relative' }}>

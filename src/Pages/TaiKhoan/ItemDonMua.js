@@ -3,19 +3,10 @@ import { useState } from "react";
 import ClassApi2 from '../../api/API2'
 import { toast } from "react-toastify";
 import AlertDialog from "../../Component/Dialog";
+import ItemDanhGia from "./ItemDanhGia";
+import { NavLink } from "react-router-dom";
 function ItemDonMua({ listsp, total, id, sanpham, donhang }) {
-    const [anchorEl, setAnchorEl] = useState(null);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const [rate, setRate] = useState(0)
-    const [comment, setComment] = useState('')
-    const open = Boolean(anchorEl);
     const [show, setShow] = useState(false)
     const huyDon = () => {
         setShow(false)
@@ -36,7 +27,12 @@ function ItemDonMua({ listsp, total, id, sanpham, donhang }) {
                     <Typography>Mã đơn hàng:<span style={{ color: 'red' }}>#{id}</span></Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>Trạng thái : <span style={{ color: donhang.status == "Hoàn thành" ? 'green' : 'blue' }}>{donhang.status}</span></Typography>
+                    <Typography>Trạng thái : <span style={{
+                        color: donhang.status === "Hoàn thành" ? 'green' :
+                            donhang.status === "Đã hủy" ? 'red' :
+                                donhang.status === "Đang giao hàng" ? 'blue' :
+                                    donhang.status === "Đã xác nhận" ? 'orange' : 'black'
+                    }}>{donhang.status}</span></Typography>
                 </Grid>
             </Grid>
 
@@ -44,14 +40,18 @@ function ItemDonMua({ listsp, total, id, sanpham, donhang }) {
                 <Grid item container xs={12} key={index} alignContent='center' >
                     <Grid item container xs={2.5} alignContent='center' paddingBottom='10px'>
                         <Grid item >
-                            <Badge badgeContent={sanpham[index].quantity} color="primary">
-                                <img style={{ maxWidth: '100%', maxHeight: '80px' }} src={item.linkimg} />
-                            </Badge>
+                            <NavLink to={'/san-pham/chitietsanpham/' + item.productid} style={{ textDecoration: 'none', color: 'purple' }}>
+                                <Badge badgeContent={sanpham[index].quantity} color="primary">
+                                    <img style={{ maxWidth: '100%', maxHeight: '80px' }} src={item.linkimg} />
+                                </Badge>
+                            </NavLink>
                         </Grid>
                     </Grid>
                     <Grid item container xs={6.5} paddingLeft='10px'>
                         <Grid item xs={12}>
-                            <Typography fontWeight={600}>{item.productname}</Typography>
+                            <NavLink to={'/san-pham/chitietsanpham/' + item.productid} style={{ textDecoration: 'none', color: 'purple' }}>
+                                <Typography fontWeight={600}>{item.productname}</Typography>
+                            </NavLink>
                         </Grid>
                         <Grid item xs={12}>
                             <Typography>{sanpham[index].color}</Typography>
@@ -59,10 +59,11 @@ function ItemDonMua({ listsp, total, id, sanpham, donhang }) {
                     </Grid>
                     <Grid item container xs={3} justifyContent='flex-end'>
                         <Grid item>
-                            <Typography textAlign='center' color='orange'>{item.price.toLocaleString()} đ</Typography>
+                            <Typography textAlign='center' color='orange'>{sanpham[index].cost.toLocaleString()} đ</Typography>
                         </Grid>
 
                     </Grid>
+                    <ItemDanhGia productid={sanpham[index].productid} time={donhang.time} status={donhang.status} />
                     <Grid item xs={12}><Divider style={{ borderColor: '#d5c1c1' }} /></Grid>
                 </Grid>
             ))}
@@ -75,38 +76,8 @@ function ItemDonMua({ listsp, total, id, sanpham, donhang }) {
             <Grid xs={12} item container justifyContent='flex-end'>
                 <Grid item >
                     {donhang.status == "Hoàn thành" || donhang.status == "Đã hủy" ? '' :
-                        <Button color='error' variant="contained" onClick={() => { setShow(true) }} style={{ marginRight: '30px' }}>Hủy đơn</Button>}
-                    <Button variant="contained" color="warning" onClick={handleClick}>
-                        Đánh giá
-                    </Button>
-                    <Popover
+                        <Button color='error' variant="contained" onClick={() => { setShow(true) }} >Hủy đơn</Button>}
 
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                    >
-                        <Grid item container sx={{ p: 2, width: '400px' }}>
-                            <Grid item xs={3}>
-                                <Typography>Đánh giá</Typography>
-                            </Grid>
-                            <Grid item xs={9}>
-                                <Rating value={rate} onChange={(e) => { setRate(parseInt(e.target.value)) }}></Rating>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography>Bình luận</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField value={comment} style={{ width: '90%' }} onChange={(e) => { setComment(e.target.value) }}></TextField>
-                            </Grid>
-                            <Grid item xs={12} paddingTop='20px'>
-                                <Button variant="contained">Gửi đánh giá</Button>
-                            </Grid>
-                        </Grid>
-                    </Popover>
                 </Grid>
             </Grid>
         </Grid>

@@ -26,6 +26,7 @@ import SuaSanPham from '../Pages/Admin/SuaSanPham'
 import SuaQuangCao from '../Pages/Admin/SuaQuangCao'
 import SanPhamOfType from '../Pages/SanPham/SanPhamOfType'
 import DonDatSan from '../Pages/TaiKhoan/DonDatSan'
+import DonDatHang from '../Pages/Admin/DonDatHang'
 const publicRoutes = [
     { path: '/dat-san', component: DatSan },
     { path: '/dat-san/chi-tiet-san/:id', component: ChiTietSan },
@@ -54,6 +55,7 @@ const publicRoutes = [
     { path: '/admin/san-pham/them-san-pham', component: ThemSanPham, layout: SidebarLayout },
     { path: '/admin/san-bong/them-san-bong', component: ThemSanBong, layout: SidebarLayout },
     { path: '/admin/quang-cao/them-quang-cao', component: ThemQuangCao, layout: SidebarLayout },
+    { path: '/admin/don-dat-hang', component: DonDatHang, layout: SidebarLayout },
 
 ]
 

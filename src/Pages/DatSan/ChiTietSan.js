@@ -6,12 +6,7 @@ import { useEffect, useState } from "react";
 import Comment from "../../Component/Comment";
 import { NavLink, useParams } from "react-router-dom";
 import ClassApi2 from '../../api/API2'
-const listComment = [
-    { name: 'Messi', avt: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgfqcIR6_q8U_vFeIxVY_Uah0hvqB6zvaC6h_jU-OMJV7PkyWrEfZ_X8kt0500NRmPk28&usqp=CAU', time: '20-11-2022', rate: 4, comment: 'Sân khá ổn.' },
-    { name: 'Ronaldo', avt: 'https://nld.mediacdn.vn/291774122806476800/2022/12/9/13-ronaldo-16705925694541880121770.jpg', time: '15-11-2022', rate: 2, comment: 'Sân hơi cùi chút' },
-    { name: 'Neymar', avt: 'https://nld.mediacdn.vn/291774122806476800/2023/9/9/neymar--16942333756491612020374.jpg', time: '12-11-2022', rate: 3, comment: 'Sân này đá dễ ngã quá!?!' },
 
-]
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -41,10 +36,54 @@ function a11yProps(index) {
 function ChiTietSan() {
     const [value, setValue] = useState(0);
     const id = useParams().id
+    const [rate, setRate] = useState(0)
     const [field, setField] = useState({})
     useEffect(() => {
         ClassApi2.GetFieldById(id).then((response) => {
             setField(response.data)
+            setRate(response.data.rate)
+        })
+    }, [])
+    const [listComment, setListComment] = useState([
+        {
+            "danhgia": {
+                "fieldid": "9xvEy",
+                "userphonenumber": "0973006826",
+                "rate": 5,
+                "comment": "sân đẹp",
+                "time": "2023-12-17T12:29:54.9206553"
+            },
+            "user": {
+                "phonenumber": "0973006826",
+                "name": "lionel messi",
+                "birthdate": null,
+                "gender": true,
+                "address": "agrentina",
+                "avt": "http://res.cloudinary.com/dqwouu351/image/upload/v1702786342/Home/ttbea9jelbtkvi5gizm6.jpg"
+            }
+        },
+        {
+            "danhgia": {
+                "fieldid": "9xvEy",
+                "userphonenumber": "0973006825",
+                "rate": 3,
+                "comment": "",
+                "time": "2023-12-17T12:25:03.2479076"
+            },
+            "user": {
+                "phonenumber": "0973006825",
+                "name": "mai minh hoàng",
+                "birthdate": null,
+                "gender": true,
+                "address": "nghệ an",
+                "avt": "http://res.cloudinary.com/dqwouu351/image/upload/v1702478388/Home/ihqztxdsjsmrmev1faur.jpg"
+            }
+        },
+
+    ])
+    useEffect(() => {
+        ClassApi2.GetAllCmtOfField(id).then((response) => {
+            setListComment(response.data)
         })
     }, [])
     const handleChange = (event, newValue) => {
@@ -75,7 +114,7 @@ function ChiTietSan() {
                         <Divider />
                     </Grid>
                     <Grid item xs={12}>
-                        <Rating name="read-only" value={field ? field.rate : 0} readOnly />
+                        <Rating name="read-only" value={rate} readOnly />
                     </Grid>
                     <Grid item xs={12} padding='0px 0px 10px 0px'>
                         <Typography><span style={{ fontSize: '30px', color: 'red' }}>{field ? !isNaN(field.price) ? field.price.toLocaleString() : field.price : 0}</span><span style={{ textDecoration: 'underline', top: '-5px', fontSize: '20px', position: 'relative', color: '#ccc', marginLeft: '4px' }}>đ</span></Typography>
@@ -122,7 +161,7 @@ function ChiTietSan() {
                 <CustomTabPanel value={value} index={1}>
                     {listComment.map((item, index) => {
                         return (
-                            <Comment key={index} name={item.name} time={item.time} rate={item.rate} avt={item.avt} comment={item.comment} />
+                            <Comment key={index} name={item.user.name} time={item.danhgia.time} rate={item.danhgia.rate} avt={item.user.avt} comment={item.danhgia.comment} />
                         )
                     })}
 

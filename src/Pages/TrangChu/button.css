@@ -1,0 +1,13 @@
+/* Ghi đè CSS cho nút điều hướng tiếp theo */
+.slick-arrow {
+  background-color: blue; /* Đổi màu nền */
+  color: white; /* Đổi màu chữ */
+  font-size: 16px; /* Đổi kích thước font chữ */
+  /* Thêm các thuộc tính CSS khác bạn muốn thay đổi */
+}
+
+/* Ghi đè CSS khi hover vào nút điều hướng tiếp theo */
+.slick-arrow:hover {
+  background-color: darkblue; /* Đổi màu nền khi hover */
+  /* Thêm các thuộc tính CSS khác khi hover */
+}

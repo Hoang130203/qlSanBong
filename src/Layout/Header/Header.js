@@ -51,7 +51,7 @@ function Header() {
         {
             xs: 3, to: '/account/thong-tin', icon: avt ? <Avatar sx={{ bgcolor: 'transparent' }} aria-label="recipe">
                 <img style={{ maxHeight: '42px' }} src={avt} />
-            </Avatar> : <AccountCircleIcon fontSize='large' className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400} fontSize={18}>{user}</Typography>, hoverBackground: "url(https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/Pen0000000/php3Y3Q7b.jpeg) #35c0c5;"
+            </Avatar> : <AccountCircleIcon fontSize='large' className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400} fontSize={18}>{user}</Typography>, hoverBackground: "url(https://png.pngtree.com/background/20210714/original/pngtree-beautiful-elegant-pink-red-purple-watercolor-smudge-background-picture-image_1220864.jpg) #35c0c5;"
         }
     ]
     const navigate = useNavigate()
