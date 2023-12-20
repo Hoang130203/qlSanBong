@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuSp from './MenuSp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ClassApi2 from '../../api/API2'
+import AutoComplete from '../../Component/AutoCompleteSearch';
 const cx = classNames.bind(styles)
 
 function Header() {
@@ -28,9 +29,7 @@ function Header() {
     }, [])
     const listHeader = [{ xs: 2, icon: <PhoneIcon sx={{ fill: '#35c0c5;' }} />, children: <Typography color="#333" >19006750</Typography>, component: Fragment },
     {
-        xs: 3, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;' }} />, children: <TextField sx={{
-            "& fieldset": { border: 'none' },
-        }} placeholder='Tìm kiếm...' />
+        xs: 3, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;', paddingRight: '10px', paddingTop: '10px' }} />, children: <AutoComplete />
     },
     { xs: 2.5, to: '/account/dang-nhap', icon: <PersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng nhập</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
     { xs: 2.0, to: '/account/dang-ky', icon: <LockPersonIcon fontSize='medium' />, cursor: 'pointer', children: <Typography variant='h6' fontWeight={400} fontSize={18}>Đăng ký</Typography>, hoverBackground: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;" },
@@ -43,9 +42,8 @@ function Header() {
     ]
     const listHeader3 = [
         {
-            xs: 5, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;' }} />, children: <TextField sx={{
-                "& fieldset": { border: 'none' },
-            }} placeholder='Tìm kiếm...' />
+            xs: 5, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;', paddingRight: '10px', paddingTop: '10px' }} />,
+            children: <AutoComplete />
         },
         { xs: 3, to: '/cart', icon: <ShoppingCartIcon className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
         {

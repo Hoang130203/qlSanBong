@@ -19,6 +19,10 @@ class ClassApi2 {
     Resister(info) {
         return axios.post(base_api + '/api/AccountUsers/register', info, { headers })
     }
+    //api tìm kiếm sản phẩm
+    SearchProduct(name) {
+        return axios.get(base_api + '/api/Products/SearchProduct?name=' + name, { headers })
+    }
     //api quảng cáo
     GetAllBanner() {
         return axios.get(base_api + '/api/Banners', { headers })

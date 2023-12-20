@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ClassApi2 from '../../api/API2'
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
+import QRThanhToan from "../../Service/QRThanhToan";
 function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -13,9 +14,20 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const [anchorEl2, setAnchorEl2] = useState(null);
+
+    const handleClick2 = (event) => {
+        setAnchorEl2(event.currentTarget);
+    };
+
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+    };
     const [rate, setRate] = useState(0)
     const [comment, setComment] = useState('')
     const open = Boolean(anchorEl);
+    const open2 = Boolean(anchorEl2);
+
     const [disabled, setDisabled] = useState(false)
     useEffect(() => {
         try {
@@ -93,6 +105,30 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
             </Grid>
             <Grid xs={12} item container justifyContent='flex-end'>
                 <Grid item >
+                    <Button variant="contained" style={{ marginRight: '10px' }}
+                        onClick={handleClick2}
+                        disabled={donhang.status.includes('chưa thanh toán') ? false : true}>
+                        Thanh toán
+                    </Button>
+                    <Popover
+                        anchorReference="anchorPosition"
+                        anchorPosition={{ top: 400, left: 700, right: 700 }}
+                        open={open2}
+                        //  responsive={true}
+                        anchorEl={anchorEl2}
+                        onClose={handleClose2}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'center',
+                            horizontal: 'center',
+                        }}
+                    ><Grid item container sx={{ p: 2, width: '450px', maxWidth: '80vw' }}>
+                            <QRThanhToan />
+                        </Grid>
+                    </Popover>
                     <Button variant="contained" color="secondary" onClick={handleClick}>
                         Đánh giá
                     </Button>
@@ -120,6 +156,7 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
                                 <TextField value={comment} disabled={disabled} style={{ width: '90%' }} onChange={(e) => { setComment(e.target.value) }}></TextField>
                             </Grid>
                             <Grid item xs={12} paddingTop='20px'>
+
                                 <Button onClick={handleSendComment} variant="contained" color="info" disabled={disabled}>Gửi đánh giá</Button>
                             </Grid>
                         </Grid>

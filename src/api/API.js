@@ -8,7 +8,7 @@ const headers = {
 };
 class ClassApi {
     /***
-     * custom api
+     * api cho admin
      */
     //post image api
     PostImage(img) {
