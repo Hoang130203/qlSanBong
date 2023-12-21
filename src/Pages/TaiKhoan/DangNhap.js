@@ -20,7 +20,7 @@ function DangNhap() {
         if (user.length > 0 && password.length > 0) {
             ClassApi2.Login(user, password).then((response) => {
                 if (response.data.success == true && response.data.message == "Admin") {
-                    localStorage.setItem('usersb', "0000000000")
+                    localStorage.setItem('admin', "admin")
                     // localStorage.setItem('namesb', 'admin')
                     navigate('/admin/thong-ke')
                     toast.success('Chào mừng Admin tới với hệ thống quản lý !', {
@@ -30,6 +30,7 @@ function DangNhap() {
                 } else if (response.data.success == true && response.data.message == "User") {
                     localStorage.setItem('usersb', user)
                     localStorage.setItem('namesb', response.data.name)
+                    localStorage.setItem('connectionId', response.data.connectionId)
                     navigate('/')
                     toast.info('Chào mừng bạn trở lại!', {
                         position: toast.POSITION.BOTTOM_CENTER

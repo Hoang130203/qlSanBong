@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
-const base_api = "https://localhost:7037"
-
+//const base_api = "https://localhost:7037"
+const base_api = 'https://project1backend20231221193248.azurewebsites.net'
 const headers = {
     "access-control-allow-origin": "*",
     "content-type": "application/json; charset=utf-8 ",
@@ -137,6 +137,10 @@ class ClassApi2 {
     //api lấy ra đơn đặt sản phẩm đã đặt
     GetOrderedProduct() {
         return axios.get(base_api + '/api/Donhangs/allOPofUser?id=' + phone, { headers })
+    }
+    //Kiểm tra thanh toán chưa
+    CheckThanhToan(id) {
+        return axios.get(base_api + '/api/Donhangs/KiemtraThanhtoan?id=' + id, { headers })
     }
     //api hủy đơn đặt hàng
     CancelOrderProduct(orderid) {

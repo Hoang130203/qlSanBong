@@ -1,0 +1,23 @@
+.tick {
+  font-size: 100px;
+  color: #00ff00; /* Màu xanh cho dấu tích */
+  opacity: 0; /* Mặc định ẩn */
+  position: absolute; /* Thiết lập vị trí tuyệt đối */
+  left: 20%; /* Căn giữa theo chiều ngang */
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: tickAnimation 1s; /* Sử dụng animation */
+  animation-fill-mode: forwards;
+}
+
+@keyframes tickAnimation {
+  0% {
+    opacity: 0; /* Bắt đầu ẩn */
+    transform: scale(0); /* Bắt đầu với kích thước 0 và vị trí trung tâm */
+  }
+
+  100% {
+    opacity: 1; /* Kết thúc hiển thị */
+    transform: scale(1); /* Kích thước cuối cùng */
+  }
+}

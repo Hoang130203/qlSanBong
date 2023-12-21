@@ -12,6 +12,7 @@ import CheckroomIcon from '@mui/icons-material/Checkroom';
 import { Button as Button2, Typography } from '@mui/material';
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const SidebarMenu = [
@@ -58,10 +59,14 @@ function onClicks() { }
 
 function Sidebar() {
     const [user, setUser] = useState(localStorage.getItem('admin'))
-
-
+    const navigate = useNavigate()
+    const handleLogOut = () => {
+        localStorage.setItem('admin', '')
+        setUser('')
+        navigate("/")
+    };
     const handleLogin = () => {
-        setUser('hoang')
+        navigate("/")
     };
 
     return (
@@ -86,8 +91,22 @@ function Sidebar() {
                     </Menu>
                 </div>
                 <div className={cx('hr')} />
-                {user ? (
-                    ''
+                {user.length > 1 ? (
+                    <Button2
+                        variant="outlined"
+                        sx={{
+                            width: '208px',
+                            height: '48px',
+                            margin: '20px 0px',
+
+                        }}
+                        color='primary'
+                        onClick={handleLogOut}
+                    >
+                        <Typography fontSize={18} fontWeight={700} color="#1976d2" textTransform="none">
+                            Đăng xuất
+                        </Typography>
+                    </Button2>
                 ) : (
                     <div style={{ fontSize: '15px', color: '#16182380', textAlign: 'center', paddingTop: '15px' }}>
                         <p>Đăng nhập với tư cách </p>

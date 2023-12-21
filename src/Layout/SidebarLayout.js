@@ -5,6 +5,7 @@ import { Grid } from '@mui/material';
 
 const cx = classNames.bind(styles);
 function SidebarLayout({ children }) {
+    const admin = localStorage.getItem('admin')
     return (
 
         <Grid container className={cx('wrapper')}>
@@ -13,7 +14,7 @@ function SidebarLayout({ children }) {
                     <Sidebar className={cx('sidebar')} />
                 </Grid>
                 <Grid item>
-                    <div className={cx('content')}>{children}</div>
+                    {admin.length > 0 ? <div className={cx('content')}>{children}</div> : ''}
                 </Grid>
             </Grid>
         </Grid>

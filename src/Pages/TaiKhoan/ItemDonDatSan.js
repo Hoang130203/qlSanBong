@@ -68,7 +68,7 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
                     <Typography>Mã đơn hàng : <span style={{ color: 'red' }}>#{donhang.orderid}</span></Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>Trạng thái : <span style={{ color: donhang.status == "Hoàn thành" ? 'green' : 'blue' }}>{donhang.status}</span></Typography>
+                    <Typography>Trạng thái : <span style={{ color: donhang.status.includes("đã thanh toán") ? 'green' : 'blue' }}>{donhang.status}</span></Typography>
                 </Grid>
             </Grid>
             <Grid item container xs={12} alignContent='center' >
@@ -126,7 +126,7 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
                             horizontal: 'center',
                         }}
                     ><Grid item container sx={{ p: 2, width: '450px', maxWidth: '80vw' }}>
-                            <QRThanhToan />
+                            <QRThanhToan phone={donhang.phonenumber} id={donhang.orderid} />
                         </Grid>
                     </Popover>
                     <Button variant="contained" color="secondary" onClick={handleClick}>
