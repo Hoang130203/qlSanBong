@@ -48,7 +48,7 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
             "fieldid": sanbong.fieldid,
             "userphonenumber": localStorage.getItem('usersb'),
             "rate": rate,
-            "comment": comment,
+            "comment": comment.length > 0 ? comment : '.',
             "time": donhang.time
         }).then((response) => {
             toast.success('Bạn đã đánh giá thành công sân bóng ' + sanbong.name, {
