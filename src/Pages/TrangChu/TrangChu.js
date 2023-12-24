@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import ClassApi2 from '../../api/API2'
 import QuangCao from "./QuangCao";
 import { useHistory } from 'react-router-dom';
+import ItemListSp2 from "../../Component/ItemListSp2";
 let spmoi = [
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/2-382751d6-ebd4-477c-83d5-5045a3a23999.jpg?v=1466415099313', title: 'Giày tây nâu đỏ thương hiệu Converse All Star', cost: '500.000' },
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/zal1.jpg?v=1466482812400', title: 'Giày Converse Star Collar Break', cost: '450.000' },
@@ -48,34 +49,39 @@ function TrangChu() {
     //<img src="https://bizweb.dktcdn.net/thumb/2048x2048/100/091/133/themes/880367/assets/slider_1.jpg?1676015027577" style={{ width: '100%', height: 'auto' }} />
     return (
         <Grid container width='100%' justifyContent='center' >
-            <Grid item xs={12} md={11} minHeight='240px'>
+            <Grid item xs={12} md={11} sx={{ minHeight: { xs: '0px', sm: '240px' } }}>
                 <QuangCao />
             </Grid>
-            <Grid item container display='flex' flexDirection='row' justifyContent='center' alignItems='center' marginTop='30px'>
-                <Grid item paddingLeft='60px' container md={3} xs={10} height='280px' display='flex' flexDirection='column' justifyContent='center'>
-
+            <Grid item container display='flex' flexDirection='row' justifyContent='center' alignItems='center' marginTop='10px'>
+                <Grid item container md={3} xs={10} height='280px' display='flex' justifyContent='center'>
                     <MenuSp />
                 </Grid>
-                <Grid item container md={9} xs={10} height='480px' overflow='hidden'>
-                    <Grid item xs={12} display='flex' flexDirection='column' justifyContent='center' ><Typography variant="h5" fontWeight='600' textAlign='center'>SẢN PHẨM MỚI</Typography></Grid>
-                    <Grid item xs={12}><Divider style={{ marginBottom: '5px' }} /><Divider style={{ marginBottom: '5px' }} /></Grid>
-                    <Grid item container xs={12} height="80%" overflow='hidden'>
-                        {spmoi.map((item, index) => (
-                            <Grid key={index} item container xs={12} height='100%' md={4} display='flex' flexDirection='row' justifyContent='center' >
-                                <ItemSp title={item.productname} img={item.linkimg} cost={item.price.toLocaleString()} id={item.productid} />
-                            </Grid>
-                        ))}
-
+                <Grid item container md={9} xs={10} minHeight='480px' paddingTop='20px'>
+                    <Grid item container xs={12} alignItems='center' display='flex' justifyContent='center' >
+                        <div style={{ flexGrow: '1', height: '2px', backgroundColor: 'black', margin: '0px 10px' }}></div>
+                        <Typography variant="h5" fontWeight='600' textAlign='center'>SẢN PHẨM MỚI</Typography>
+                        <div style={{ flexGrow: '1', height: '2px', backgroundColor: 'black', margin: '0px 10px' }}></div>
                     </Grid>
+
+
+                    {spmoi.map((item, index) => (
+                        <Grid key={index} item container xs={12} height='100%' md={4} sm={6} display='flex' flexDirection='row' justifyContent='center' >
+                            <ItemSp title={item.productname} img={item.linkimg} cost={item.price.toLocaleString()} id={item.productid} />
+                        </Grid>
+                    ))}
+
+
 
                 </Grid>
 
 
             </Grid>
-            <Grid item container xs={12}>
+            <Grid item container xs={12} justifyContent='space-around'>
                 <Grid item container md={3} xs={10} rowSpacing={1} padding='50px 0px' minHeight='400px' display='flex' flexDirection='row' >
-                    <Grid item xs={12} >
+                    <Grid item container xs={12} style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ flexGrow: '1', height: '1px', backgroundColor: 'black', margin: '0px 10px' }}></div>
                         <Typography textAlign='center' fontWeight={600} variant="h6">SẢN PHẨM BÁN CHẠY</Typography>
+                        <div style={{ flexGrow: '1', height: '1px', backgroundColor: 'black', margin: '0px 10px' }}></div>
                     </Grid>
                     {spbanchay.map((item, index) => (
                         <Grid item key={index} xs={12} style={{
@@ -83,7 +89,7 @@ function TrangChu() {
                             flexDirection: 'row',
                             justifyContent: 'center'
                         }}>
-                            <ItemListSp id={item.productid} widthMedia='151px' maxWidth='400px' cost={item.price.toLocaleString()} fontSize='20px' minWidthContent='200px' title={item.productname} heightt='152px' img={item.linkimg} />
+                            <ItemListSp2 id={item.productid} cost={item.price.toLocaleString()} name={item.productname} img={item.linkimg} type={1} />
 
                         </Grid>
                     ))}

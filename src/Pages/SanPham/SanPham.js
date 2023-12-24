@@ -7,6 +7,7 @@ import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 import { useEffect, useState } from "react";
 import ItemSp from "../../Component/ItemSp";
 import ClassApi2 from '../../api/API2'
+import ItemListSp2 from "../../Component/ItemListSp2";
 /*let spmoi = [
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/2-382751d6-ebd4-477c-83d5-5045a3a23999.jpg?v=1466415099313', title: 'Giày tây nâu đỏ thương hiệu Converse All Star', cost: '500.000' },
     { img: 'https://bizweb.dktcdn.net/thumb/large/100/091/133/products/zal1.jpg?v=1466482812400', title: 'Giày Converse Star Collar Break', cost: '450.000' },
@@ -98,14 +99,14 @@ function SanPham() {
                 </a>
                 <Typography color='#35c0c5'>Sản phẩm</Typography>
             </Grid>
-            <Grid container item xs={12} sm={11.5} display='flex' flexDirection='row' justifyContent='flex-end'>
+            <Grid container item xs={12} sm={11.5} display='flex' flsexDirection='row' justifyContent='flex-end'>
 
-                <Grid item container lg={2.5} md={4} sm={0.001} xs={0.001} overflow='hidden' display='flex' flexDirection='column' justifyContent='flex-start'>
+                <Grid item container lg={2.5} md={4} sm={12} xs={12} display='flex' flexDirection='row' justifyContent='flex-start'>
 
-                    <Grid container item height='200px' display='flex' flexDirection='column' padding='0px 10px' justifyContent='center' rowSpacing={1} border='1px solid #ccc'>
+                    <Grid container item xs={12} minHeight='300px' display='flex' flexDirection='column' padding='0px 10px' justifyContent='center' rowSpacing={1} >
                         <MenuSp />
                     </Grid>
-                    <Grid item container rowSpacing={1} minHeight='200px' display='flex' flexDirection='row' paddingTop='20px'>
+                    <Grid item container xs={12} sx={{ display: { xs: 'none', sm: 'flex' } }} rowSpacing={1} minHeight='200px' display='flex' flexDirection='row' paddingTop='20px'>
                         <Grid item xs={12} >
                             <Typography textAlign='center' fontWeight={600} variant="h6">SẢN PHẨM MỚI</Typography>
                         </Grid>
@@ -115,13 +116,13 @@ function SanPham() {
                                 flexDirection: 'row',
                                 justifyContent: 'center'
                             }}>
-                                <ItemListSp id={item.productid} widthMedia='100px' minWidthContent='200px' maxWidth='400px' paddingtop='0' heightt='100px' cost={item.price.toLocaleString()} title={item.productname} img={item.linkimg} />
+                                <ItemListSp2 bgcolor='#ccc' id={item.productid} cost={item.price.toLocaleString()} name={item.productname} img={item.linkimg} type={1} />
 
                             </Grid>
                         ))}
 
                     </Grid>
-                    <Grid item container display='flex' flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' height='65px' style={{ margin: '20px 0px', background: 'url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-menu.png?1665385034327) #35c0c5', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                    <Grid item container display='flex' sx={{ display: { xs: 'none', sm: 'flex' } }} flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' height='65px' style={{ margin: '20px 0px', background: 'url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-menu.png?1665385034327) #35c0c5', fontFamily: 'Arial, Helvetica, sans-serif' }}>
                         <Grid item container xs={3} justifyContent='flex-end'>
                             <Grid item>
                                 <WifiCalling3Icon style={{ color: 'white', fontSize: '35px' }} />
@@ -132,7 +133,7 @@ function SanPham() {
                             <Grid item><Typography color='white' fontSize='20px'>0912344736</Typography></Grid>
                         </Grid>
                     </Grid>
-                    <Grid item display='flex' justifyContent='center' margin='20px 0px'>
+                    <Grid item display='flex' justifyContent='center' margin='20px 0px' sx={{ display: { xs: 'none', sm: 'flex' } }}>
                         <img src="https://bizweb.dktcdn.net/100/091/133/themes/880367/assets/banner-qc-cl.jpg?1676015027577"></img>
                     </Grid>
                 </Grid>
@@ -152,7 +153,7 @@ function SanPham() {
                                 </Select>
                             </Grid>
                         </Grid>
-                        <Grid item container xs={0.001} sm={6} alignItems='center' justifyContent='flex-end' overflow='hidden' padding='0px 30px'>
+                        <Grid item container sm={6} alignItems='center' sx={{ justifyContent: { xs: 'flex-start', sm: 'flex-end' }, display: { xs: 'flex', sm: 'flex' } }} padding='0px 30px'>
                             <Grid item overflow='hidden'>
                                 <Button style={{ color: '#ccc' }} onClick={handleClickChange1} startIcon={<ViewModuleIcon style={{ color: shape == 1 ? '#35c0c5' : 'black' }} />} ><Typography style={{ textTransform: 'none', color: 'black' }}>Lưới</Typography></Button>
                             </Grid>
@@ -160,7 +161,7 @@ function SanPham() {
                                 <Button style={{ color: '#ccc' }} onClick={handleClickChange2} startIcon={<MenuIcon style={{ color: shape == 2 ? '#35c0c5' : 'black' }} />}><Typography style={{ textTransform: 'none', color: 'black' }}>Danh sách</Typography></Button>
                             </Grid>
                         </Grid>
-                        <Grid item container justifyContent='space-evenly' xs={12} style={{ minHeight: '400px', marginTop: '10px' }}>
+                        <Grid item container justifyContent='space-evenly' xs={12} style={{ marginTop: '10px' }}>
                             {allsp.map((item, index) => {
                                 return (
                                     shape == 1 ?
@@ -170,11 +171,9 @@ function SanPham() {
                                             </Grid>
                                         </Grid> :
                                         <Grid key={index} container item md={11} sm={12} sx={{ padding: { xs: '10px', sm: '20px 0px' } }} justifyContent='flex-start'>
-                                            <Grid item justifyContent='center'>
-                                                <ItemListSp widthMedia='200px' maxWidth='600px' minWidthContent='400px' wrap={true}
-                                                    id={item.productid}
-                                                    img={item.linkimg} title={item.productname} cost={item.price.toLocaleString()} fontSize='20px' />
-                                            </Grid>
+
+                                            <ItemListSp2 id={item.productid} img={item.linkimg} name={item.productname} cost={item.price.toLocaleString()}></ItemListSp2>
+
                                         </Grid>
                                 )
                             })}

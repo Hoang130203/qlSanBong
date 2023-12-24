@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Grid, TextField, Tooltip, Typography, styled } from '@mui/material';
+import { Avatar, Button, Divider, Grid, MenuItem, TextField, Tooltip, Typography, styled } from '@mui/material';
 import Tippy from '@tippyjs/react/headless';
 import styles from './Header.module.scss'
 import classNames from 'classnames/bind';
@@ -17,15 +17,23 @@ import MenuSp from './MenuSp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ClassApi2 from '../../api/API2'
 import AutoComplete from '../../Component/AutoCompleteSearch';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles)
-
+//https://divuitravel.com/wp-content/uploads/2023/05/chon-loc-25-logo-bong-da-an-tuong-va-dep-mat_28.jpg
 function Header() {
     const user = localStorage.getItem('namesb')
     const [avt, setAvt] = useState()
     useEffect(() => {
-        ClassApi2.GetInfo().then((response) => {
-            setAvt(response.data.avt)
-        })
+        try {
+            ClassApi2.GetInfo().then((response) => {
+                setAvt(response.data.avt)
+            }).catch(() => {
+
+
+            })
+        } catch (error) {
+            //      toast.info('chào mừng bạn tới với trang web, hãy đăng nhập để thao tác')
+        }
     }, [])
     const listHeader = [{ xs: 2, icon: <PhoneIcon sx={{ fill: '#35c0c5;' }} />, children: <Typography color="#333" >19006750</Typography>, component: Fragment },
     {
@@ -42,7 +50,7 @@ function Header() {
     ]
     const listHeader3 = [
         {
-            xs: 5, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;', paddingRight: '10px', paddingTop: '10px' }} />,
+            xs: 5.7, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;', paddingRight: '10px', paddingTop: '10px' }} />,
             children: <AutoComplete />
         },
         { xs: 3, to: '/cart', icon: <ShoppingCartIcon className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
@@ -62,12 +70,23 @@ function Header() {
             height: '40px',
             '&:hover': { color: '#ccc !important' }
         });
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const isMobile = windowWidth < 800;
     return (
         <div className={cx('wrapper')}>
-            <Grid container maxHeight={70} display='flex' flexDirection='row' justifyContent='space-between'>
-                <Grid item xs={2.5} md={3} justifyContent="center" display="flex" sx={{ cursor: 'pointer' }}>
+            <Grid container maxHeight='70px' display='flex' flexDirection='row' justifyContent='space-between'>
+                <Grid item container xs={2.5} md={3} justifyContent="center" display="flex" sx={{ cursor: 'pointer' }}>
                     <NavLink to='/'>
-                        <img src='https://divuitravel.com/wp-content/uploads/2023/05/chon-loc-25-logo-bong-da-an-tuong-va-dep-mat_28.jpg' className={cx('logo')} />
+                        <img src={isMobile ? 'https://res.cloudinary.com/dqwouu351/image/upload/f_auto,q_auto/twbogen8bhvaw4pibb01' : 'https://res.cloudinary.com/dqwouu351/image/upload/f_auto,q_auto/hbktvkca6ompi5hnztyu'} className={cx('logo')} />
                     </NavLink>
                 </Grid>
                 {user != null && user.length > 0 ? (
@@ -154,15 +173,19 @@ function Header() {
             </Grid>
             <div className={cx('menu')}>
                 <Grid container height='40px'>
-                    <Grid item xs={3} sm={0.00001} overflow='hidden'>
+                    <Grid item xs={3} sx={{ display: 'none' }} overflow='hidden'>
                         <Button style={{ height: '40px' }}><MenuIcon style={{ color: 'white' }} /></Button>
                     </Grid>
-                    <Grid item container xs={0.0001} sm={10} md={8} lg={7} sx={{ display: { xs: 'none', sm: 'flex' }, flexDirection: 'row', justifyContent: 'center' }} overflow='hidden' >
+                    <Grid item container sm={11} md={8} lg={7}
+                        sx={{ display: { sm: 'flex' }, flexDirection: 'row', paddingLeft: { sm: '70px', xs: '10px' } }}
+                        overflow='hidden' >
                         <NavLink to='/'>
-                            <CustomizedButton style={{ '&.hover': { color: '#333' } }}>Trang chủ</CustomizedButton>
+                            <CustomizedButton style={{ '&.hover': { color: '#333' } }}
+                                sx={{ fontSize: { xs: '10px', sm: '14px' }, width: { xs: '80px', sm: '120px' }, padding: { xs: '0px 0px', sm: '0px 10px' } }}>Trang chủ</CustomizedButton>
                         </NavLink>
                         <NavLink to='/dat-san'>
-                            <CustomizedButton style={{ paddingRight: '5px' }}>Đặt sân<SportsSoccerIcon style={{ paddingLeft: '5px' }} /></CustomizedButton>
+                            <CustomizedButton sx={{ fontSize: { xs: '10px', sm: '14px' }, width: { xs: '80px', sm: '120px' }, padding: { xs: '0px 0px', sm: '0px 10px' } }}
+                                style={{ paddingRight: '5px' }}>Đặt sân<SportsSoccerIcon style={{ paddingLeft: '5px' }} sx={{ fontSize: { xs: 'small', sm: 'medium' } }} /></CustomizedButton>
                         </NavLink>
                         <Tippy interactive
                             offset={[0, -9]}
@@ -171,16 +194,17 @@ function Header() {
                                     <MenuSp />
                                 </div>
                             )}>
-                            <NavLink to='/san-pham'>
+                            <NavLink to='/san-pham' >
 
-                                <CustomizedButton style={{ paddingRight: '5px' }}>Sản phẩm <KeyboardArrowDownIcon /></CustomizedButton>
+                                <CustomizedButton
+                                    sx={{ fontSize: { xs: '10px', sm: '14px' }, width: { xs: '90px', sm: '120px' }, padding: { xs: '0px 0px', sm: '0px 10px' } }}
+                                    style={{ paddingRight: '5px' }}>Sản phẩm <KeyboardArrowDownIcon sx={{ fontSize: { xs: 'small', sm: 'medium' } }} /></CustomizedButton>
                             </NavLink>
                         </Tippy>
                         <NavLink to='/tin-tuc'>
-                            <CustomizedButton>Tin tức</CustomizedButton>
-                        </NavLink>
-                        <NavLink to='/lien-he'>
-                            <CustomizedButton>Liên hệ</CustomizedButton>
+                            <CustomizedButton
+                                sx={{ fontSize: { xs: '10px', sm: '14px' }, width: { xs: '80px', sm: '120px' }, padding: { xs: '0px 0px', sm: '0px 10px' } }}
+                            >Tin tức</CustomizedButton>
                         </NavLink>
                     </Grid>
                 </Grid>

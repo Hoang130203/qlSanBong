@@ -95,6 +95,22 @@ function GioHang() {
                                                                     setGioHangs(updatedGioHangs);
                                                                     setTotalCost(solvetotalcost())
                                                                 }
+                                                                if (updatedGioHangs[index].quantity == 0) {
+                                                                    const updatedGioHangs2 = [...GioHangs];
+                                                                    ClassApi2.DeleteProductFromCart(sanpham.productId, sanpham.color ? sanpham.color : '.').then(() => {
+                                                                        updatedGioHangs2[index].quantity = 0
+                                                                        updatedGioHangs2.splice(index, 1);
+                                                                        setGioHangs(updatedGioHangs2);
+                                                                        setTotalCost(solvetotalcost())
+                                                                        toast.info('Đã xóa', {
+                                                                            position: 'bottom-right'
+                                                                        })
+                                                                    }).catch(() => {
+                                                                        toast.error('lỗi', {
+                                                                            position: 'bottom-right'
+                                                                        })
+                                                                    })
+                                                                }
 
                                                             }}>
                                                             <RemoveIcon /></button>

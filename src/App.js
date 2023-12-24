@@ -4,6 +4,7 @@ import { publicRoutes } from './routes';
 import ScrollToTop from './ScrollToTop';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './Navigation.css'
 function App() {
 
   return (

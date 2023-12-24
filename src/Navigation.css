@@ -1,0 +1,69 @@
+nav {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+nav.active {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin-bottom: 10px;
+}
+
+.nav-button {
+  background-color: #007bff; /* Màu nền của nút */
+  color: #fff; /* Màu chữ */
+  border: none; /* Loại bỏ viền */
+  border-radius: 50%; /* Tạo góc cong cho nút để làm tròn */
+  width: 50px; /* Độ rộng của nút */
+  height: 50px; /* Độ cao của nút */
+  cursor: pointer; /* Biểu tượng con trỏ khi rê chuột */
+  position: fixed; /* Vị trí cố định */
+  bottom: 20px; /* Khoảng cách bottom */
+  right: 20px; /* Khoảng cách right */
+  display: flex; /* Hiển thị theo kiểu flexbox */
+  justify-content: center; /* Canh lề giữa theo chiều ngang */
+  align-items: center; /* Canh lề giữa theo chiều dọc */
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+}
+
+.nav-button:hover {
+  background-color: #0d2d4f; /* Màu nền thay đổi khi rê chuột vào */
+}
+
+.nav-button:active {
+  background-color: #003d80; /* Màu nền thay đổi khi click */
+}
+.flash {
+  animation: flashAnimation 2.5s infinite alternate; /* Thêm hiệu ứng nhấp nháy */
+}
+
+@keyframes flashAnimation {
+  0% {
+    transform: scale(1);
+    background-color: #21689e; /* Màu nền ban đầu */
+  }
+  50% {
+    transform: scale(1.1); /* Phóng to lên 110% */
+  }
+  100% {
+    transform: scale(1);
+    background-color: #007bff; /* Màu nền thay đổi trong hiệu ứng nhấp nháy */
+  }
+}
+.bground {
+  /*background-color: #fcfef1;*/
+  background-image: url("https://res.cloudinary.com/dqwouu351/image/upload/v1703384286/zasb4sz26pd1zf9lgxqq.png");
+  background-repeat: no-repeat;
+  height: 300px; /* Chiều cao mẫu */
+  background-size: cover;
+}

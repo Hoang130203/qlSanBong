@@ -45,9 +45,11 @@ function FormDatSan() {
                 toast.info(response.data.message, {
                     position: 'bottom-right'
                 })
-            }).catch(
-
-        )
+            }).catch(() => {
+                toast.error('Đặt thất bại', {
+                    position: 'bottom-right'
+                })
+            })
     }
     let kips = [
         { value: 1, name: 'Kíp 1: 7h-8h' },

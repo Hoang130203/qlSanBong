@@ -12,7 +12,7 @@ function DatSan() {
     useEffect(() => {
         ClassApi.GetAllField().then((response) => {
             setFields(response.data)
-        })
+        }).catch(() => { })
     }, [])
     const [selectedRate, setSelectedRate] = useState([]);
     const handleRateChange = (event) => {
