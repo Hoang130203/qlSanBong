@@ -77,8 +77,10 @@ function Sidebar() {
                 <div className={cx('menu')}>
                     <Menu>
                         {SidebarMenu.map((data, index) => {
+                            console.log('phần tử thứ ' + index)
                             return (
-                                <div key={index}>
+
+                                <div key={index} >
                                     <MenuItem
                                         title={data.title}
                                         to={data.to}

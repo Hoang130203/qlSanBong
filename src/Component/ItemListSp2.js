@@ -35,7 +35,7 @@ function ItemListSp2({ id, img, name, cost, type, bgcolor }) {
                 >
                     <Grid item sx={{ maxHeight: { xs: '100px' }, maxWidth: { xs: '120px' } }} className="img" >
                         <NavLink to={'/san-pham/chitietsanpham/' + id}>
-                            <img src={img} style={{ objectFit: 'contain', height: '100%', borderRadius: '10px' }} ></img>
+                            <img src={img} style={{ objectFit: 'contain', height: '100%', borderRadius: '10px', maxWidth: '90%' }} ></img>
                         </NavLink>
                     </Grid>
                     <Grid item container flex={1}>
@@ -97,7 +97,7 @@ function ItemListSp2({ id, img, name, cost, type, bgcolor }) {
                 >
                     <Grid item sx={{ maxHeight: { xs: '100px', sm: '170px' }, maxWidth: { xs: '120px', sm: '200px' } }} className="img" >
                         <NavLink to={'/san-pham/chitietsanpham/' + id}>
-                            <img src={img} style={{ objectFit: 'contain', height: '100%', borderRadius: '10px' }} ></img>
+                            <img src={img} style={{ objectFit: 'contain', height: '100%', borderRadius: '10px', maxWidth: '90%' }} ></img>
                         </NavLink>
                     </Grid>
                     <Grid item container flex={1}>

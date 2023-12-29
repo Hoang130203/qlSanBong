@@ -13,15 +13,22 @@ function DangKy() {
     const [name, setName] = useState('')
     const [address, setAddress] = useState('')
     const handleRegister = () => {
+
         if (phone.length == 0 || pass.length == 0 || name.length == 0 || repass.length == 0 || address.length == 0) {
             toast.warn('Hãy nhập đủ thông tin', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
+
         } else if (pass != repass) {
             toast.warn('Mật khẩu nhập lại không đúng', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
-        } else {
+        } else if (phone.length < 10 || phone.length > 10) {
+            toast.warn('Số điện thoại phải có 10 số', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        }
+        else {
             try {
                 ClassApi2.Resister({
                     "phoneNumber": phone,

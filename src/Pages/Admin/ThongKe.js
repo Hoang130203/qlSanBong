@@ -11,6 +11,7 @@ import ClassApi from '../../api/API'
 import { toast } from "react-toastify";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { font } from "../../Service/font";
+import MenuMobile from "./MenuMobile/MenuMobile";
 
 function Thongke() {
 
@@ -198,6 +199,7 @@ function Thongke() {
     };
     return (
         <Grid container padding='30px 30px' alignContent='flex-start' rowSpacing={4}>
+
             <Grid item xs={12} >
                 <Typography fontFamily='inherit' variant="h4" color='#1976d2'>Thống kê doanh số</Typography>
             </Grid>

@@ -1,0 +1,55 @@
+.menu-container {
+  position: fixed;
+  bottom: 20px; /* Điều chỉnh vị trí bottom của menu */
+  right: 20px; /* Điều chỉnh vị trí right của menu */
+  width: 190px; /* Kích thước của menu */
+  height: 190px; /* Kích thước của menu */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+
+  border-radius: 50%;
+}
+
+.menu {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+}
+
+.menu-item {
+  width: 40px; /* Kích thước của từng phần tử trong menu */
+  height: 40px; /* Kích thước của từng phần tử trong menu */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #fff; /* Màu nền của các item trong menu */
+  position: absolute;
+}
+
+/* Căn chỉnh vị trí của từng phần tử trong hình tròn */
+.menu-item:nth-child(1) {
+  transform: rotate(0deg) translate(50px) rotate(0deg);
+}
+.menu-item:nth-child(2) {
+  transform: rotate(60deg) translate(50px) rotate(-60deg);
+}
+.menu-item:nth-child(3) {
+  transform: rotate(120deg) translate(50px) rotate(-120deg);
+}
+.menu-item:nth-child(4) {
+  transform: rotate(180deg) translate(50px) rotate(-180deg);
+}
+.menu-item:nth-child(5) {
+  transform: rotate(240deg) translate(50px) rotate(-240deg);
+}
+.menu-item:nth-child(6) {
+  transform: rotate(300deg) translate(50px) rotate(-300deg);
+}

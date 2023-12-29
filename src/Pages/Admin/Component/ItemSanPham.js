@@ -17,7 +17,7 @@ function ItemSanPham({ type, products }) {
     return (
         <List
             sx={{ width: '100%' }}
-            component="nav"
+            component="div"
 
         >
 

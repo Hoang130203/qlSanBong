@@ -122,19 +122,9 @@ function SanPham() {
                         ))}
 
                     </Grid>
-                    <Grid item container display='flex' sx={{ display: { xs: 'none', sm: 'flex' } }} flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' height='65px' style={{ margin: '20px 0px', background: 'url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-menu.png?1665385034327) #35c0c5', fontFamily: 'Arial, Helvetica, sans-serif' }}>
-                        <Grid item container xs={3} justifyContent='flex-end'>
-                            <Grid item>
-                                <WifiCalling3Icon style={{ color: 'white', fontSize: '35px' }} />
-                            </Grid>
-                        </Grid>
-                        <Grid item container display='flex' flexDirection='column' xs={8}>
-                            <Grid item><Typography color='white' fontSize='20px'>Liên hệ</Typography></Grid>
-                            <Grid item><Typography color='white' fontSize='20px'>0912344736</Typography></Grid>
-                        </Grid>
-                    </Grid>
+
                     <Grid item display='flex' justifyContent='center' margin='20px 0px' sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                        <img src="https://bizweb.dktcdn.net/100/091/133/themes/880367/assets/banner-qc-cl.jpg?1676015027577"></img>
+                        <img src="https://genk.mediacdn.vn/2017/photo-1-1496042071517.jpg" style={{ maxWidth: '100%' }}></img>
                     </Grid>
                 </Grid>
                 <Grid item container lg={9} md={7.5} sm={11} xs={11.9} style={{ padding: { xs: '10px', sm: '0px' } }} display='flex' rowSpacing={2} flexDirection='column' justifyContent='flex-start' >

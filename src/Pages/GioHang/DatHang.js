@@ -22,8 +22,6 @@ function DatHang() {
             ClassApi2.GetCart().then((response) => {
                 setGioHangs(response.data)
             })
-
-
         } catch (error) {
 
         }
@@ -45,8 +43,12 @@ function DatHang() {
             if (response.data.success == true) {
                 ClassApi2.DeleteGioHang()
             }
-        }).finally(
-            navigate('/')
+        }).finally(() => {
+            setShow(false)
+            setTimeout(() => {
+                window.location.reload()
+            }, [3000])
+        }
         )
     }
     const [show, setShow] = useState(false)
