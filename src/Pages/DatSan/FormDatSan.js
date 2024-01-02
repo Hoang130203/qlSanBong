@@ -66,7 +66,7 @@ function FormDatSan() {
             <Grid item xs={12} md={7} height='50px'>
                 <Typography textAlign='center' fontSize='25px' fontWeight='600'>Đặt sân</Typography>
             </Grid>
-            <Grid item container xs={12} sm={10} md={8} lg={6} border='1px solid #ccc' minHeight='500px' maxHeight='600px' alignContent='flex-start'>
+            <Grid item container xs={12} sm={10} md={8} lg={6} border='1px solid #ccc' minHeight='500px' alignContent='flex-start'>
                 <Grid item container xs={12} bgcolor='#ccc' height='40px' display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
                     <Grid item paddingRight='10px'>
                         <EmailIcon style={{ position: 'relative', top: '2px' }} />

@@ -15,10 +15,12 @@ import ExportToExcel from "../../Service/ExportToExcel";
 function SanBong2() {
     let originalArray = []
     const [listField, setListField] = useState([])
+    const [fields, setFields] = useState([])
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await ClassApi.GetAllField().then((response) => { originalArray = response.data })
+                setFields(originalArray)
                 setListField(await originalArray.map(item => ({
                     id: item.fieldid,
                     name: item.name,
@@ -35,7 +37,41 @@ function SanBong2() {
         }
         fetchData()
     }, [])
+    function reorderProperties(obj) {
+        const reorderedObj = [
+            obj.fieldid,
+            obj.name,
+            obj.rate,
+            obj.type,
+            obj.price,
+            obj.address,
+            obj.decription,
 
+        ]
+        return reorderedObj;
+    }
+
+    const handleExport = () => {
+        function mapTypeValue(type) {
+            switch (type) {
+                case "1":
+                    return '7 người';
+                case "2":
+                    return '11 người';
+                case "3":
+                    return 'fusal';
+                default:
+                    return 'Unknown';
+            }
+        }
+        const newArray = fields.map(obj => ({
+            ...obj,
+            type: mapTypeValue(obj.type)
+        }));
+        const reorderedArray = [['Mã sân', 'Tên sân', 'Đánh giá', 'Loại sân', 'Giá', 'Địa chỉ', 'Mô tả'], ...newArray.map(obj => reorderProperties(obj))];
+
+        ExportToExcel.export(reorderedArray, 'Danh sách sân bóng')
+    }
     return (
         <Grid container padding='30px 30px' alignContent='flex-start' rowSpacing={4}>
             <Grid item xs={12}>
@@ -46,7 +82,7 @@ function SanBong2() {
                     <Button startIcon={<AddIcon />} style={{ marginRight: '20px' }} variant="contained">Thêm sân bóng</Button>
                 </NavLink>
 
-                <Button onClick={() => { ExportToExcel.export() }} startIcon={<ExitToAppIcon />} color="success" variant="contained">Excel</Button>
+                <Button onClick={() => { handleExport() }} startIcon={<ExitToAppIcon />} color="success" variant="contained">Excel</Button>
 
             </Grid>
             <Grid item container xs={12}>

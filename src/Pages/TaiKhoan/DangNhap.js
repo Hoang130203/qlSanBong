@@ -53,7 +53,7 @@ function DangNhap() {
             <Grid container item xs={12} sm={9} height='610px' display='flex' flexDirection='row' justifyContent='space-around'>
                 <Grid item md={5} sm={0.00001} display='flex' flexDirection='row' borderRadius='10px' sx={{ borderTopRightRadius: '0', borderBottomRightRadius: '0', background: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
                 </Grid>
-                <Grid item container md={7} sm={11.9} padding="40px 100px" display='block'>
+                <Grid item container md={7} sm={11.9} sx={{ padding: { sm: "40px 100px", xs: '30px 60px' } }} display='block'>
                     <Grid item xs={12}><Typography variant="h4">Login</Typography></Grid>
                     <Grid item xs={12}><Typography variant="h7">New user?</Typography>
                         <NavLink to='/account/dang-ky' style={{ textDecoration: 'none', color: "#1D9BF0" }}><Typography variant="h7">Create an account</Typography></NavLink>

@@ -12,7 +12,7 @@ class ExportToExcel {
                 // Thêm dữ liệu khác nếu cần
             ];
         }
-        name = 'Danh sách sân bóng'
+        name ? (name = name) : (name = 'Danh sách sân bóng')
         // Tạo một WorkSheet
         const ws = XLSX.utils.aoa_to_sheet(data);
 

@@ -77,7 +77,7 @@ function ItemSp({ id, img, title, cost }) {
                         },
                     }}
                 >
-                    <Typography variant="h8" className="text">
+                    <Typography style={{ fontSize: '12px' }} className="text">
                         Thêm vào giỏ
                     </Typography>
                     <AddShoppingCartIcon className="icon" />

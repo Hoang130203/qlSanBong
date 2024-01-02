@@ -70,7 +70,7 @@ function ThemQuangCao() {
         }
     }
     return (
-        <Grid item container spacing={1} style={{ padding: " 30px 50px" }} xs={12} width='100%'>
+        <Grid item container spacing={1} sx={{ maxWidth: { xs: '400px', sm: '100%' }, padding: { sm: " 30px 50px", xs: '30px 20px' } }} xs={12} width='100%'>
             {isUploading && <CircularProgress style={{ position: 'fixed', right: '20px', top: '20px' }} />}
             <ThemeProvider theme={theme}>
                 <Grid item xs={12} padding='0px 0px 20px 0px'>
@@ -86,7 +86,7 @@ function ThemQuangCao() {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={7}>
-                            <TextField style={{ width: '430px' }} value={title} onChange={(e) => { setTitle(e.target.value) }}></TextField>
+                            <TextField style={{ width: '430px', maxWidth: '100%' }} value={title} onChange={(e) => { setTitle(e.target.value) }}></TextField>
                         </Grid>
                     </Grid>
 

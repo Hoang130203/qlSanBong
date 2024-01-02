@@ -71,7 +71,7 @@ function DatSan() {
 
                 <Grid item container display='flex' paddingTop='25px' flexDirection='row' >
                     <Grid item container xs={12} md={3} display='flex' flexDirection='colume' alignContent='flex-start'>
-                        <ButtonMenu title='Đánh giá' iconRight=''>
+                        <ButtonMenu title='Đánh giá' iconRight='' >
                             <Grid container item fontSize='22px' display='flex' rowSpacing={1} flexDirection='column' padding='10px 0px 0px 30px'>
                                 <Grid item ><input onChange={handleRateChange} type="checkbox" value='5' id="5s" style={{ width: '30px' }} /><label htmlFor="5s">5 sao</label></Grid>
                                 <Grid item ><input onChange={handleRateChange} type="checkbox" value='4' id="4s" style={{ width: '30px' }} /><label htmlFor="4s">4 sao</label></Grid>

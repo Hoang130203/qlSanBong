@@ -58,6 +58,9 @@ class ClassApi {
     GetDash1Y(year) {
         return axios.get(base_api + '/api/Thongkes/DoanhSo1Y?Year=' + year, { headers })
     }
+    GetBXH() {
+        return axios.get(base_api + '/api/Thongkes/XepHangNguoiDung', { headers })
+    }
     //api sân bóng cho admin
     //Them san bong 
     PostField(name, cost, address, type, detail, img) {
@@ -110,6 +113,10 @@ class ClassApi {
     //lấy theo id
     GetProduct(id) {
         return axios.get(base_api + '/api/InfoProducts/' + id, { headers })
+    }
+    //lấy tất cả
+    GetAllProduct() {
+        return axios.get(base_api + '/api/Products', { headers })
     }
     //sửa theo id
     PutProduct(id, product) {

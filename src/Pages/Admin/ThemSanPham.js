@@ -98,7 +98,7 @@ function ThemSanPham() {
 
     };
     return (
-        <Grid item container spacing={1} style={{ padding: " 30px 50px" }} width='100%'>
+        <Grid item container spacing={1} sx={{ maxWidth: { xs: '400px', sm: '100%' }, padding: { sm: " 30px 50px", xs: '30px 20px' } }} width='100%'>
             {isUploading && <CircularProgress style={{ position: 'fixed', right: '20px', top: '20px' }} />}
             <ThemeProvider theme={theme}>
                 <Grid item xs={12}>
@@ -114,7 +114,7 @@ function ThemSanPham() {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={7}>
-                            <TextField style={{ width: '430px' }} value={name} onChange={(e) => { setName(e.target.value) }}></TextField>
+                            <TextField style={{ width: '430px', maxWidth: '100%' }} value={name} onChange={(e) => { setName(e.target.value) }}></TextField>
                         </Grid>
                     </Grid>
                     <Grid item container xs={12} alignItems='center'>
@@ -154,7 +154,7 @@ function ThemSanPham() {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={7}>
-                            <TextareaAutosize value={detail} onChange={(e) => { setDetail(e.target.value) }} style={{ width: '430px', height: '100px', overflow: 'auto', fontSize: '20px', fontFamily: 'inherit', padding: '5px' }} />
+                            <TextareaAutosize value={detail} onChange={(e) => { setDetail(e.target.value) }} style={{ width: '430px', maxWidth: '100%', height: '100px', overflow: 'auto', fontSize: '20px', fontFamily: 'inherit', padding: '5px' }} />
                         </Grid>
                     </Grid>
                     <Grid item container xs={12} alignItems='center'>

@@ -53,7 +53,7 @@ function Header() {
             xs: 5.7, icon: <SearchIcon fontSize='medium' sx={{ '&:hover': { color: '#333 !important' }, cursor: 'pointer', color: '#35c0c5;', paddingRight: '10px', paddingTop: '10px' }} />,
             children: <AutoComplete />
         },
-        { xs: 3, to: '/cart', icon: <ShoppingCartIcon className={cx('iconMenu')} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
+        { xs: 3, to: '/cart', icon: <ShoppingCartIcon className={cx('iconMenu')} sx={{ fontSize: { xs: '30px', sm: '25px' } }} />, children: <Typography className={cx('textMenu')} variant='h6' fontWeight={400}>Giỏ hàng</Typography>, hovercolor: "c", cursor: 'pointer', background: "url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-cart.png?1665385034327) #35c0c5;", hoverBackground: "#fff" },
         {
             xs: 3, to: '/account/thong-tin', icon: avt ? <Avatar sx={{ bgcolor: 'transparent' }} aria-label="recipe">
                 <img style={{ maxHeight: '42px' }} src={avt} />
@@ -83,7 +83,7 @@ function Header() {
     const isMobile = windowWidth < 800;
     return (
         <div className={cx('wrapper')}>
-            <Grid container maxHeight='70px' display='flex' flexDirection='row' justifyContent='space-between'>
+            <Grid container sx={{ maxHeight: { sm: '70px' } }} display='flex' flexDirection='row' justifyContent='space-between'>
                 <Grid item container xs={2.5} md={3} justifyContent="center" display="flex" sx={{ cursor: 'pointer' }}>
                     <NavLink to='/'>
                         <img src={isMobile ? 'https://res.cloudinary.com/dqwouu351/image/upload/f_auto,q_auto/twbogen8bhvaw4pibb01' : 'https://res.cloudinary.com/dqwouu351/image/upload/f_auto,q_auto/hbktvkca6ompi5hnztyu'} className={cx('logo')} />
@@ -105,7 +105,7 @@ function Header() {
                                                     },
                                                 }} >
                                                 <Grid item display="flex" justifyItems="flex-end">{item.icon}</Grid>
-                                                <Grid item xs={8.5} display="flex" justifyContent="center">{item.children}</Grid>
+                                                <Grid item xs={9.5} display="flex" justifyContent="center">{item.children}</Grid>
 
                                             </Grid>
                                             <Divider orientation='vertical' style={{ height: '70px' }} />

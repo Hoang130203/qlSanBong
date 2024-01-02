@@ -58,5 +58,6 @@ export default function LineChart({ label, data1, data2 }) {
             },
         ],
     };
-    return <Line options={options} data={data} />;
+    const variable = window.innerWidth <= 768 ? 500 : 250;
+    return <Line width={500} height={variable} options={options} data={data} />;
 }

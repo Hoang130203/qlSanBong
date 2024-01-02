@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 import { Key } from "@mui/icons-material";
 const cx = classNames.bind(styles);
 const ButtonMenu = ({ iconLeft, iconRight, children, title }) => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(window.innerWidth <= 768 ? false : true);
 
     return (
         <div className={cx("menu")}>

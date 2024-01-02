@@ -69,7 +69,7 @@ function DangKy() {
             <Grid container item xs={12} md={9} height='610px' display='flex' flexDirection='row' justifyContent='space-around'>
                 <Grid item maxHeight="630px" md={5} sm={0.00001} display='flex' flexDirection='row' borderRadius='10px' sx={{ borderTopRightRadius: '0', borderBottomRightRadius: '0', background: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
                 </Grid>
-                <Grid item container md={7} sm={11.9} padding="40px 100px" display='block'>
+                <Grid item container md={7} sm={11.9} sx={{ padding: { sm: "40px 100px", xs: '30px 60px' } }} display='block'>
                     <Grid item xs={12}><Typography variant="h4">Sign up</Typography></Grid>
 
                     <Grid item container padding="10px 0px" spacing={1}>

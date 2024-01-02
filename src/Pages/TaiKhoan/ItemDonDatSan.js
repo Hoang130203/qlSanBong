@@ -82,16 +82,16 @@ function ItemDonDatSan({ sanbongdh, sanbong, donhang }) {
                 <Grid item container xs={7} paddingLeft='10px'>
                     <Grid item xs={12}>
                         <NavLink to={"/dat-san/chi-tiet-san/" + sanbong.fieldid} style={{ textDecoration: 'none' }}>
-                            <Typography fontWeight={600}>{sanbong.name}</Typography>
+                            <Typography fontWeight={600}>{sanbong ? sanbong.name : ''}</Typography>
                         </NavLink>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography>Kíp: <span style={{ color: 'blue' }}>{sanbongdh.kip}</span> Đã đặt đá ngày: <span style={{ color: 'green' }}>{sanbongdh.times.split("T")[0]}</span></Typography>
+                        <Typography>Kíp: <span style={{ color: 'blue' }}>{sanbongdh ? sanbongdh.kip : 1}</span> Đã đặt đá ngày: <span style={{ color: 'green' }}>{sanbongdh ? sanbongdh.times.split("T")[0] : ''}</span></Typography>
                     </Grid>
                 </Grid>
                 <Grid item container xs={2.5} justifyContent='flex-end'>
                     <Grid item>
-                        <Typography textAlign='center' color='orange'>{sanbongdh.cost.toLocaleString()} đ</Typography>
+                        <Typography textAlign='center' color='orange'>{sanbongdh ? sanbongdh.cost.toLocaleString() : ''} đ</Typography>
                     </Grid>
 
                 </Grid>

@@ -17,6 +17,7 @@ function DatHang() {
     const [address, setAddress] = useState()
     const [phoneNumber, setPhoneNumber] = useState()
     const [name, setName] = useState()
+    const [disabled, setDisabled] = useState(false)
     useEffect(() => {
         try {
             ClassApi2.GetCart().then((response) => {
@@ -36,6 +37,7 @@ function DatHang() {
         setName(response.data.name)
     })
     const postOrder = () => {
+        setDisabled(true)
         ClassApi2.PostOrder(GioHangs, vanchuyen).then((response) => {
             toast.info(response.data.message, {
                 position: 'bottom-right'
@@ -43,11 +45,13 @@ function DatHang() {
             if (response.data.success == true) {
                 ClassApi2.DeleteGioHang()
             }
+
         }).finally(() => {
             setShow(false)
             setTimeout(() => {
+                navigate('/')
                 window.location.reload()
-            }, [3000])
+            }, [5000])
         }
         )
     }
@@ -164,6 +168,7 @@ function DatHang() {
                     <Grid item xs={12}>
                         <Button variant="contained"
                             onClick={() => { setShow(true) }}
+                            disabled={disabled}
                         >Đặt hàng</Button>
                     </Grid>
                 </Grid>

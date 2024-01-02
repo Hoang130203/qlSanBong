@@ -60,5 +60,7 @@ export default function RowChart({ label, data1, data2 }) {
             },
         ],
     };
-    return <Bar options={options} data={data} />;
+    const variable = window.innerWidth <= 768 ? 500 : 250;
+
+    return <Bar width={500} height={variable} options={options} data={data} />;
 }
