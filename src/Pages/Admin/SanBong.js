@@ -4,6 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 import ItemSanBong from "./Component/ItemSanBong";
 import ClassApi from '../../api/API'
 import { useEffect, useState } from "react";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ExportToExcel from "../../Service/ExportToExcel";
 //let listField = [
 //   { name: 'Sân bách khoa', rate: 3, price: '500.000', address: 'svđ bách khoa', special: 'không có', image: "https://lh3.googleusercontent.com/p/AF1QipNA87BgBmE7xAL3LclpDWHbeb9ACPTT_yyInsPh=w1080-h608-p-k-no-v0" },
 //   { name: 'Sân Mỹ Đình', rate: 5, price: '900.000', address: 'Mỹ đình', special: 'svđ quốc gia', image: "https://nld.mediacdn.vn/2018/6/2/mordovia-arena-saransk-1527915860667205779137.jpg" },
@@ -41,8 +43,11 @@ function SanBong2() {
             </Grid>
             <Grid item xs={12}>
                 <NavLink to='/admin/san-bong/them-san-bong'>
-                    <Button startIcon={<AddIcon />} variant="contained">Thêm sân bóng</Button>
+                    <Button startIcon={<AddIcon />} style={{ marginRight: '20px' }} variant="contained">Thêm sân bóng</Button>
                 </NavLink>
+
+                <Button onClick={() => { ExportToExcel.export() }} startIcon={<ExitToAppIcon />} color="success" variant="contained">Excel</Button>
+
             </Grid>
             <Grid item container xs={12}>
                 <ItemSanBong fields={listField} setFields={setListField} />

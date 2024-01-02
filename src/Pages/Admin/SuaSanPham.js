@@ -11,12 +11,16 @@ import {
     Typography,
     createTheme,
 } from "@mui/material";
-
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useEffect, useState } from "react";
 import ClassApi from '../../api/API'
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import jsPDF from "jspdf";
+import { font } from '../../Service/font'
+import { getDate } from "date-fns";
+
 const API_ADDRESS = 'https://provinces.open-api.vn/';
 const theme = createTheme({
     components: {
@@ -118,6 +122,73 @@ function SuaSanPham() {
         }
 
     };
+    const handleExport = () => {
+        const doc = new jsPDF();
+
+        const imageUrl = demoUrl.length > 10 ? demoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoL4bX1iIJZituNk6mWAwOdD2Am1MjOdJBZQ&usqp=CAU';
+        let line = 10
+        doc.addFileToVFS("WorkSans-normal.ttf", font);
+        doc.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
+        doc.setFont("WorkSans");
+        doc.setFontSize(15);
+        doc.setTextColor(255, 0, 0);
+        doc.text('Project 1 shop', 35, line, 'center');
+        doc.setTextColor(255, 0, 0);
+        doc.setFontSize(12)
+        var currentDate = new Date();
+
+        // Lấy ngày, tháng và năm hiện tại
+        var day = currentDate.getDate(); // Lấy ngày (từ 1 đến 31)
+        var month = currentDate.getMonth() + 1; // Lấy tháng (từ 0 đến 11), cộng thêm 1 vì tháng bắt đầu từ 0
+        var year = currentDate.getFullYear(); // Lấy năm
+        doc.setTextColor(0, 0, 0)
+        doc.text('ngày ' + day + ', tháng ' + month + ', năm ' + year, 130, line, 'center');
+        line += 30
+        doc.setTextColor(11, 14, 229);
+        doc.setFontSize(30)
+        doc.text('Thông tin sản phẩm', 80, line, 'center');
+        line += 15
+        // Tải hình ảnh từ URL
+        const img = new Image();
+        img.src = demoUrl;
+
+        // Đợi hình ảnh tải xong
+        img.onload = () => {
+            const imgWidth = 100; // Chiều rộng hình ảnh trong file PDF
+            const imgHeight = 75; // Chiều cao hình ảnh trong file PDF
+            doc.setTextColor(0, 0, 0);
+            doc.addImage(img, 'JPEG', 35, line, imgWidth, imgHeight); // Thêm hình ảnh vào file PDF
+            doc.addFileToVFS("WorkSans-normal.ttf", font);
+            doc.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
+            doc.setFont("WorkSans");
+            doc.setFontSize(15);
+            line += 82
+            doc.text('Mã sản phẩm :   ' + id, 35, line);
+            line += 12
+            doc.text('Tên sản phẩm :   ' + name, 35, line);
+            line += 12
+            doc.text('Đơn giá:     ' + cost.toLocaleString() + ' đ', 35, line);
+            line += 12
+            doc.text('Số lượng còn lại:         ' + quantity, 35, line)
+            line += 12
+            const typ = (type == 1 ? '7 người' : type == 2 ? '11 người' : 'fusal')
+            doc.text('Loại hàng:       ' + type, 35, line)
+            line += 12
+            doc.text('Mô tả:  ', 35, line)
+
+            const maxWidth = 100; // Chiều rộng tối đa cho mỗi dòng
+
+            let textLines = doc.splitTextToSize(detail, maxWidth); // Chia mô tả thành các dòng với độ dài tối đa
+
+            textLines.forEach((lines) => {
+                doc.text('' + lines, 70, line);
+                line += 12; // Tăng y để xuống dòng cho dòng tiếp theo
+            });
+            // Lưu file PDF
+            doc.save('thogtinsanpham_' + id + '.pdf');
+        };
+
+    };
     return (
         <Grid item container spacing={1} style={{ padding: " 30px 50px" }} width='100%'>
             {isUploading && <CircularProgress style={{ position: 'fixed', right: '20px', top: '20px' }} />}
@@ -207,7 +278,8 @@ function SuaSanPham() {
                         </Grid>
                     </Grid>
                     <Grid item xs={12} >
-                        <Button variant="contained" startIcon={<UpgradeIcon />} onClick={handleClick} disabled={isUploading}><Typography textTransform='none'>Sửa sản phẩm</Typography></Button>
+                        <Button variant="contained" style={{ marginRight: '30px' }} startIcon={<UpgradeIcon />} onClick={handleClick} disabled={isUploading}><Typography textTransform='none'>Sửa sản phẩm</Typography></Button>
+                        <Button onClick={handleExport} color="info" startIcon={<ExitToAppIcon />} variant="contained"><Typography textTransform='none'>Export</Typography></Button>
                     </Grid>
                 </Grid>
 

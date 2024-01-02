@@ -114,8 +114,26 @@ function SuaSanBong() {
 
         const imageUrl = demoUrl.length > 10 ? demoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoL4bX1iIJZituNk6mWAwOdD2Am1MjOdJBZQ&usqp=CAU';
         let line = 10
+        doc.addFileToVFS("WorkSans-normal.ttf", font);
+        doc.addFont("WorkSans-normal.ttf", "WorkSans", "normal");
+        doc.setFont("WorkSans");
+        doc.setFontSize(15);
         doc.setTextColor(255, 0, 0);
-        doc.text('Thông tin sân bóng', 80, 10, 'center');
+        doc.text('Project 1 shop', 35, line, 'center');
+        doc.setTextColor(255, 0, 0);
+        doc.setFontSize(12)
+        var currentDate = new Date();
+
+        // Lấy ngày, tháng và năm hiện tại
+        var day = currentDate.getDate(); // Lấy ngày (từ 1 đến 31)
+        var month = currentDate.getMonth() + 1; // Lấy tháng (từ 0 đến 11), cộng thêm 1 vì tháng bắt đầu từ 0
+        var year = currentDate.getFullYear(); // Lấy năm
+        doc.setTextColor(0, 0, 0)
+        doc.text('ngày ' + day + ', tháng ' + month + ', năm ' + year, 130, line, 'center');
+        line += 30
+        doc.setTextColor(11, 14, 229);
+        doc.setFontSize(30)
+        doc.text('Thông tin sân bóng', 80, line, 'center');
         line += 15
         // Tải hình ảnh từ URL
         const img = new Image();

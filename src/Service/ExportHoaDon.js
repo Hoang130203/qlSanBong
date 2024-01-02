@@ -60,9 +60,19 @@ class ExportHoaDon {
         doc.setFontSize(15);
         doc.setTextColor(255, 0, 0);
         doc.text('Project 1 shop', 35, 10, 'center');
+        const currentDate = new Date()
+        var day = currentDate.getDate(); // Lấy ngày (từ 1 đến 31)
+        var month = currentDate.getMonth() + 1; // Lấy tháng (từ 0 đến 11), cộng thêm 1 vì tháng bắt đầu từ 0
+        var year = currentDate.getFullYear(); // Lấy năm
+        var hour = currentDate.getHours()
+        var minute = currentDate.getMinutes()
+        var second = currentDate.getSeconds()
+        doc.setTextColor(0, 0, 0)
+        doc.setFontSize(12)
+        doc.text(`${hour}:${minute}:${second}` + ' ngày ' + day + ', tháng ' + month + ', năm ' + year, 130, 10, 'center');
         doc.setFontSize(30);
         doc.setTextColor(0, 0, 0);
-        doc.text('Hóa đơn', 105, 20, 'center');
+        doc.text('Hóa đơn', 105, 30, 'center');
         doc.setFontSize(12);
         let verticalPosition = 40;
         doc.text(`Tên hóa đơn: Hóa đơn sản phẩm`, 20, verticalPosition);
@@ -113,6 +123,8 @@ class ExportHoaDon {
         doc.text(`Thời gian đặt: ${invoiceInfo.order.time}`, 20, verticalPosition);
         verticalPosition += 10;
         doc.text(`Trạng thái: ${invoiceInfo.order.status}`, 20, verticalPosition);
+        verticalPosition += 10;
+        doc.text(`Người bán: Chủ project1 shop`, 20, verticalPosition);
 
         // Xuất file PDF với tên 'invoice.pdf'
         doc.save('invoice.pdf');

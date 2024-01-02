@@ -4,7 +4,7 @@ import * as signalR from '@microsoft/signalr';
 import ClassApi2 from '../api/API2'
 import './tick.css';
 //const base_api = "https://dd38-2405-4802-1caa-93c0-c443-5313-6910-82b5.ngrok-free.app/api/Donhangs/ThanhToanQr"
-const base_api = 'https://9d62-202-191-58-174.ngrok-free.app/api/Donhangs/ThanhToanQr'
+const base_api = 'https://19da-118-70-127-160.ngrok-free.app/api/Donhangs/ThanhToanQr'
 
 function QRThanhToan({ phone, id }) {
     const sendRequest = async () => {
