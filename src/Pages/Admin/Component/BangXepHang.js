@@ -55,11 +55,11 @@ const BangXepHang = () => {
         ExportToExcel.export(reorderedArray, 'Xếp hạng người dùng')
     }
     return (
-        <Fragment>
+        <Grid item container xs={12}>
             <Grid item xs={12} container justifyContent='flex-end' paddingRight='20px'>
                 <Button onClick={() => { handleExport() }} startIcon={<ExitToAppIcon />} color="success" variant="contained">Excel</Button>
             </Grid>
-            <TableContainer sx={{ maxWidth: { xs: '400px', sm: '100%' } }} component={Paper}>
+            <TableContainer sx={{ width: { xs: '400px', sm: '100%' } }} component={Paper}>
                 <Table>
                     <TableHead padding='0px'>
                         <TableRow >
@@ -142,7 +142,7 @@ const BangXepHang = () => {
                     </tfoot>
                 </Table>
             </TableContainer>
-        </Fragment>
+        </Grid>
     );
 };
 
