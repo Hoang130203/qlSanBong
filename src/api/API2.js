@@ -2,7 +2,7 @@ import axios from "axios";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
 //const base_api = "https://localhost:7037"
 //const base_api = 'https://project1mmhoang.azurewebsites.net'
-const base_api = 'http://hoangmm215381.somee.com'
+const base_api = 'https://hoangmm215381.somee.com'
 const headers = {
     "access-control-allow-origin": "*",
     "content-type": "application/json; charset=utf-8 ",
