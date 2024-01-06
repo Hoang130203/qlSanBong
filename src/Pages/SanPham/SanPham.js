@@ -4,7 +4,7 @@ import ItemListSp from "../../Component/ItemListSp";
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import MenuIcon from '@mui/icons-material/Menu';
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ItemSp from "../../Component/ItemSp";
 import ClassApi2 from '../../api/API2'
 import ItemListSp2 from "../../Component/ItemListSp2";
@@ -38,9 +38,11 @@ function SanPham() {
     const [allsp, setAllsp] = useState([])
     const [spmoi, setSpmoi] = useState([])
     const [shape, setShape] = useState(1)
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         ClassApi2.GetAllSp().then((response) => {
             setAllsp(response.data)
+            setLoading(false)
         })
         ClassApi2.GetSpMoi().then((response) => {
             setSpmoi(response.data)
@@ -92,87 +94,89 @@ function SanPham() {
     }
 
     return (
-        <Grid container justifyContent='center' alignContent='flex-start'>
-            <Grid container item xs={9.5} paddingTop='25px' display='flex' flexDirection='row' height='30px' marginBottom='30px'>
-                <a href="/" style={{ textDecoration: 'none', color: '#333' }}>
-                    <Typography >Trang chủ    /&nbsp;</Typography>
-                </a>
-                <Typography color='#35c0c5'>Sản phẩm</Typography>
-            </Grid>
-            <Grid container item xs={12} sm={11.5} display='flex' flsexDirection='row' justifyContent='flex-end'>
-
-                <Grid item container lg={2.5} md={4} sm={12} xs={12} display='flex' flexDirection='row' justifyContent='flex-start'>
-
-                    <Grid container item xs={12} minHeight='300px' display='flex' flexDirection='column' padding='0px 10px' justifyContent='center' rowSpacing={1} >
-                        <MenuSp />
-                    </Grid>
-                    <Grid item container xs={12} sx={{ display: { xs: 'none', sm: 'flex' } }} rowSpacing={1} minHeight='200px' display='flex' flexDirection='row' paddingTop='20px'>
-                        <Grid item xs={12} >
-                            <Typography textAlign='center' fontWeight={600} variant="h6">SẢN PHẨM MỚI</Typography>
-                        </Grid>
-                        {spmoi.map((item, index) => (
-                            <Grid item key={index} xs={12} style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center'
-                            }}>
-                                <ItemListSp2 bgcolor='#ccc' id={item.productid} cost={item.price.toLocaleString()} name={item.productname} img={item.linkimg} type={1} />
-
-                            </Grid>
-                        ))}
-
-                    </Grid>
-
-                    <Grid item display='flex' justifyContent='center' margin='20px 0px' sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                        <img src="https://genk.mediacdn.vn/2017/photo-1-1496042071517.jpg" style={{ maxWidth: '100%' }}></img>
-                    </Grid>
+        <Fragment>{!loading &&
+            <Grid container justifyContent='center' alignContent='flex-start'>
+                <Grid container item xs={9.5} paddingTop='25px' display='flex' flexDirection='row' height='30px' marginBottom='30px'>
+                    <a href="/" style={{ textDecoration: 'none', color: '#333' }}>
+                        <Typography >Trang chủ    /&nbsp;</Typography>
+                    </a>
+                    <Typography color='#35c0c5'>Sản phẩm</Typography>
                 </Grid>
-                <Grid item container lg={9} md={7.5} sm={11} xs={11.9} style={{ padding: { xs: '10px', sm: '0px' } }} display='flex' rowSpacing={2} flexDirection='column' justifyContent='flex-start' >
-                    <Grid item padding='0px 30px'>
-                        <Typography fontWeight={600} variant="h6"> TẤT CẢ SẢN PHẨM</Typography>
-                    </Grid>
-                    <Grid item container >
-                        <Grid item container xs={12} md={6} alignItems='center' columnSpacing={2} padding='0px 30px'>
-                            <Grid item><Typography>Sắp xếp</Typography></Grid>
+                <Grid container item xs={12} sm={11.5} display='flex' flsexDirection='row' justifyContent='flex-end'>
 
-                            <Grid item >
-                                <Select style={{ width: '200px', height: '40px' }} value={CachSapXep} onChange={handleChange}>
-                                    {menuitems.map((item, index) => (
-                                        <MenuItem key={index} value={item.type}>{item.name}</MenuItem>
-                                    ))}
-                                </Select>
-                            </Grid>
+                    <Grid item container lg={2.5} md={4} sm={12} xs={12} display='flex' flexDirection='row' justifyContent='flex-start'>
+
+                        <Grid container item xs={12} minHeight='300px' display='flex' flexDirection='column' padding='0px 10px' justifyContent='center' rowSpacing={1} >
+                            <MenuSp />
                         </Grid>
-                        <Grid item container sm={6} alignItems='center' sx={{ justifyContent: { xs: 'flex-start', sm: 'flex-end' }, display: { xs: 'flex', sm: 'flex' } }} padding='0px 30px'>
-                            <Grid item overflow='hidden'>
-                                <Button style={{ color: '#ccc' }} onClick={handleClickChange1} startIcon={<ViewModuleIcon style={{ color: shape == 1 ? '#35c0c5' : 'black' }} />} ><Typography style={{ textTransform: 'none', color: 'black' }}>Lưới</Typography></Button>
+                        <Grid item container xs={12} sx={{ display: { xs: 'none', sm: 'flex' } }} rowSpacing={1} minHeight='200px' display='flex' flexDirection='row' paddingTop='20px'>
+                            <Grid item xs={12} >
+                                <Typography textAlign='center' fontWeight={600} variant="h6">SẢN PHẨM MỚI</Typography>
                             </Grid>
-                            <Grid item overflow='hidden'>
-                                <Button style={{ color: '#ccc' }} onClick={handleClickChange2} startIcon={<MenuIcon style={{ color: shape == 2 ? '#35c0c5' : 'black' }} />}><Typography style={{ textTransform: 'none', color: 'black' }}>Danh sách</Typography></Button>
-                            </Grid>
+                            {spmoi.map((item, index) => (
+                                <Grid item key={index} xs={12} style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center'
+                                }}>
+                                    <ItemListSp2 bgcolor='#ccc' id={item.productid} cost={item.price.toLocaleString()} name={item.productname} img={item.linkimg} type={1} />
+
+                                </Grid>
+                            ))}
+
                         </Grid>
-                        <Grid item container justifyContent='space-evenly' xs={12} style={{ marginTop: '10px' }}>
-                            {allsp.map((item, index) => {
-                                return (
-                                    shape == 1 ?
-                                        <Grid key={index} container item lg={3.5} md={7} sm={6} sx={{ padding: '20px 0px' }} justifyContent='center'>
-                                            <Grid item justifyContent='center'>
-                                                <ItemSp id={item.productid} img={item.linkimg} title={item.productname} cost={item.price.toLocaleString()} />
+
+                        <Grid item display='flex' justifyContent='center' margin='20px 0px' sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                            <img src="https://genk.mediacdn.vn/2017/photo-1-1496042071517.jpg" style={{ maxWidth: '100%' }}></img>
+                        </Grid>
+                    </Grid>
+                    <Grid item container lg={9} md={7.5} sm={11} xs={11.9} style={{ padding: { xs: '10px', sm: '0px' } }} display='flex' rowSpacing={2} flexDirection='column' justifyContent='flex-start' >
+                        <Grid item padding='0px 30px'>
+                            <Typography fontWeight={600} variant="h6"> TẤT CẢ SẢN PHẨM</Typography>
+                        </Grid>
+                        <Grid item container >
+                            <Grid item container xs={12} md={6} alignItems='center' columnSpacing={2} padding='0px 30px'>
+                                <Grid item><Typography>Sắp xếp</Typography></Grid>
+
+                                <Grid item >
+                                    <Select style={{ width: '200px', height: '40px' }} value={CachSapXep} onChange={handleChange}>
+                                        {menuitems.map((item, index) => (
+                                            <MenuItem key={index} value={item.type}>{item.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </Grid>
+                            </Grid>
+                            <Grid item container sm={6} alignItems='center' sx={{ justifyContent: { xs: 'flex-start', sm: 'flex-end' }, display: { xs: 'flex', sm: 'flex' } }} padding='0px 30px'>
+                                <Grid item overflow='hidden'>
+                                    <Button style={{ color: '#ccc' }} onClick={handleClickChange1} startIcon={<ViewModuleIcon style={{ color: shape == 1 ? '#35c0c5' : 'black' }} />} ><Typography style={{ textTransform: 'none', color: 'black' }}>Lưới</Typography></Button>
+                                </Grid>
+                                <Grid item overflow='hidden'>
+                                    <Button style={{ color: '#ccc' }} onClick={handleClickChange2} startIcon={<MenuIcon style={{ color: shape == 2 ? '#35c0c5' : 'black' }} />}><Typography style={{ textTransform: 'none', color: 'black' }}>Danh sách</Typography></Button>
+                                </Grid>
+                            </Grid>
+                            <Grid item container justifyContent='space-evenly' xs={12} style={{ marginTop: '10px' }}>
+                                {allsp.map((item, index) => {
+                                    return (
+                                        shape == 1 ?
+                                            <Grid key={index} container item lg={3.5} md={7} sm={6} sx={{ padding: '20px 0px' }} justifyContent='center'>
+                                                <Grid item justifyContent='center'>
+                                                    <ItemSp id={item.productid} img={item.linkimg} title={item.productname} cost={item.price.toLocaleString()} />
+                                                </Grid>
+                                            </Grid> :
+                                            <Grid key={index} container item md={11} sm={12} sx={{ padding: { xs: '10px', sm: '20px 0px' } }} justifyContent='flex-start'>
+
+                                                <ItemListSp2 id={item.productid} img={item.linkimg} name={item.productname} cost={item.price.toLocaleString()}></ItemListSp2>
+
                                             </Grid>
-                                        </Grid> :
-                                        <Grid key={index} container item md={11} sm={12} sx={{ padding: { xs: '10px', sm: '20px 0px' } }} justifyContent='flex-start'>
-
-                                            <ItemListSp2 id={item.productid} img={item.linkimg} name={item.productname} cost={item.price.toLocaleString()}></ItemListSp2>
-
-                                        </Grid>
-                                )
-                            })}
+                                    )
+                                })}
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
 
-            </Grid>
-        </Grid >
+                </Grid>
+            </Grid >
+        }</Fragment>
     );
 }
 

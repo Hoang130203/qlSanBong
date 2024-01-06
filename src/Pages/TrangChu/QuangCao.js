@@ -4,13 +4,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ClassApi2 from '../../api/API2';
 
-let quangcaos = [];
-
 export default class QuangCao extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isMobile: false,
+            quangcaos: [], // Thêm state quangcaos để lưu trữ dữ liệu từ API
         };
     }
 
@@ -25,25 +24,26 @@ export default class QuangCao extends Component {
     }
 
     handleResize = () => {
-        const isMobile = window.innerWidth <= 768; // Thiết lập ngưỡng kích thước cho thiết bị di động (có thể điều chỉnh)
+        const isMobile = window.innerWidth <= 768;
         this.setState({ isMobile });
     };
 
     fetchBannerData = () => {
         const { quangcao } = this.props;
         if (quangcao) {
-            quangcaos = quangcao;
+            this.setState({ quangcaos: quangcao });
         } else {
             ClassApi2.GetAllBanner().then((response) => {
-                quangcaos = response.data;
+                this.setState({ quangcaos: response.data });
             });
         }
     };
 
     render() {
-        const { isMobile } = this.state;
+        const { isMobile, quangcaos } = this.state; // Lấy quangcaos từ state
+
         if (isMobile) {
-            return null; // Trả về null nếu là thiết bị di động để ẩn component QuangCao
+            return null;
         }
 
         const settings = {

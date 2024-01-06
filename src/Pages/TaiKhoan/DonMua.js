@@ -12,7 +12,7 @@ function DonMua() {
     const user = { name: 'user', id: '#11911', avt: 'https://honkai-builds.com/wp-content/uploads/jingliu.webp', password: '1234', address: 'Hà Nội', account: 'abcxyz', email: 'abc@gmail.com', phoneNumber: '091122438', gender: 'Nam' }
     const [show, setShow] = useState(false)
     const [info, setInfo] = useState({ name: '', phonenumber: '', password: '', address: '' })
-
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         ClassApi2.GetInfo().then((response) => {
             setInfo(response.data)
@@ -92,10 +92,12 @@ function DonMua() {
     useEffect(() => {
         ClassApi2.GetOrderedProduct().then((response) => {
             setDonMuas(response.data)
+            setLoading(false)
         })
     }, [])
     return (
         <Grid container justifyContent='center'>
+
             <Grid item container xs={12} md={10} minHeight='400px'>
                 <AlertDialog isopen={show} setIsOpen={setShow} title='Bạn có chắc chắn muốn đăng xuất ?' confirm={handleLogout} />
                 <Grid item container md={3} xs={5}>
@@ -151,11 +153,12 @@ function DonMua() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item container xs={12} md={9}>
-                    {DonMuas.map((item, index) => (
-                        <ItemDonMua key={index} total={item.donhang.totalcost} donhang={item.donhang} listsp={item.chitiet} id={item.donhang.orderid} sanpham={item.sanpham} />
-                    ))}
-                </Grid>
+                {!loading &&
+                    <Grid item container xs={12} md={9}>
+                        {DonMuas.map((item, index) => (
+                            <ItemDonMua key={index} total={item.donhang.totalcost} donhang={item.donhang} listsp={item.chitiet} id={item.donhang.orderid} sanpham={item.sanpham} />
+                        ))}
+                    </Grid>}
             </Grid>
 
         </Grid>

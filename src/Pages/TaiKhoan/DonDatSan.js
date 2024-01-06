@@ -14,6 +14,7 @@ function DonDatSan() {
     const user = { name: 'user', id: '#11911', avt: 'https://honkai-builds.com/wp-content/uploads/jingliu.webp', password: '1234', address: 'Hà Nội', account: 'abcxyz', email: 'abc@gmail.com', phoneNumber: '091122438', gender: 'Nam' }
     const [show, setShow] = useState(false)
     const [info, setInfo] = useState({ name: '', phonenumber: '', password: '', address: '' })
+    const [loading, setLoading] = useState(true)
     const [Orders, setOrders] = useState([
         {
             "donhang": {
@@ -52,6 +53,7 @@ function DonDatSan() {
     useEffect(() => {
         ClassApi2.GetOrderedField().then((response) => {
             setOrders(response.data)
+            setLoading(false)
         })
     }, [])
     const navigate = useNavigate()
@@ -66,6 +68,7 @@ function DonDatSan() {
     }
     return (
         <Grid container justifyContent='center' sx={{ minHeight: { xs: '830px', md: '' } }}>
+
             <Grid item container xs={12} md={10} minHeight='400px'>
                 <AlertDialog isopen={show} setIsOpen={setShow} title='Bạn có chắc chắn muốn đăng xuất ?' confirm={handleLogout} />
                 <Grid item container md={3} xs={5}>
@@ -121,11 +124,12 @@ function DonDatSan() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item container xs={12} md={9}>
-                    {Orders.map((item, index) => (
-                        <ItemDonDatSan key={index} donhang={item.donhang} sanbongdh={item.sanbongdh} sanbong={item.sanbong} />
-                    ))}
-                </Grid>
+                {!loading &&
+                    <Grid item container xs={12} md={9}>
+                        {Orders.map((item, index) => (
+                            <ItemDonDatSan key={index} donhang={item.donhang} sanbongdh={item.sanbongdh} sanbong={item.sanbong} />
+                        ))}
+                    </Grid>}
             </Grid>
         </Grid>
     );
