@@ -234,7 +234,7 @@ function Thongke() {
         });
     };
     return (
-        <Grid container sx={{ padding: { sm: '30px 30px', xs: '30px 5px' } }} alignContent='flex-start' rowSpacing={4}>
+        <Grid container sx={{ padding: { sm: '30px 30px', xs: '50px 40px' } }} alignContent='flex-start' rowSpacing={4}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="Doanh số" {...a11yProps(0)} style={{ borderBottom: '1px solid #ccc' }} />
                 <Tab label="Người dùng" {...a11yProps(1)} style={{ borderBottom: '1px solid #ccc' }} />

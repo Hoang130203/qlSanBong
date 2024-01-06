@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import './Menu.css'; // Import CSS để tùy chỉnh giao diện của menu
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
-
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Button } from '@mui/material';
 const Menu = () => {
     const menuRef = useRef(null);
 
@@ -55,15 +56,15 @@ const Menu = () => {
         enableScroll()
         setIsDragging(false);
     };
-
+    const navigate = useNavigate()
+    const handleLogOut = () => {
+        localStorage.setItem('admin', null)
+        navigate('/')
+    }
     return (
         <div
             className="menu-container"
-            ref={menuRef}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onTouchCancel={enableScroll}
+
         >
             <div id="menu" className="menu">
                 <NavLink to='/admin/thong-ke' className="menu-item" style={{ padding: '0px', margin: '0px', textDecoration: 'none' }}>
@@ -84,6 +85,9 @@ const Menu = () => {
                 <NavLink to='/admin/quang-cao' className="menu-item" style={{ padding: '0px', margin: '0px', textDecoration: 'none' }}>
                     <AutoAwesomeMotionIcon color='secondary' />
                 </NavLink>
+                <button onClick={handleLogOut} style={{ marginRight: '0px', marginLeft: '0px', marginTop: '20px', backgroundColor: 'transparent', border: 'none' }}>
+                    <LogoutIcon color='disabled' />
+                </button>
             </div>
         </div>
     );

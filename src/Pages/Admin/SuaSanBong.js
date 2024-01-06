@@ -177,7 +177,7 @@ function SuaSanBong() {
 
     };
     return (
-        <Grid item container spacing={1} xs={12} width='100%' sx={{ maxWidth: { xs: '400px', sm: '100%' }, padding: { sm: " 30px 50px", xs: '30px 20px' } }}>
+        <Grid item container spacing={1} xs={12} width='100%' sx={{ maxWidth: { xs: '400px', sm: '100%' }, padding: { sm: " 30px 50px", xs: '30px 40px' } }}>
             {isUploading && <CircularProgress style={{ position: 'fixed', right: '20px', top: '20px' }} />}
             <ThemeProvider theme={theme}>
                 <Grid item xs={12} padding='0px 0px 20px 0px'>

@@ -98,7 +98,7 @@ function ThemSanPham() {
 
     };
     return (
-        <Grid item container spacing={1} sx={{ maxWidth: { xs: '400px', sm: '100%' }, padding: { sm: " 30px 50px", xs: '30px 20px' } }} width='100%'>
+        <Grid item container spacing={1} sx={{ maxWidth: { xs: '400px', sm: '100%' }, padding: { sm: " 30px 50px", xs: '30px 40px' } }} width='100%'>
             {isUploading && <CircularProgress style={{ position: 'fixed', right: '20px', top: '20px' }} />}
             <ThemeProvider theme={theme}>
                 <Grid item xs={12}>

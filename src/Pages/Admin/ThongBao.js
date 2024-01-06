@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, TablePagination, Typography } from "@mui/material";
 import NotificationCard from "./Component/NotificationCard";
 import ClassApi from '../../api/API'
 import { useEffect, useState } from "react";
@@ -11,6 +11,15 @@ let notifications = [
 
 function ThongBao() {
     const [notifications, setNotifications] = useState([])
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
     useEffect(() => {
         ClassApi.GetAllNotifi().then((response) => {
             setNotifications(response.data)
@@ -22,10 +31,47 @@ function ThongBao() {
                 <Typography bgcolor='#e6f3ff' textAlign='center' fontFamily='inherit' variant="h4" color='#1976d2'>Thông báo</Typography>
             </Grid>
             <Grid item container xs={12} display='flex' flexDirection='column'>
-                {notifications.map((item, index) => (
-                    <NotificationCard key={index} content={item.message} time={item.time} id={item.notifid} orderCode={item.orderid} type={item.type} />
-                ))}
+                {notifications &&
+                    (rowsPerPage > 0
+                        ? notifications.slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage
+                        )
+                        : notifications
+                    ).map((item, index) => (
+                        <NotificationCard key={index} content={item.message} time={item.time} id={item.notifid} orderCode={item.orderid} type={item.type} />
+                    ))}
             </Grid>
+            <TablePagination
+                rowsPerPageOptions={[5, 8, 10, { label: "All", value: -1 }]}
+                colSpan={6}
+                count={notifications.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                labelRowsPerPage='Số hàng mỗi trang'
+                slotProps={{
+                    select: {
+                        "aria-label": "Số hàng mỗi trang",
+                    },
+                    actions: {
+                        showFirstButton: true,
+                        showLastButton: true,
+                    },
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{
+                    "& .MuiTablePagination-input": {
+                        fontSize: "16px",
+                    },
+                    "& .MuiTablePagination-displayedRows": {
+                        fontSize: "16px",
+                    },
+                    "& .MuiTablePagination-selectLabel": {
+                        fontSize: "16px",
+                    },
+                }}
+            />
         </Grid>
     );
 }

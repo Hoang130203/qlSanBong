@@ -59,7 +59,7 @@ const BangXepHang = () => {
             <Grid item xs={12} container justifyContent='flex-end' paddingRight='20px'>
                 <Button onClick={() => { handleExport() }} startIcon={<ExitToAppIcon />} color="success" variant="contained">Excel</Button>
             </Grid>
-            <TableContainer sx={{ width: { xs: '400px', sm: '100%' } }} component={Paper}>
+            <TableContainer sx={{ width: { xs: '350px', sm: '800px' }, minWidth: '100%' }} component={Paper}>
                 <Table>
                     <TableHead padding='0px'>
                         <TableRow >
@@ -115,6 +115,8 @@ const BangXepHang = () => {
                                 count={bxh.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
+                                labelRowsPerPage='Số hàng mỗi trang'
+
                                 slotProps={{
                                     select: {
                                         "aria-label": "rows per page",
