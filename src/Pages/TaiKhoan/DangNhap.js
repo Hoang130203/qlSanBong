@@ -34,13 +34,9 @@ function DangNhap() {
                     //    navigate('/')
                     toast.info('Chào mừng bạn trở lại!', {
                         position: toast.POSITION.BOTTOM_CENTER,
-                        onClose: function () {
-                            setTimeout(function () {
-                                window.location.href = '/';
-                            }, 1000);
-                        }
-                    });
 
+                    });
+                    window.location.href = '/';
                 } else {
                     toast.error('Sai tài khoản hoặc mật khẩu!', {
                         position: toast.POSITION.BOTTOM_RIGHT
