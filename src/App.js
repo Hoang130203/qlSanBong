@@ -18,7 +18,7 @@ function App() {
           return (
             <Route key={index} path={route.path} element={
               <Layout>
-                <ToastContainer />
+                <ToastContainer hideProgressBar />
                 <Page></Page>
               </Layout>
             }>

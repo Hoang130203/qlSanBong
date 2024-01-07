@@ -48,10 +48,9 @@ function DatHang() {
 
         }).finally(() => {
             setShow(false)
-            setTimeout(() => {
-                navigate('/')
-                window.location.reload()
-            }, [5000])
+
+            navigate('/')
+
         }
         )
     }

@@ -31,10 +31,16 @@ function DangNhap() {
                     localStorage.setItem('usersb', user)
                     localStorage.setItem('namesb', response.data.name)
                     localStorage.setItem('connectionId', response.data.connectionId)
-                    navigate('/')
+                    //    navigate('/')
                     toast.info('Chào mừng bạn trở lại!', {
-                        position: toast.POSITION.BOTTOM_CENTER
-                    })
+                        position: toast.POSITION.BOTTOM_CENTER,
+                        onClose: function () {
+                            setTimeout(function () {
+                                window.location.href = '/';
+                            }, 1000);
+                        }
+                    });
+
                 } else {
                     toast.error('Sai tài khoản hoặc mật khẩu!', {
                         position: toast.POSITION.BOTTOM_RIGHT
