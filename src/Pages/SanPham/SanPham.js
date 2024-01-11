@@ -1,4 +1,4 @@
-import { Button, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Button, Grid, InputLabel, MenuItem, Select, TablePagination, Typography } from "@mui/material";
 import MenuSp from "../../Component/MenuSp";
 import ItemListSp from "../../Component/ItemListSp";
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
@@ -39,6 +39,15 @@ function SanPham() {
     const [spmoi, setSpmoi] = useState([])
     const [shape, setShape] = useState(1)
     const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(9);
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
     useEffect(() => {
         ClassApi2.GetAllSp().then((response) => {
             setAllsp(response.data)
@@ -119,15 +128,26 @@ function SanPham() {
                                     flexDirection: 'row',
                                     justifyContent: 'center'
                                 }}>
-                                    <ItemListSp2 bgcolor='#ccc' id={item.productid} cost={item.price.toLocaleString()} name={item.productname} img={item.linkimg} type={1} />
+                                    <ItemListSp2 id={item.productid} cost={item.price.toLocaleString()} name={item.productname} img={item.linkimg} type={1} />
+
 
                                 </Grid>
                             ))}
 
                         </Grid>
-
+                        <Grid item container display='flex' sx={{ display: { xs: 'none', sm: 'flex' } }} flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' height='65px' style={{ margin: '20px 0px', background: 'url(//bizweb.dktcdn.net/100/091/133/themes/880367/assets/bg-menu.png?1665385034327) #35c0c5', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+                            <Grid item container xs={3} justifyContent='flex-end'>
+                                <Grid item>
+                                    <WifiCalling3Icon style={{ color: 'white', fontSize: '35px' }} />
+                                </Grid>
+                            </Grid>
+                            <Grid item container display='flex' flexDirection='column' xs={8}>
+                                <Grid item><Typography color='white' fontSize='20px'>Liên hệ</Typography></Grid>
+                                <Grid item><Typography color='white' fontSize='20px'>0912344736</Typography></Grid>
+                            </Grid>
+                        </Grid>
                         <Grid item display='flex' justifyContent='center' margin='20px 0px' sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                            <img src="https://genk.mediacdn.vn/2017/photo-1-1496042071517.jpg" style={{ maxWidth: '100%' }}></img>
+                            <img src="https://genk.mediacdn.vn/2017/photo-1-1496042071517.jpg " style={{ maxWidth: '100%' }}></img>
                         </Grid>
                     </Grid>
                     <Grid item container lg={9} md={7.5} sm={11} xs={11.9} style={{ padding: { xs: '10px', sm: '0px' } }} display='flex' rowSpacing={2} flexDirection='column' justifyContent='flex-start' >
@@ -155,21 +175,61 @@ function SanPham() {
                                 </Grid>
                             </Grid>
                             <Grid item container justifyContent='space-evenly' xs={12} style={{ marginTop: '10px' }}>
-                                {allsp.map((item, index) => {
-                                    return (
-                                        shape == 1 ?
-                                            <Grid key={index} container item lg={3.5} md={7} sm={6} sx={{ padding: '20px 0px' }} justifyContent='center'>
-                                                <Grid item justifyContent='center'>
-                                                    <ItemSp id={item.productid} img={item.linkimg} title={item.productname} cost={item.price.toLocaleString()} />
+                                {allsp &&
+                                    (rowsPerPage > 0
+                                        ? allsp.slice(
+                                            page * rowsPerPage,
+                                            page * rowsPerPage + rowsPerPage
+                                        )
+                                        : allsp
+                                    ).map((item, index) => {
+                                        return (
+                                            shape == 1 ?
+                                                <Grid key={index} container item lg={3.5} md={7} sm={6} sx={{ padding: '20px 0px' }} justifyContent='center'>
+                                                    <Grid item justifyContent='center'>
+                                                        <ItemSp id={item.productid} img={item.linkimg} title={item.productname} cost={item.price.toLocaleString()} />
+                                                    </Grid>
+                                                </Grid> :
+                                                <Grid key={index} container item md={11} sm={12} sx={{ padding: { xs: '10px', sm: '20px 0px' } }} justifyContent='flex-start'>
+
+                                                    <ItemListSp2 id={item.productid} img={item.linkimg} name={item.productname} cost={item.price.toLocaleString()}></ItemListSp2>
+
                                                 </Grid>
-                                            </Grid> :
-                                            <Grid key={index} container item md={11} sm={12} sx={{ padding: { xs: '10px', sm: '20px 0px' } }} justifyContent='flex-start'>
+                                        )
+                                    })}
+                            </Grid>
+                            <Grid item xs={12} marginLeft='30px'>
+                                <TablePagination
+                                    rowsPerPageOptions={[6, 9, 12, { label: "All", value: -1 }]}
+                                    colSpan={6}
+                                    count={allsp.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    labelRowsPerPage='Số phần tử mỗi trang'
 
-                                                <ItemListSp2 id={item.productid} img={item.linkimg} name={item.productname} cost={item.price.toLocaleString()}></ItemListSp2>
-
-                                            </Grid>
-                                    )
-                                })}
+                                    slotProps={{
+                                        select: {
+                                            "aria-label": "rows per page",
+                                        },
+                                        actions: {
+                                            showFirstButton: true,
+                                            showLastButton: true,
+                                        },
+                                    }}
+                                    onPageChange={handleChangePage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                    sx={{
+                                        "& .MuiTablePagination-input": {
+                                            fontSize: "16px",
+                                        },
+                                        "& .MuiTablePagination-displayedRows": {
+                                            fontSize: "16px",
+                                        },
+                                        "& .MuiTablePagination-selectLabel": {
+                                            fontSize: "16px",
+                                        },
+                                    }}
+                                />
                             </Grid>
                         </Grid>
                     </Grid>

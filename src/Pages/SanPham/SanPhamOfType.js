@@ -1,4 +1,4 @@
-import { Button, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Button, Grid, InputLabel, MenuItem, Select, TablePagination, Typography } from "@mui/material";
 import MenuSp from "../../Component/MenuSp";
 import ItemListSp from "../../Component/ItemListSp";
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
@@ -41,7 +41,15 @@ function SanPhamOfType() {
     const [spmoi, setSpmoi] = useState([])
     const [shape, setShape] = useState(1)
     const [loading, setLoading] = useState(true)
-
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(9);
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
     useEffect(() => {
         ClassApi2.GetAllSpofType(type).then((response) => {
             setAllsp(response.data)
@@ -169,22 +177,65 @@ function SanPhamOfType() {
                                 </Grid>
                             </Grid>
                             <Grid item container justifyContent='space-evenly' xs={12} style={{ marginTop: '10px' }}>
-                                {allsp.map((item, index) => {
-                                    return (
-                                        shape == 1 ?
-                                            <Grid key={index} container item lg={3.5} md={7} sm={6} sx={{ padding: '20px 0px' }} justifyContent='center'>
-                                                <Grid item justifyContent='center'>
-                                                    <ItemSp id={item.productid} img={item.linkimg} title={item.productname} cost={item.price.toLocaleString()} />
+                                {allsp &&
+                                    (rowsPerPage > 0
+                                        ? allsp.slice(
+                                            page * rowsPerPage,
+                                            page * rowsPerPage + rowsPerPage
+                                        )
+                                        : allsp
+                                    ).map((item, index) => {
+                                        return (
+                                            shape == 1 ?
+                                                <Grid key={index} container item lg={3.5} md={7} sm={6} sx={{ padding: '20px 0px' }} justifyContent='center'>
+                                                    <Grid item justifyContent='center'>
+                                                        <ItemSp id={item.productid} img={item.linkimg} title={item.productname} cost={item.price.toLocaleString()} />
+                                                    </Grid>
+                                                </Grid> :
+                                                <Grid key={index} container item md={11} sm={12} sx={{ padding: { xs: '10px', sm: '20px 0px' } }} justifyContent='flex-start'>
+
+                                                    <ItemListSp2 id={item.productid} img={item.linkimg} name={item.productname} cost={item.price.toLocaleString()}></ItemListSp2>
+
                                                 </Grid>
-                                            </Grid> :
-                                            <Grid key={index} container item md={11} sm={12} sx={{ padding: { xs: '10px', sm: '20px 0px' } }} justifyContent='flex-start'>
-
-                                                <ItemListSp2 id={item.productid} img={item.linkimg} name={item.productname} cost={item.price.toLocaleString()}></ItemListSp2>
-
-                                            </Grid>
-                                    )
-                                })}
+                                        )
+                                    })}
                             </Grid>
+                            {
+                                allsp.length >= 6 && <Grid item xs={12} marginLeft='30px'>
+                                    <TablePagination
+                                        rowsPerPageOptions={[6, 9, 12, { label: "All", value: -1 }]}
+                                        colSpan={6}
+                                        count={allsp.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        labelRowsPerPage='Số phần tử mỗi trang'
+
+                                        slotProps={{
+                                            select: {
+                                                "aria-label": "rows per page",
+                                            },
+                                            actions: {
+                                                showFirstButton: true,
+                                                showLastButton: true,
+                                            },
+                                        }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        sx={{
+                                            "& .MuiTablePagination-input": {
+                                                fontSize: "16px",
+                                            },
+                                            "& .MuiTablePagination-displayedRows": {
+                                                fontSize: "16px",
+                                            },
+                                            "& .MuiTablePagination-selectLabel": {
+                                                fontSize: "16px",
+                                            },
+                                        }}
+                                    />
+                                </Grid>
+                            }
+
                         </Grid>
                     </Grid>
 
