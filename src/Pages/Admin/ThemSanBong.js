@@ -44,7 +44,10 @@ function ThemSanBong() {
         setType(e.target.value)
     }
     const handleAdd = async () => {
-
+        if (decription.length > 500) {
+            toast.warn('Mô tả không quá 500 ký tự!')
+            return;
+        }
         try {
 
             setCost(parseInt(cost))

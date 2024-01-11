@@ -74,7 +74,10 @@ function ThemSanPham() {
 
     const handleClick = async () => {
 
-
+        if (detail.length > 500) {
+            toast.warn('Mô tả không quá 500 ký tự!')
+            return;
+        }
         try {
             if (name.length == 0 || cost.length == 0 || type.length == 0 || quantity.length == 0) {
                 toast.warning('điền đủ thông tin')

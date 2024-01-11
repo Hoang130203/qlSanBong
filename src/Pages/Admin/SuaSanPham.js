@@ -94,6 +94,10 @@ function SuaSanPham() {
 
     }, [])
     const handleClick = async () => {
+        if (detail.length > 500) {
+            toast.warn('Mô tả không quá 500 ký tự!')
+            return;
+        }
         setIsButtonDisabled(true);
 
         setTimeout(() => {

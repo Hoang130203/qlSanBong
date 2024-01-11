@@ -71,6 +71,10 @@ function SuaSanBong() {
 
     }, [])
     const handleAdd = async () => {
+        if (decription.length > 500) {
+            toast.warn('Mô tả không quá 500 ký tự!')
+            return;
+        }
         try {
             setCost(parseInt(cost))
             if (name.length == 0 || address.length == 0 || type.length == 0) {
